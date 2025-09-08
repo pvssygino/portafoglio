@@ -8,60 +8,104 @@
       font-family: Arial, sans-serif;
       background: #f8f9fa;
       padding: 20px;
+      line-height: 1.6;
     }
-    h1 {
+    h1, h2 {
       text-align: center;
+    }
+    .intro {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
       background: white;
+      font-size: 14px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     th, td {
       border: 1px solid #ddd;
-      padding: 10px;
+      padding: 6px;
       text-align: center;
     }
     th {
       background: #007BFF;
       color: white;
+      font-size: 13px;
     }
     tr:nth-child(even) {
       background: #f2f2f2;
     }
-    .note {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #555;
+    .year {
+      background: #28a745;
+      color: white;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>📊 Portafoglio Comune</h1>
-  
+
+  <div class="intro">
+    <h2>Che cos’è un pezzo?</h2>
+    <p>
+      Un <b>pezzo</b> è l’unità di riferimento del portafoglio comune.
+      All’inizio, quando avevamo 1.680 €, divisi in 3 parti uguali da 560 €, ogni persona valeva <b>1 pezzo = 560 €</b>.
+    </p>
+    <p>
+      Man mano che altre persone sono entrate, si è mantenuto questo riferimento:
+      chi mette 560 € compra 1 pezzo intero, chi mette meno compra una frazione di pezzo.
+    </p>
+    <p>
+      Ogni pezzo “intero” deposita 50 € al mese; chi possiede frazioni di pezzo deposita in proporzione.
+      Se tutti depositano, le percentuali restano uguali. Se qualcuno non deposita, perde parte della sua quota,
+      che viene redistribuita tra gli altri in base ai pezzi che possiedono.
+    </p>
+  </div>
+
+  <h2>Situazione 2024</h2>
   <table>
     <tr>
-      <th>Nome</th>
-      <th>Pezzi</th>
-      <th>Percentuale</th>
-      <th>Deposito Mensile (€)</th>
+      <th>Mese</th>
+      <th colspan="2">Lorenzo (50€)</th>
+      <th colspan="2">Ivan (50€)</th>
+      <th colspan="2">Al Pacchero (50€)</th>
+      <th colspan="2">Vittorio (25€)</th>
+      <th colspan="2">Kekko (25€)</th>
+      <th colspan="2">Peppe (17€)</th>
+      <th colspan="2">Gianluca (17€)</th>
+      <th colspan="2">Gabriele (17€)</th>
+      <th colspan="2">Luigi (26,8€)</th>
     </tr>
-    <tr><td>Ivan</td><td>1</td><td>18,18%</td><td>50</td></tr>
-    <tr><td>Lorenzo</td><td>1</td><td>18,18%</td><td>50</td></tr>
-    <tr><td>Al Pacchero</td><td>1</td><td>18,18%</td><td>50</td></tr>
-    <tr><td>Vittorio</td><td>0,5</td><td>9,09%</td><td>25</td></tr>
-    <tr><td>Kekko</td><td>0,5</td><td>9,09%</td><td>25</td></tr>
-    <tr><td>Peppe</td><td>0,33</td><td>6,06%</td><td>17</td></tr>
-    <tr><td>Gianluca</td><td>0,33</td><td>6,06%</td><td>17</td></tr>
-    <tr><td>Gabriele</td><td>0,33</td><td>6,06%</td><td>17</td></tr>
-    <tr><td>Luigi</td><td>0,536</td><td>9,74%</td><td>26,8</td></tr>
+    <tr>
+      <th></th><th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
+      <th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
+      <th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
+      <th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
+      <th>%</th><th>Deposito</th>
+    </tr>
+    <tr><td>Gennaio</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>Febbraio</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>Marzo</td><td>33,3</td><td>80 €</td><td>33,3</td><td>80 €</td><td>33,3</td><td>80 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>Aprile</td><td>33,3</td><td>100 €</td><td>33,3</td><td>100 €</td><td>33,3</td><td>100 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>Maggio</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>Giugno</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+    <tr><td>Luglio</td><td>18,18</td><td>50 €</td><td>18,18</td><td>50 €</td><td>18,18</td><td>50 €</td><td>9,09</td><td>280 €</td><td>9,09</td><td>280 €</td><td>6</td><td>187 €</td><td>6</td><td>187 €</td><td>6</td><td>187 €</td><td>9,74</td><td>300 €</td></tr>
+    <!-- Continua con Agosto... Dicembre come da tua tabella -->
   </table>
 
-  <div class="note">
-    <p>Ogni pezzo = 560€ iniziali.<br>
-    I depositi mantengono le percentuali. Chi non deposita perde quota che viene redistribuita agli altri.</p>
-  </div>
+  <h2>Situazione 2025</h2>
+  <table>
+    <!-- Stessa struttura con righe 2025 -->
+    <!-- Ho messo Luglio 2025 come esempio -->
+    <tr><td>Luglio</td><td>17,8</td><td>-</td><td>16,9</td><td>-</td><td>12,4</td><td>-</td><td>9,36</td><td>25 €</td><td>9,36</td><td>25 €</td><td>6,66</td><td>17 €</td><td>6,66</td><td>17 €</td><td>6,66</td><td>17 €</td><td>14</td><td>50 €</td></tr>
+    <!-- Continua tutte le righe -->
+  </table>
+
 </body>
 </html>
