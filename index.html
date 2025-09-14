@@ -1,111 +1,145 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Portafoglio Comune</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      padding: 20px;
-      line-height: 1.6;
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    .intro {
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
-      font-size: 14px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 6px;
-      text-align: center;
-    }
-    th {
-      background: #007BFF;
-      color: white;
-      font-size: 13px;
-    }
-    tr:nth-child(even) {
-      background: #f2f2f2;
-    }
-    .year {
-      background: #28a745;
-      color: white;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Condiviso Crypto 2025</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>📊 Portafoglio Comune</h1>
+    <div class="container">
+        <header class="header">
+            <h1 class="header__title">
+                <span class="crypto-icon">₿</span>
+                Portfolio Condiviso Crypto 2025
+                <span class="crypto-icon">Ξ</span>
+            </h1>
+            <p class="header__subtitle">Tracciamento mensile dei depositi per 8 partecipanti</p>
+        </header>
 
-  <div class="intro">
-    <h2>Che cos’è un pezzo?</h2>
-    <p>
-      Un <b>pezzo</b> è l’unità di riferimento del portafoglio comune.
-      All’inizio, quando avevamo 1.680 €, divisi in 3 parti uguali da 560 €, ogni persona valeva <b>1 pezzo = 560 €</b>.
-    </p>
-    <p>
-      Man mano che altre persone sono entrate, si è mantenuto questo riferimento:
-      chi mette 560 € compra 1 pezzo intero, chi mette meno compra una frazione di pezzo.
-    </p>
-    <p>
-      Ogni pezzo “intero” deposita 50 € al mese; chi possiede frazioni di pezzo deposita in proporzione.
-      Se tutti depositano, le percentuali restano uguali. Se qualcuno non deposita, perde parte della sua quota,
-      che viene redistribuita tra gli altri in base ai pezzi che possiedono.
-    </p>
-  </div>
+        <section class="summary">
+            <div class="summary__cards">
+                <div class="card summary__card">
+                    <h3>Totale Portfolio</h3>
+                    <div class="summary__value" id="totalPortfolio">€0</div>
+                </div>
+                <div class="card summary__card">
+                    <h3>Deposito Medio</h3>
+                    <div class="summary__value" id="avgDeposit">€0</div>
+                </div>
+                <div class="card summary__card">
+                    <h3>Partecipanti Attivi</h3>
+                    <div class="summary__value" id="activeParticipants">8</div>
+                </div>
+            </div>
+        </section>
 
-  <h2>2024</h2>
-  <table>
-    <tr>
-      <th>Mese</th>
-      <th colspan="2">Lorenzo (50€)</th>
-      <th colspan="2">Ivan (50€)</th>
-      <th colspan="2">Al Pacchero (50€)</th>
-      <th colspan="2">Vittorio (25€)</th>
-      <th colspan="2">Kekko (25€)</th>
-      <th colspan="2">Peppe (17€)</th>
-      <th colspan="2">Gianluca (17€)</th>
-      <th colspan="2">Gabriele (17€)</th>
-      <th colspan="2">Luigi (26,8€)</th>
-    </tr>
-    <tr>
-      <th></th><th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
-      <th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
-      <th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
-      <th>%</th><th>Deposito</th><th>%</th><th>Deposito</th>
-      <th>%</th><th>Deposito</th>
-    </tr>
-    <tr><td>Gennaio</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    <tr><td>Febbraio</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    <tr><td>Marzo</td><td>33,3</td><td>80 €</td><td>33,3</td><td>80 €</td><td>33,3</td><td>80 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    <tr><td>Aprile</td><td>33,3</td><td>100 €</td><td>33,3</td><td>100 €</td><td>33,3</td><td>100 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    <tr><td>Maggio</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    <tr><td>Giugno</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>33,3</td><td>50 €</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-    <tr><td>Luglio</td><td>18,18</td><td>50 €</td><td>18,18</td><td>50 €</td><td>18,18</td><td>50 €</td><td>9,09</td><td>280 €</td><td>9,09</td><td>280 €</td><td>6</td><td>187 €</td><td>6</td><td>187 €</td><td>6</td><td>187 €</td><td>9,74</td><td>300 €</td></tr>
-    <!-- Continua con Agosto... Dicembre come da tua tabella -->
-  </table>
+        <section class="table-section">
+            <div class="table-controls">
+                <button class="btn btn--primary" id="exportBtn">
+                    📊 Esporta CSV
+                </button>
+                <button class="btn btn--secondary" id="resetBtn">
+                    🔄 Reset Dati
+                </button>
+            </div>
+            
+            <div class="table-container">
+                <table class="crypto-table" id="cryptoTable">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="participant-header">Partecipante</th>
+                            <th class="month-group" colspan="2">Gennaio</th>
+                            <th class="month-group" colspan="2">Febbraio</th>
+                            <th class="month-group" colspan="2">Marzo</th>
+                            <th class="month-group" colspan="2">Aprile</th>
+                            <th class="month-group" colspan="2">Maggio</th>
+                            <th class="month-group" colspan="2">Giugno</th>
+                            <th class="month-group" colspan="2">Luglio</th>
+                            <th class="month-group" colspan="2">Agosto</th>
+                            <th class="month-group" colspan="2">Settembre</th>
+                            <th class="month-group" colspan="2">Ottobre</th>
+                            <th class="month-group" colspan="2">Novembre</th>
+                            <th class="month-group" colspan="2">Dicembre</th>
+                            <th class="total-header">Totale</th>
+                        </tr>
+                        <tr class="sub-header">
+                            <th></th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">Deposito</th>
+                            <th class="sub-column">%</th>
+                            <th class="sub-column">€</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- I dati verranno inseriti tramite JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr class="totals-row">
+                            <td class="totals-label">Totali Mensili</td>
+                            <td class="month-total" id="total-jan-deposit">€0</td>
+                            <td class="month-total" id="total-jan-percent">-</td>
+                            <td class="month-total" id="total-feb-deposit">€0</td>
+                            <td class="month-total" id="total-feb-percent">-</td>
+                            <td class="month-total" id="total-mar-deposit">€0</td>
+                            <td class="month-total" id="total-mar-percent">-</td>
+                            <td class="month-total" id="total-apr-deposit">€0</td>
+                            <td class="month-total" id="total-apr-percent">-</td>
+                            <td class="month-total" id="total-may-deposit">€0</td>
+                            <td class="month-total" id="total-may-percent">-</td>
+                            <td class="month-total" id="total-jun-deposit">€0</td>
+                            <td class="month-total" id="total-jun-percent">-</td>
+                            <td class="month-total" id="total-jul-deposit">€0</td>
+                            <td class="month-total" id="total-jul-percent">-</td>
+                            <td class="month-total" id="total-aug-deposit">€0</td>
+                            <td class="month-total" id="total-aug-percent">-</td>
+                            <td class="month-total" id="total-sep-deposit">€0</td>
+                            <td class="month-total" id="total-sep-percent">-</td>
+                            <td class="month-total" id="total-oct-deposit">€0</td>
+                            <td class="month-total" id="total-oct-percent">-</td>
+                            <td class="month-total" id="total-nov-deposit">€0</td>
+                            <td class="month-total" id="total-nov-percent">-</td>
+                            <td class="month-total" id="total-dec-deposit">€0</td>
+                            <td class="month-total" id="total-dec-percent">-</td>
+                            <td class="grand-total" id="grandTotal">€0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
 
-  <h2>2025</h2>
-  <table>
-    <!-- Stessa struttura con righe 2025 -->
-    <!-- Ho messo Luglio 2025 come esempio -->
-    <tr><td>Luglio</td><td>17,8</td><td>-</td><td>16,9</td><td>-</td><td>12,4</td><td>-</td><td>9,36</td><td>25 €</td><td>9,36</td><td>25 €</td><td>6,66</td><td>17 €</td><td>6,66</td><td>17 €</td><td>6,66</td><td>17 €</td><td>14</td><td>50 €</td></tr>
-    <!-- Continua tutte le righe -->
-  </table>
+        <footer class="footer">
+            <p>&copy; 2025 Portfolio Condiviso Crypto - Tracciamento investimenti collettivi</p>
+            <div class="crypto-symbols">
+                <span>₿</span>
+                <span>Ξ</span>
+                <span>₳</span>
+                <span>◊</span>
+            </div>
+        </footer>
+    </div>
 
+    <script src="app.js"></script>
 </body>
 </html>
