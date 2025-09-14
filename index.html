@@ -3,141 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Condiviso Crypto 2025</title>
+    <title>Portfolio Condiviso Crypto</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <!-- Ticker scorrevole -->
+    <div class="ticker-container">
+        <div class="ticker-content">
+            <div class="ticker-item">
+                <span class="crypto-symbol">BTC</span>
+                <span class="crypto-price">€115,230</span>
+                <span class="crypto-change positive">+2.4%</span>
+            </div>
+            <div class="ticker-item">
+                <span class="crypto-symbol">ETH</span>
+                <span class="crypto-price">€4,587</span>
+                <span class="crypto-change positive">+1.8%</span>
+            </div>
+            <div class="ticker-item">
+                <span class="crypto-symbol">SOL</span>
+                <span class="crypto-price">€247.15</span>
+                <span class="crypto-change positive">+4.1%</span>
+            </div>
+            <div class="ticker-item">
+                <span class="crypto-symbol">ADA</span>
+                <span class="crypto-price">€0.89</span>
+                <span class="crypto-change negative">-0.6%</span>
+            </div>
+            <div class="ticker-item">
+                <span class="crypto-symbol">XRP</span>
+                <span class="crypto-price">€0.95</span>
+                <span class="crypto-change positive">+0.9%</span>
+            </div>
+            <div class="ticker-item">
+                <span class="crypto-symbol">DOGE</span>
+                <span class="crypto-price">€0.12</span>
+                <span class="crypto-change positive">+1.2%</span>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header class="header">
-            <h1 class="header__title">
-                <span class="crypto-icon">₿</span>
-                Portfolio Condiviso Crypto 2025
-                <span class="crypto-icon">Ξ</span>
-            </h1>
-            <p class="header__subtitle">Tracciamento mensile dei depositi per 8 partecipanti</p>
+            <h1 class="header__title">Portfolio Condiviso Crypto</h1>
+            <p class="header__subtitle">Tracciamento investimenti 2024</p>
         </header>
 
-        <section class="summary">
-            <div class="summary__cards">
-                <div class="card summary__card">
-                    <h3>Totale Portfolio</h3>
-                    <div class="summary__value" id="totalPortfolio">€0</div>
+        <div class="main-layout">
+            <!-- Tabella Portfolio Verticale (Sinistra 60%) -->
+            <section class="portfolio-section">
+                <div class="section-header">
+                    <h2>Depositi 2024 - Vista Trimestrale</h2>
                 </div>
-                <div class="card summary__card">
-                    <h3>Deposito Medio</h3>
-                    <div class="summary__value" id="avgDeposit">€0</div>
+                
+                <div class="table-container">
+                    <table class="portfolio-table-vertical" id="portfolioTable">
+                        <thead>
+                            <tr>
+                                <th class="month-column-header">Mese</th>
+                                <th class="participant-header-small">Marco<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Marco<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Luca<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Luca<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Sara<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Sara<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Giovanni<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Giovanni<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Anna<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Anna<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Paolo<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Paolo<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Elena<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Elena<br><span class="header-subtext">€</span></th>
+                                <th class="participant-header-small">Roberto<br><span class="header-subtext">%</span></th>
+                                <th class="participant-header-small">Roberto<br><span class="header-subtext">€</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Sezioni trimestrali generate dinamicamente -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="card summary__card">
-                    <h3>Partecipanti Attivi</h3>
-                    <div class="summary__value" id="activeParticipants">8</div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="table-section">
-            <div class="table-controls">
-                <button class="btn btn--primary" id="exportBtn">
-                    📊 Esporta CSV
-                </button>
-                <button class="btn btn--secondary" id="resetBtn">
-                    🔄 Reset Dati
-                </button>
+            <!-- Sezione Destra (40%) -->
+            <aside class="sidebar">
+                <!-- Grafico a Torta -->
+                <section class="chart-section">
+                    <div class="section-header">
+                        <h2>Allocazione Portfolio</h2>
+                    </div>
+                    
+                    <div class="chart-container" style="position: relative; height: 300px;">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-legend" id="chartLegend">
+                        <!-- Legenda generata tramite JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Lista Partecipanti -->
+                <section class="participants-section">
+                    <div class="section-header">
+                        <h2>Partecipanti</h2>
+                    </div>
+                    
+                    <div class="participants-list" id="participantsList">
+                        <!-- Lista generata tramite JavaScript -->
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <div class="summary-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalPortfolio">€0</div>
+                <div class="stat-label">Totale Portfolio</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgDeposit">€0</div>
+                <div class="stat-label">Media Mensile</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="activeParticipants">8</div>
+                <div class="stat-label">Partecipanti Attivi</div>
+            </div>
+        </div>
+
+        <!-- Sezione Regolamento con Nuovo Stile Elegante -->
+        <section class="regulations-section-new">
+            <div class="section-header-elegant">
+                <h2>Regolamento Portfolio Condiviso Crypto</h2>
+                <div class="header-accent"></div>
             </div>
             
-            <div class="table-container">
-                <table class="crypto-table" id="cryptoTable">
-                    <thead>
-                        <tr class="table-header">
-                            <th class="participant-header">Partecipante</th>
-                            <th class="month-group" colspan="2">Gennaio</th>
-                            <th class="month-group" colspan="2">Febbraio</th>
-                            <th class="month-group" colspan="2">Marzo</th>
-                            <th class="month-group" colspan="2">Aprile</th>
-                            <th class="month-group" colspan="2">Maggio</th>
-                            <th class="month-group" colspan="2">Giugno</th>
-                            <th class="month-group" colspan="2">Luglio</th>
-                            <th class="month-group" colspan="2">Agosto</th>
-                            <th class="month-group" colspan="2">Settembre</th>
-                            <th class="month-group" colspan="2">Ottobre</th>
-                            <th class="month-group" colspan="2">Novembre</th>
-                            <th class="month-group" colspan="2">Dicembre</th>
-                            <th class="total-header">Totale</th>
-                        </tr>
-                        <tr class="sub-header">
-                            <th></th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">Deposito</th>
-                            <th class="sub-column">%</th>
-                            <th class="sub-column">€</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- I dati verranno inseriti tramite JavaScript -->
-                    </tbody>
-                    <tfoot>
-                        <tr class="totals-row">
-                            <td class="totals-label">Totali Mensili</td>
-                            <td class="month-total" id="total-jan-deposit">€0</td>
-                            <td class="month-total" id="total-jan-percent">-</td>
-                            <td class="month-total" id="total-feb-deposit">€0</td>
-                            <td class="month-total" id="total-feb-percent">-</td>
-                            <td class="month-total" id="total-mar-deposit">€0</td>
-                            <td class="month-total" id="total-mar-percent">-</td>
-                            <td class="month-total" id="total-apr-deposit">€0</td>
-                            <td class="month-total" id="total-apr-percent">-</td>
-                            <td class="month-total" id="total-may-deposit">€0</td>
-                            <td class="month-total" id="total-may-percent">-</td>
-                            <td class="month-total" id="total-jun-deposit">€0</td>
-                            <td class="month-total" id="total-jun-percent">-</td>
-                            <td class="month-total" id="total-jul-deposit">€0</td>
-                            <td class="month-total" id="total-jul-percent">-</td>
-                            <td class="month-total" id="total-aug-deposit">€0</td>
-                            <td class="month-total" id="total-aug-percent">-</td>
-                            <td class="month-total" id="total-sep-deposit">€0</td>
-                            <td class="month-total" id="total-sep-percent">-</td>
-                            <td class="month-total" id="total-oct-deposit">€0</td>
-                            <td class="month-total" id="total-oct-percent">-</td>
-                            <td class="month-total" id="total-nov-deposit">€0</td>
-                            <td class="month-total" id="total-nov-percent">-</td>
-                            <td class="month-total" id="total-dec-deposit">€0</td>
-                            <td class="month-total" id="total-dec-percent">-</td>
-                            <td class="grand-total" id="grandTotal">€0</td>
-                        </tr>
-                    </tfoot>
-                </table>
+            <div class="regulations-grid">
+                <!-- Card Contributi Mensili -->
+                <div class="regulation-card-clean">
+                    <div class="regulation-icon">💰</div>
+                    <h3>Contributi Mensili</h3>
+                    <div class="regulation-content-clean">
+                        <p>Ogni partecipante si impegna a versare un contributo mensile tra €400 e €1,500. I contributi devono essere versati entro il 5 di ogni mese per mantenere l'equilibrio del portfolio condiviso.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Contributi Mensili -->
+                <div class="regulation-faq-section">
+                    <h4 class="faq-title">FAQ - Contributi Mensili</h4>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">Cosa succede se non riesco a versare il contributo minimo un mese?</div>
+                            <div class="faq-answer">È consentito saltare al massimo 2 mesi consecutivi, ma bisogna avvisare il gruppo con almeno 7 giorni di anticipo. Dopo 3 mesi di assenza si viene automaticamente esclusi.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Posso versare più del massimo consentito in casi eccezionali?</div>
+                            <div class="faq-answer">Solo con approvazione unanime del gruppo e per un massimo del 20% in più rispetto al limite standard, per mantenere l'equilibrio tra i partecipanti.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Come vengono gestiti i contributi in ritardo?</div>
+                            <div class="faq-answer">I contributi in ritardo di più di 10 giorni comportano una penale del 2% che viene distribuita agli altri partecipanti proporzionalmente.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">È possibile cambiare l'importo del contributo durante l'anno?</div>
+                            <div class="faq-answer">Sì, è possibile modificare l'importo mensilmente, sempre rispettando i limiti minimi e massimi stabiliti dal regolamento.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Distribuzione P&L -->
+                <div class="regulation-card-clean">
+                    <div class="regulation-icon">📊</div>
+                    <h3>Distribuzione P&L</h3>
+                    <div class="regulation-content-clean">
+                        <p>Profitti e perdite sono distribuiti proporzionalmente ai contributi di ogni partecipante. Le percentuali sono calcolate su base mensile e i rebalancing avvengono trimestralmente per ottimizzare il rendimento.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Distribuzione P&L -->
+                <div class="regulation-faq-section">
+                    <h4 class="faq-title">FAQ - Distribuzione P&L</h4>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">Come vengono calcolate esattamente le percentuali di distribuzione?</div>
+                            <div class="faq-answer">La percentuale di ogni partecipante è calcolata come: (somma contributi partecipante / totale contributi gruppo) × 100. Il calcolo viene aggiornato ogni mese.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Con che frequenza vengono distribuiti i profitti?</div>
+                            <div class="faq-answer">I profitti vengono distribuiti trimestralmente, sempre il 15 del primo mese di ogni trimestre (15 gennaio, aprile, luglio, ottobre).</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Cosa succede alle perdite? Vengono compensate dai profitti futuri?</div>
+                            <div class="faq-answer">Le perdite vengono registrate e compensate automaticamente dai profitti futuri. Ogni partecipante accumula o perde proporzionalmente alla sua quota.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Posso reinvestire automaticamente la mia quota di profitti?</div>
+                            <div class="faq-answer">Sì, è possibile impostare il reinvestimento automatico al 100%, 50% o 0%. La scelta può essere modificata con preavviso di un mese.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Uscita dal Gruppo -->
+                <div class="regulation-card-clean">
+                    <div class="regulation-icon">🚪</div>
+                    <h3>Uscita dal Gruppo</h3>
+                    <div class="regulation-content-clean">
+                        <p>Per uscire dal gruppo è necessario un preavviso di 90 giorni. La liquidazione avviene al valore di mercato del momento dell'uscita e le spese di transazione sono a carico del partecipante uscente.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Uscita dal Gruppo -->
+                <div class="regulation-faq-section">
+                    <h4 class="faq-title">FAQ - Uscita dal Gruppo</h4>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">Posso uscire dal gruppo in qualsiasi momento dell'anno?</div>
+                            <div class="faq-answer">L'uscita è consentita solo alla fine di ogni trimestre (31 marzo, 30 giugno, 30 settembre, 31 dicembre) per mantenere la stabilità del portfolio.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Come viene calcolato il valore della mia quota al momento dell'uscita?</div>
+                            <div class="faq-answer">Il valore è calcolato come: (valore totale portfolio × tua percentuale) - commissioni di transazione - fee amministrative del 0.5%.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Chi paga le commissioni di transazione per l'uscita?</div>
+                            <div class="faq-answer">Tutte le commissioni (trading, withdrawal, gas fees) sono a carico del partecipante che esce dal gruppo.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Posso rientrare nel gruppo dopo essere uscito?</div>
+                            <div class="faq-answer">Il rientro è possibile solo se c'è unanimità del gruppo e dopo almeno 6 mesi dall'uscita, ripartendo da zero con la percentuale basata sui nuovi contributi.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Trasparenza -->
+                <div class="regulation-card-clean">
+                    <div class="regulation-icon">📋</div>
+                    <h3>Trasparenza</h3>
+                    <div class="regulation-content-clean">
+                        <p>Tutti i movimenti sono tracciati in questa dashboard. Report mensili vengono inviati a tutti i partecipanti e l'accesso in sola lettura è garantito 24/7 a tutti i membri del gruppo.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Trasparenza -->
+                <div class="regulation-faq-section">
+                    <h4 class="faq-title">FAQ - Trasparenza</h4>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">Quanto spesso ricevo aggiornamenti sul portfolio?</div>
+                            <div class="faq-answer">Report automatici settimanali via email, dashboard sempre aggiornata in tempo reale, e call mensile obbligatoria ogni primo lunedì del mese.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Posso vedere i singoli trade effettuati dal gruppo?</div>
+                            <div class="faq-answer">Sì, tutti i trade sono visibili nella sezione 'Storico Operazioni' della dashboard con data, importo, crypto, prezzo e ragione dell'operazione.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Come vengono comunicate le decisioni di investimento?</div>
+                            <div class="faq-answer">Tutte le decisioni sono comunicate via Telegram del gruppo con almeno 24h di anticipo. Le decisioni urgenti richiedono approvazione di almeno 5 membri.</div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Cosa succede se non sono d'accordo con una decisione di investimento?</div>
+                            <div class="faq-answer">Puoi esprimere dissenso entro 24h dalla comunicazione. Se almeno 3 membri dissentono, la decisione viene rinviata alla call mensile per discussione.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-
-        <footer class="footer">
-            <p>&copy; 2025 Portfolio Condiviso Crypto - Tracciamento investimenti collettivi</p>
-            <div class="crypto-symbols">
-                <span>₿</span>
-                <span>Ξ</span>
-                <span>₳</span>
-                <span>◊</span>
-            </div>
-        </footer>
     </div>
 
     <script src="app.js"></script>
