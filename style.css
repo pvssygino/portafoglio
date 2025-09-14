@@ -738,21 +738,21 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Logo crypto */
+/* Logo portfolio semplice - moneta con frecce */
 .logo-container {
   display: flex;
   justify-content: center;
   margin-bottom: var(--space-24);
 }
 
-.crypto-logo {
-  width: 120px;
-  height: 80px;
+.portfolio-logo {
+  width: 80px;
+  height: 60px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
   transition: transform var(--duration-normal) var(--ease-standard);
 }
 
-.crypto-logo:hover {
+.portfolio-logo:hover {
   transform: scale(1.05);
 }
 
@@ -852,6 +852,13 @@ body {
   grid-template-columns: 60% 40%;
   gap: var(--space-32);
   margin-bottom: var(--space-32);
+}
+
+/* Container per le due tabelle */
+.tables-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
 }
 
 /* Sezione Portfolio Verticale */
@@ -1382,19 +1389,24 @@ body {
     gap: var(--space-20);
     padding: var(--space-24);
   }
+
+  /* Ticker più veloce su tablet */
+  .ticker-content {
+    animation: scroll-left 40s linear infinite;
+  }
 }
 
 /* MEDIA QUERIES - MOBILE SPECIFICHE */
 @media (max-width: 767px) {
   /* Logo mobile più piccolo */
-  .crypto-logo {
-    width: 90px;
-    height: 60px;
+  .portfolio-logo {
+    width: 70px;
+    height: 50px;
   }
   
-  /* Ticker veloce su mobile - doppia velocità */
+  /* Ticker veloce su mobile - 25s invece di 60s */
   .ticker-content {
-    animation: scroll-left 30s linear infinite;
+    animation: scroll-left 25s linear infinite;
   }
   
   .container {
@@ -1501,6 +1513,11 @@ body {
   
   .faq-header h2 {
     font-size: var(--font-size-lg);
+  }
+
+  /* Ticker molto veloce su mobile piccoli - 20s */
+  .ticker-content {
+    animation: scroll-left 20s linear infinite;
   }
 }
 
