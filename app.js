@@ -1,4 +1,4 @@
-// Portfolio Crypto Application - Versione Trimestrale Verticale
+// Portfolio Crypto Application - Versione Trimestrale Verticale con Header Corretti
 class CryptoPortfolioApp {
     constructor() {
         this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
