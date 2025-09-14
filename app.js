@@ -1,4 +1,4 @@
-// Portfolio Crypto Application - Versione Trimestrale Verticale con Header Corretti
+// Portfolio Crypto Application - Versione Ottimizzata Mobile con Logo
 class CryptoPortfolioApp {
     constructor() {
         this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
@@ -66,13 +66,14 @@ class CryptoPortfolioApp {
     }
 
     initializeApp() {
-        console.log('Inizializzazione Crypto Portfolio App - Versione Trimestrale Verticale...');
+        console.log('Inizializzazione Crypto Portfolio App - Versione Mobile Ottimizzata...');
         this.renderVerticalTable();
         this.renderParticipantsList();
-        this.createPieChart();
+        this.createResponsivePieChart();
         this.calculateAllTotals();
         this.updateSummary();
         this.setupEventListeners();
+        this.setupResponsiveChart();
         console.log('App inizializzata con successo');
     }
 
@@ -197,13 +198,16 @@ class CryptoPortfolioApp {
         }
     }
 
-    createPieChart() {
+    createResponsivePieChart() {
         const ctx = document.getElementById('allocationChart');
         if (!ctx) return;
 
         const labels = Object.keys(this.cryptoAllocation);
         const data = Object.values(this.cryptoAllocation);
 
+        // Configurazione responsive per mobile
+        const isMobile = window.innerWidth <= 767;
+        
         this.pieChart = new Chart(ctx, {
             type: 'pie',
             data: {
@@ -211,7 +215,7 @@ class CryptoPortfolioApp {
                 datasets: [{
                     data: data,
                     backgroundColor: this.chartColors,
-                    borderWidth: 2,
+                    borderWidth: isMobile ? 1 : 2,
                     borderColor: '#ffffff'
                 }]
             },
@@ -227,7 +231,18 @@ class CryptoPortfolioApp {
                             label: function(context) {
                                 return context.label + ': ' + context.parsed + '%';
                             }
+                        },
+                        titleFont: {
+                            size: isMobile ? 12 : 14
+                        },
+                        bodyFont: {
+                            size: isMobile ? 11 : 13
                         }
+                    }
+                },
+                elements: {
+                    arc: {
+                        borderWidth: isMobile ? 1 : 2
                     }
                 }
             }
@@ -259,10 +274,32 @@ class CryptoPortfolioApp {
         });
     }
 
+    setupResponsiveChart() {
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (this.pieChart) {
+                    const isMobile = window.innerWidth <= 767;
+                    
+                    // Aggiorna opzioni del grafico per mobile
+                    this.pieChart.options.plugins.tooltip.titleFont.size = isMobile ? 12 : 14;
+                    this.pieChart.options.plugins.tooltip.bodyFont.size = isMobile ? 11 : 13;
+                    this.pieChart.options.elements.arc.borderWidth = isMobile ? 1 : 2;
+                    
+                    // Aggiorna dataset
+                    this.pieChart.data.datasets[0].borderWidth = isMobile ? 1 : 2;
+                    
+                    this.pieChart.update();
+                }
+            }, 250);
+        });
+    }
+
     setupEventListeners() {
         console.log('Setting up event listeners...');
         
-        // Event listeners per celle della tabella
+        // Event listeners per celle della tabella con miglior supporto touch
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('deposit-cell')) {
                 console.log('Deposit cell clicked:', e.target);
@@ -276,6 +313,23 @@ class CryptoPortfolioApp {
                 if (participant) {
                     this.selectParticipant(participant);
                 }
+            }
+        });
+
+        // Supporto touch per dispositivi mobili
+        let touchStartTime = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartTime = Date.now();
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchDuration = Date.now() - touchStartTime;
+            
+            // Se il touch è breve (tap), gestisci come click
+            if (touchDuration < 300 && e.target.classList.contains('deposit-cell')) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.editCell(e.target);
             }
         });
         
@@ -304,7 +358,7 @@ class CryptoPortfolioApp {
         // Salva contenuto originale
         const originalContent = cell.innerHTML;
 
-        // Crea input
+        // Crea input ottimizzato per mobile
         const input = document.createElement('input');
         input.type = 'number';
         input.className = 'table-input';
@@ -313,18 +367,22 @@ class CryptoPortfolioApp {
         input.step = '50';
         input.style.width = '100%';
         input.style.height = '100%';
-        input.style.minWidth = '60px';
+        input.style.minWidth = window.innerWidth <= 767 ? '50px' : '60px';
+        
+        // Attributi per mobile
+        input.setAttribute('inputmode', 'numeric');
+        input.setAttribute('pattern', '[0-9]*');
 
         // Sostituisci contenuto cella
         cell.innerHTML = '';
         cell.appendChild(input);
         cell.classList.add('editing');
 
-        // Focus sull'input
+        // Focus sull'input con delay per mobile
         setTimeout(() => {
             input.focus();
             input.select();
-        }, 10);
+        }, window.innerWidth <= 767 ? 50 : 10);
 
         const finishEditing = () => {
             console.log('Finishing edit, input value:', input.value);
@@ -349,7 +407,7 @@ class CryptoPortfolioApp {
             cell.classList.remove('editing');
         };
 
-        // Gestione eventi input
+        // Gestione eventi input con supporto touch migliorato
         input.addEventListener('blur', (e) => {
             console.log('Input blur');
             setTimeout(() => finishEditing(), 100);
@@ -361,6 +419,7 @@ class CryptoPortfolioApp {
             
             if (e.key === 'Enter') {
                 e.preventDefault();
+                input.blur(); // Su mobile forza il blur
                 finishEditing();
             } else if (e.key === 'Escape') {
                 e.preventDefault();
@@ -370,6 +429,10 @@ class CryptoPortfolioApp {
 
         // Previeni propagazione eventi
         input.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        input.addEventListener('touchstart', (e) => {
             e.stopPropagation();
         });
     }
@@ -475,7 +538,8 @@ class CryptoPortfolioApp {
             notification.classList.add('show');
         }, 100);
         
-        // Rimuovi dopo 3 secondi
+        // Rimuovi dopo 3 secondi (4s su mobile per maggior leggibilità)
+        const displayTime = window.innerWidth <= 767 ? 4000 : 3000;
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => {
@@ -483,7 +547,7 @@ class CryptoPortfolioApp {
                     notification.parentNode.removeChild(notification);
                 }
             }, 300);
-        }, 3000);
+        }, displayTime);
     }
 
     // Metodi di utilità per statistiche trimestrali
@@ -513,15 +577,31 @@ class CryptoPortfolioApp {
         
         return stats;
     }
+
+    // Metodo per debugging su mobile
+    getMobileDebugInfo() {
+        return {
+            isMobile: window.innerWidth <= 767,
+            screenWidth: window.innerWidth,
+            screenHeight: window.innerHeight,
+            devicePixelRatio: window.devicePixelRatio,
+            userAgent: navigator.userAgent
+        };
+    }
 }
 
 // Inizializza l'applicazione
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Avvio app trimestrale verticale...');
+    console.log('DOM Content Loaded - Avvio app mobile ottimizzata...');
     const app = new CryptoPortfolioApp();
     
     // Rendi l'app disponibile globalmente per debugging
     window.cryptoPortfolioApp = app;
     
-    console.log('Crypto Portfolio App (Trimestrale Verticale) avviata con successo');
+    console.log('Crypto Portfolio App (Mobile Ottimizzata) avviata con successo');
+    
+    // Log info mobile per debugging
+    if (window.innerWidth <= 767) {
+        console.log('Mobile device detected:', app.getMobileDebugInfo());
+    }
 });
