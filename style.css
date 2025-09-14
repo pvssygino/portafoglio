@@ -738,7 +738,25 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Ticker scorrevole */
+/* Logo crypto */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-24);
+}
+
+.crypto-logo {
+  width: 120px;
+  height: 80px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+
+.crypto-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Ticker scorrevole - Desktop normale */
 .ticker-container {
   width: 100%;
   background: var(--color-surface);
@@ -1338,7 +1356,7 @@ body {
   margin: 0;
 }
 
-/* Responsive design */
+/* MEDIA QUERIES - TABLET */
 @media (max-width: 1024px) {
   .main-layout {
     grid-template-columns: 1fr;
@@ -1355,6 +1373,10 @@ body {
     flex: 1;
   }
   
+  .chart-container {
+    height: 300px !important;
+  }
+  
   .regulations-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--space-20);
@@ -1362,7 +1384,19 @@ body {
   }
 }
 
-@media (max-width: 768px) {
+/* MEDIA QUERIES - MOBILE SPECIFICHE */
+@media (max-width: 767px) {
+  /* Logo mobile più piccolo */
+  .crypto-logo {
+    width: 90px;
+    height: 60px;
+  }
+  
+  /* Ticker veloce su mobile - doppia velocità */
+  .ticker-content {
+    animation: scroll-left 30s linear infinite;
+  }
+  
   .container {
     padding: var(--space-16);
   }
@@ -1375,8 +1409,9 @@ body {
     grid-template-columns: 1fr;
   }
   
+  /* Tabella compatta mobile */
   .portfolio-table-vertical {
-    font-size: var(--font-size-xs);
+    font-size: 10px;
   }
   
   .portfolio-table-vertical td,
@@ -1384,9 +1419,34 @@ body {
     padding: var(--space-4) var(--space-4);
   }
   
+  .participant-header,
+  .participant-subheader {
+    min-width: 60px;
+    font-size: 9px;
+  }
+  
+  .month-column-header {
+    min-width: 80px;
+    font-size: 10px;
+  }
+  
+  /* Grafico mobile ottimizzato */
+  .chart-container {
+    max-width: 280px;
+    height: 280px !important;
+    margin: 0 auto;
+    padding: var(--space-12);
+  }
+  
+  /* Ticker mobile più compatto */
+  .ticker-container {
+    height: 40px;
+  }
+  
   .ticker-item {
     margin-right: var(--space-16);
     font-size: var(--font-size-xs);
+    padding: var(--space-4) var(--space-8);
   }
   
   .regulations-grid {
@@ -1425,31 +1485,14 @@ body {
   }
 }
 
+/* MEDIA QUERIES - MOBILE PICCOLI */
 @media (max-width: 480px) {
   .header__title {
     font-size: var(--font-size-2xl);
   }
   
-  .ticker-container {
-    height: 40px;
-  }
-  
-  .portfolio-table-vertical {
-    font-size: var(--font-size-xs);
-  }
-  
   .main-layout {
     gap: var(--space-16);
-  }
-  
-  .participant-header,
-  .participant-subheader {
-    min-width: 60px;
-    font-size: 10px;
-  }
-  
-  .month-column-header {
-    min-width: 80px;
   }
 
   .faq-header {
@@ -1458,6 +1501,17 @@ body {
   
   .faq-header h2 {
     font-size: var(--font-size-lg);
+  }
+}
+
+/* Desktop ticker normale - esplicitamente definito */
+@media (min-width: 768px) {
+  .ticker-content {
+    animation: scroll-left 60s linear infinite;
+  }
+  
+  .chart-container {
+    height: 350px !important;
   }
 }
 
