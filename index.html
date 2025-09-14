@@ -60,24 +60,34 @@
                 <div class="table-container">
                     <table class="portfolio-table-vertical" id="portfolioTable">
                         <thead>
-                            <tr>
-                                <th class="month-column-header">Mese</th>
-                                <th class="participant-header-small">Marco<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Marco<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Luca<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Luca<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Sara<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Sara<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Giovanni<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Giovanni<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Anna<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Anna<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Paolo<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Paolo<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Elena<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Elena<br><span class="header-subtext">€</span></th>
-                                <th class="participant-header-small">Roberto<br><span class="header-subtext">%</span></th>
-                                <th class="participant-header-small">Roberto<br><span class="header-subtext">€</span></th>
+                            <tr class="participant-names-row">
+                                <th class="month-column-header" rowspan="2">Mese</th>
+                                <th class="participant-header" colspan="2">Marco</th>
+                                <th class="participant-header" colspan="2">Luca</th>
+                                <th class="participant-header" colspan="2">Sara</th>
+                                <th class="participant-header" colspan="2">Giovanni</th>
+                                <th class="participant-header" colspan="2">Anna</th>
+                                <th class="participant-header" colspan="2">Paolo</th>
+                                <th class="participant-header" colspan="2">Elena</th>
+                                <th class="participant-header" colspan="2">Roberto</th>
+                            </tr>
+                            <tr class="subheader-row">
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
+                                <th class="participant-subheader">%</th>
+                                <th class="participant-subheader">€</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
@@ -132,27 +142,59 @@
             </div>
         </div>
 
-        <!-- Sezione Regolamento con Nuovo Stile Elegante -->
-        <section class="regulations-section-new">
+        <!-- Sezione Regolamento con Solo 4 Targhette Pulite -->
+        <section class="regulations-section">
             <div class="section-header-elegant">
                 <h2>Regolamento Portfolio Condiviso Crypto</h2>
                 <div class="header-accent"></div>
             </div>
             
             <div class="regulations-grid">
-                <!-- Card Contributi Mensili -->
-                <div class="regulation-card-clean">
+                <div class="regulation-card">
                     <div class="regulation-icon">💰</div>
                     <h3>Contributi Mensili</h3>
-                    <div class="regulation-content-clean">
+                    <div class="regulation-content">
                         <p>Ogni partecipante si impegna a versare un contributo mensile tra €400 e €1,500. I contributi devono essere versati entro il 5 di ogni mese per mantenere l'equilibrio del portfolio condiviso.</p>
                     </div>
                 </div>
 
-                <!-- FAQ Contributi Mensili -->
-                <div class="regulation-faq-section">
-                    <h4 class="faq-title">FAQ - Contributi Mensili</h4>
-                    <div class="faq-list">
+                <div class="regulation-card">
+                    <div class="regulation-icon">📊</div>
+                    <h3>Distribuzione P&L</h3>
+                    <div class="regulation-content">
+                        <p>Profitti e perdite sono distribuiti proporzionalmente ai contributi di ogni partecipante. Le percentuali sono calcolate su base mensile e i rebalancing avvengono trimestralmente per ottimizzare il rendimento.</p>
+                    </div>
+                </div>
+
+                <div class="regulation-card">
+                    <div class="regulation-icon">🚪</div>
+                    <h3>Uscita dal Gruppo</h3>
+                    <div class="regulation-content">
+                        <p>Per uscire dal gruppo è necessario un preavviso di 90 giorni. La liquidazione avviene al valore di mercato del momento dell'uscita e le spese di transazione sono a carico del partecipante uscente.</p>
+                    </div>
+                </div>
+
+                <div class="regulation-card">
+                    <div class="regulation-icon">📋</div>
+                    <h3>Trasparenza</h3>
+                    <div class="regulation-content">
+                        <p>Tutti i movimenti sono tracciati in questa dashboard. Report mensili vengono inviati a tutti i partecipanti e l'accesso in sola lettura è garantito 24/7 a tutti i membri del gruppo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione FAQ Separata -->
+        <section class="faq-section">
+            <div class="faq-header">
+                <h2>Domande Frequenti</h2>
+            </div>
+            
+            <div class="faq-categories">
+                <!-- Contributi Mensili FAQ -->
+                <div class="faq-category">
+                    <h3 class="faq-category-title">💰 Contributi Mensili</h3>
+                    <div class="faq-items">
                         <div class="faq-item">
                             <div class="faq-question">Cosa succede se non riesco a versare il contributo minimo un mese?</div>
                             <div class="faq-answer">È consentito saltare al massimo 2 mesi consecutivi, ma bisogna avvisare il gruppo con almeno 7 giorni di anticipo. Dopo 3 mesi di assenza si viene automaticamente esclusi.</div>
@@ -172,19 +214,10 @@
                     </div>
                 </div>
 
-                <!-- Card Distribuzione P&L -->
-                <div class="regulation-card-clean">
-                    <div class="regulation-icon">📊</div>
-                    <h3>Distribuzione P&L</h3>
-                    <div class="regulation-content-clean">
-                        <p>Profitti e perdite sono distribuiti proporzionalmente ai contributi di ogni partecipante. Le percentuali sono calcolate su base mensile e i rebalancing avvengono trimestralmente per ottimizzare il rendimento.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Distribuzione P&L -->
-                <div class="regulation-faq-section">
-                    <h4 class="faq-title">FAQ - Distribuzione P&L</h4>
-                    <div class="faq-list">
+                <!-- Distribuzione P&L FAQ -->
+                <div class="faq-category">
+                    <h3 class="faq-category-title">📊 Distribuzione P&L</h3>
+                    <div class="faq-items">
                         <div class="faq-item">
                             <div class="faq-question">Come vengono calcolate esattamente le percentuali di distribuzione?</div>
                             <div class="faq-answer">La percentuale di ogni partecipante è calcolata come: (somma contributi partecipante / totale contributi gruppo) × 100. Il calcolo viene aggiornato ogni mese.</div>
@@ -204,19 +237,10 @@
                     </div>
                 </div>
 
-                <!-- Card Uscita dal Gruppo -->
-                <div class="regulation-card-clean">
-                    <div class="regulation-icon">🚪</div>
-                    <h3>Uscita dal Gruppo</h3>
-                    <div class="regulation-content-clean">
-                        <p>Per uscire dal gruppo è necessario un preavviso di 90 giorni. La liquidazione avviene al valore di mercato del momento dell'uscita e le spese di transazione sono a carico del partecipante uscente.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Uscita dal Gruppo -->
-                <div class="regulation-faq-section">
-                    <h4 class="faq-title">FAQ - Uscita dal Gruppo</h4>
-                    <div class="faq-list">
+                <!-- Uscita dal Gruppo FAQ -->
+                <div class="faq-category">
+                    <h3 class="faq-category-title">🚪 Uscita dal Gruppo</h3>
+                    <div class="faq-items">
                         <div class="faq-item">
                             <div class="faq-question">Posso uscire dal gruppo in qualsiasi momento dell'anno?</div>
                             <div class="faq-answer">L'uscita è consentita solo alla fine di ogni trimestre (31 marzo, 30 giugno, 30 settembre, 31 dicembre) per mantenere la stabilità del portfolio.</div>
@@ -236,19 +260,10 @@
                     </div>
                 </div>
 
-                <!-- Card Trasparenza -->
-                <div class="regulation-card-clean">
-                    <div class="regulation-icon">📋</div>
-                    <h3>Trasparenza</h3>
-                    <div class="regulation-content-clean">
-                        <p>Tutti i movimenti sono tracciati in questa dashboard. Report mensili vengono inviati a tutti i partecipanti e l'accesso in sola lettura è garantito 24/7 a tutti i membri del gruppo.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Trasparenza -->
-                <div class="regulation-faq-section">
-                    <h4 class="faq-title">FAQ - Trasparenza</h4>
-                    <div class="faq-list">
+                <!-- Trasparenza FAQ -->
+                <div class="faq-category">
+                    <h3 class="faq-category-title">📋 Trasparenza</h3>
+                    <div class="faq-items">
                         <div class="faq-item">
                             <div class="faq-question">Quanto spesso ricevo aggiornamenti sul portfolio?</div>
                             <div class="faq-answer">Report automatici settimanali via email, dashboard sempre aggiornata in tempo reale, e call mensile obbligatoria ogni primo lunedì del mese.</div>
