@@ -1,4 +1,4 @@
-// Portfolio Crypto Application - Versione con Due Tabelle (2024 e 2025)
+// Portfolio Crypto Application - Versione Due Tabelle 2024 e 2025
 class CryptoPortfolioApp {
     constructor() {
         this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
@@ -26,7 +26,7 @@ class CryptoPortfolioApp {
         // Colori per il grafico
         this.chartColors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F'];
         
-        // Inizializza dati portfolio separati per 2024 e 2025
+        // Inizializza dati portfolio per entrambi gli anni
         this.portfolioData2024 = this.initializeData2024();
         this.portfolioData2025 = this.initializeData2025();
         
@@ -45,16 +45,21 @@ class CryptoPortfolioApp {
     }
 
     initializeData2024() {
-        // Dati 2024 esistenti
+        // Dati completi 2024 forniti
         return {
             "Marco": {"Gennaio": 800, "Febbraio": 750, "Marzo": 900, "Aprile": 650, "Maggio": 850, "Giugno": 700, "Luglio": 950, "Agosto": 800, "Settembre": 750, "Ottobre": 600, "Novembre": 750, "Dicembre": 900},
             "Luca": {"Gennaio": 750, "Febbraio": 700, "Marzo": 800, "Aprile": 600, "Maggio": 750, "Giugno": 650, "Luglio": 800, "Agosto": 750, "Settembre": 700, "Ottobre": 800, "Novembre": 700, "Dicembre": 650},
-            "Sara": {"Gennaio": 650, "Febbraio": 800, "Marzo": 750, "Aprile": 700, "Maggio": 900, "Giugno": 600, "Luglio": 750, "Agosto": 700, "Settembre": 800, "Ottobre": 700, "Novembre": 800, "Dicembre": 750}
+            "Sara": {"Gennaio": 650, "Febbraio": 800, "Marzo": 750, "Aprile": 700, "Maggio": 900, "Giugno": 600, "Luglio": 750, "Agosto": 700, "Settembre": 800, "Ottobre": 700, "Novembre": 800, "Dicembre": 750},
+            "Giovanni": {"Gennaio": 500, "Febbraio": 550, "Marzo": 600, "Aprile": 580, "Maggio": 520, "Giugno": 600, "Luglio": 550, "Agosto": 580, "Settembre": 500, "Ottobre": 550, "Novembre": 600, "Dicembre": 580},
+            "Anna": {"Gennaio": 650, "Febbraio": 700, "Marzo": 600, "Aprile": 650, "Maggio": 700, "Giugno": 600, "Luglio": 650, "Agosto": 700, "Settembre": 650, "Ottobre": 600, "Novembre": 650, "Dicembre": 700},
+            "Paolo": {"Gennaio": 480, "Febbraio": 520, "Marzo": 500, "Aprile": 580, "Maggio": 600, "Giugno": 550, "Luglio": 580, "Agosto": 520, "Settembre": 480, "Ottobre": 520, "Novembre": 580, "Dicembre": 600},
+            "Elena": {"Gennaio": 550, "Febbraio": 600, "Marzo": 580, "Aprile": 520, "Maggio": 620, "Giugno": 580, "Luglio": 550, "Agosto": 600, "Settembre": 550, "Ottobre": 580, "Novembre": 520, "Dicembre": 620},
+            "Roberto": {"Gennaio": 500, "Febbraio": 480, "Marzo": 520, "Aprile": 550, "Maggio": 500, "Giugno": 480, "Luglio": 520, "Agosto": 500, "Settembre": 520, "Ottobre": 500, "Novembre": 480, "Dicembre": 550}
         };
     }
 
     initializeData2025() {
-        // Dati 2025 inizializzati a zero
+        // Dati 2025 tutti a zero inizialmente (editabili)
         const data = {};
         this.participants.forEach(participant => {
             data[participant] = {};
@@ -66,35 +71,40 @@ class CryptoPortfolioApp {
     }
 
     initializeApp() {
-        console.log('Inizializzazione Crypto Portfolio App - Versione Due Tabelle...');
+        console.log('Inizializzazione Crypto Portfolio App - Due Tabelle 2024 e 2025...');
         this.renderTable2024();
         this.renderTable2025();
         this.renderParticipantsList();
+        this.renderPLSection();
         this.createResponsivePieChart();
-        this.calculateAllTotals();
+        this.calculateAllTotals2024();
+        this.calculateAllTotals2025();
         this.updateSummary();
         this.setupEventListeners();
         this.setupResponsiveChart();
         console.log('App inizializzata con successo');
     }
 
+    // Renderizza tabella 2024
     renderTable2024() {
         const tableBody = document.getElementById('tableBody2024');
         if (!tableBody) return;
         
-        tableBody.innerHTML = '';
         this.renderTableForYear(tableBody, this.portfolioData2024, '2024');
     }
 
+    // Renderizza tabella 2025
     renderTable2025() {
         const tableBody = document.getElementById('tableBody2025');
         if (!tableBody) return;
         
-        tableBody.innerHTML = '';
         this.renderTableForYear(tableBody, this.portfolioData2025, '2025');
     }
 
+    // Metodo generico per renderizzare una tabella
     renderTableForYear(tableBody, portfolioData, year) {
+        tableBody.innerHTML = '';
+
         // Itera attraverso ogni trimestre
         Object.keys(this.quartersVertical).forEach((quarter, quarterIndex) => {
             const months = this.quartersVertical[quarter];
@@ -122,7 +132,7 @@ class CryptoPortfolioApp {
         
         // Per ogni partecipante, aggiungi due colonne: % e €
         this.participants.forEach((participant, participantIndex) => {
-            const deposit = portfolioData[participant] && portfolioData[participant][month] ? portfolioData[participant][month] : 0;
+            const deposit = portfolioData[participant][month] || 0;
             const monthIndex = this.allMonths.indexOf(month);
             
             html += `
@@ -155,16 +165,58 @@ class CryptoPortfolioApp {
             participantElement.className = 'participant-item';
             participantElement.dataset.participant = participant;
             
-            const total = this.calculateParticipantTotalCombined(participant);
+            const total2024 = this.calculateParticipantTotal(participant, '2024');
+            const total2025 = this.calculateParticipantTotal(participant, '2025');
+            const totalCombined = total2024 + total2025;
             
             participantElement.innerHTML = `
                 <div>
                     <div class="participant-name-text">${participant}</div>
                 </div>
-                <div class="participant-total-text">€${total.toLocaleString('it-IT')}</div>
+                <div class="participant-total-text">€${totalCombined.toLocaleString('it-IT')}</div>
             `;
             
             listContainer.appendChild(participantElement);
+        });
+    }
+
+    renderPLSection() {
+        const plTableBody = document.getElementById('plTableBody');
+        if (!plTableBody) return;
+
+        plTableBody.innerHTML = '';
+
+        // Calcolo P&L intelligente: prima prova settembre 2025, poi fallback a 2024
+        const currentMonth = "Settembre";
+        
+        this.participants.forEach((participant) => {
+            // Prova prima 2025, poi fallback a 2024
+            let deposit2025 = this.portfolioData2025[participant][currentMonth] || 0;
+            let deposit2024 = this.portfolioData2024[participant][currentMonth] || 0;
+            
+            // Se settembre 2025 è zero, usa 2024 come fallback
+            const currentDeposit = deposit2025 > 0 ? deposit2025 : deposit2024;
+            const yearUsed = deposit2025 > 0 ? '2025' : '2024';
+            
+            // Calcola totale mese corrente di tutti i partecipanti
+            let totalMonth = 0;
+            this.participants.forEach(p => {
+                let p2025 = this.portfolioData2025[p][currentMonth] || 0;
+                let p2024 = this.portfolioData2024[p][currentMonth] || 0;
+                totalMonth += (p2025 > 0 ? p2025 : p2024);
+            });
+            
+            const percentage = totalMonth > 0 ? ((currentDeposit / totalMonth) * 100) : 0;
+            const mockValue = currentDeposit * 1.15; // Mock 15% gain
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${participant} <small>(${yearUsed})</small></td>
+                <td class="pl-percentage">${percentage.toFixed(1)}%</td>
+                <td class="pl-value">€${mockValue.toLocaleString('it-IT')}</td>
+            `;
+            
+            plTableBody.appendChild(row);
         });
     }
 
@@ -180,14 +232,14 @@ class CryptoPortfolioApp {
             participantElement.classList.add('selected');
             this.selectedParticipant = participant;
             
-            // Evidenzia colonne nella tabella
-            this.highlightParticipantInTable(participant);
+            // Evidenzia colonne nelle tabelle per entrambi gli anni
+            this.highlightParticipantInTables(participant);
             
             this.showNotification(`Selezionato: ${participant}`, 'info');
         }
     }
 
-    highlightParticipantInTable(participant) {
+    highlightParticipantInTables(participant) {
         // Rimuovi evidenziazione precedente
         document.querySelectorAll('.portfolio-table-vertical td').forEach(cell => {
             cell.style.background = '';
@@ -196,7 +248,6 @@ class CryptoPortfolioApp {
         // Evidenzia colonne del partecipante selezionato in entrambe le tabelle
         const participantIndex = this.participants.indexOf(participant);
         if (participantIndex >= 0) {
-            // Evidenzia nelle tabelle 2024 e 2025
             ['2024', '2025'].forEach(year => {
                 this.allMonths.forEach((month, monthIndex) => {
                     const percentCell = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
@@ -312,7 +363,7 @@ class CryptoPortfolioApp {
     }
 
     setupEventListeners() {
-        console.log('Setting up event listeners...');
+        console.log('Setting up event listeners per entrambe le tabelle...');
         
         // Event listeners per celle della tabella con miglior supporto touch
         document.addEventListener('click', (e) => {
@@ -369,7 +420,7 @@ class CryptoPortfolioApp {
         }
         
         const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
-        const currentValue = portfolioData[participant] && portfolioData[participant][month] ? portfolioData[participant][month] : 0;
+        const currentValue = portfolioData[participant][month] || 0;
         console.log(`Editing ${participant} - ${month} ${year}: current value = ${currentValue}`);
 
         // Salva contenuto originale
@@ -404,21 +455,22 @@ class CryptoPortfolioApp {
         const finishEditing = () => {
             console.log('Finishing edit, input value:', input.value);
             const newValue = Math.max(0, parseInt(input.value) || 0);
-            
-            // Aggiorna i dati nella struttura corretta
-            if (!portfolioData[participant]) {
-                portfolioData[participant] = {};
-            }
             portfolioData[participant][month] = newValue;
             
             // Ripristina contenuto cella
             cell.innerHTML = `€${newValue.toLocaleString('it-IT')}`;
             cell.classList.remove('editing');
             
-            // Aggiorna calcoli
-            this.calculateAllTotals();
+            // Aggiorna calcoli per l'anno specifico
+            if (year === '2024') {
+                this.calculateAllTotals2024();
+            } else {
+                this.calculateAllTotals2025();
+            }
+            
             this.updateSummary();
             this.updateParticipantsList();
+            this.renderPLSection();
             
             this.showNotification(`✅ ${participant} ${month} ${year}: €${newValue.toLocaleString('it-IT')}`, 'success');
         };
@@ -441,7 +493,7 @@ class CryptoPortfolioApp {
             
             if (e.key === 'Enter') {
                 e.preventDefault();
-                input.blur(); // Su mobile forza il blur
+                input.blur();
                 finishEditing();
             } else if (e.key === 'Escape') {
                 e.preventDefault();
@@ -459,74 +511,70 @@ class CryptoPortfolioApp {
         });
     }
 
-    calculateAllTotals() {
-        // Calcola totali per ogni mese e percentuali per entrambe le tabelle
-        ['2024', '2025'].forEach(year => {
-            const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
+    // Calcola totali 2024
+    calculateAllTotals2024() {
+        this.allMonths.forEach((month, monthIndex) => {
+            const monthTotal = this.calculateMonthTotal(month, '2024');
             
-            this.allMonths.forEach((month, monthIndex) => {
-                const monthTotal = this.calculateMonthTotal(month, portfolioData);
+            // Aggiorna percentuali per questo mese 2024
+            this.participants.forEach((participant, participantIndex) => {
+                const deposit = this.portfolioData2024[participant][month] || 0;
+                const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
                 
-                // Aggiorna percentuali per questo mese
-                this.participants.forEach((participant, participantIndex) => {
-                    const deposit = portfolioData[participant] && portfolioData[participant][month] ? portfolioData[participant][month] : 0;
-                    const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
-                    
-                    const percentElement = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
-                    if (percentElement) {
-                        percentElement.textContent = `${percentage.toFixed(1)}%`;
-                    }
-                });
-            });
-        });
-    }
-
-    calculateMonthTotal(month, portfolioData) {
-        let total = 0;
-        this.participants.forEach(participant => {
-            if (portfolioData[participant] && portfolioData[participant][month]) {
-                total += portfolioData[participant][month];
-            }
-        });
-        return total;
-    }
-
-    calculateParticipantTotal(participant, portfolioData) {
-        let total = 0;
-        if (portfolioData[participant]) {
-            this.allMonths.forEach(month => {
-                if (portfolioData[participant][month]) {
-                    total += portfolioData[participant][month];
+                const percentElement = document.getElementById(`percent-2024-${participantIndex}-${monthIndex}`);
+                if (percentElement) {
+                    percentElement.textContent = `${percentage.toFixed(1)}%`;
                 }
             });
-        }
+        });
+    }
+
+    // Calcola totali 2025
+    calculateAllTotals2025() {
+        this.allMonths.forEach((month, monthIndex) => {
+            const monthTotal = this.calculateMonthTotal(month, '2025');
+            
+            // Aggiorna percentuali per questo mese 2025
+            this.participants.forEach((participant, participantIndex) => {
+                const deposit = this.portfolioData2025[participant][month] || 0;
+                const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
+                
+                const percentElement = document.getElementById(`percent-2025-${participantIndex}-${monthIndex}`);
+                if (percentElement) {
+                    percentElement.textContent = `${percentage.toFixed(1)}%`;
+                }
+            });
+        });
+    }
+
+    calculateMonthTotal(month, year) {
+        let total = 0;
+        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
+        
+        this.participants.forEach(participant => {
+            total += portfolioData[participant][month] || 0;
+        });
         return total;
     }
 
-    calculateParticipantTotalCombined(participant) {
-        const total2024 = this.calculateParticipantTotal(participant, this.portfolioData2024);
-        const total2025 = this.calculateParticipantTotal(participant, this.portfolioData2025);
-        return total2024 + total2025;
+    calculateParticipantTotal(participant, year) {
+        let total = 0;
+        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
+        
+        this.allMonths.forEach(month => {
+            total += portfolioData[participant][month] || 0;
+        });
+        return total;
     }
 
     calculateGrandTotal() {
         let grandTotal = 0;
         
-        // Somma 2024
+        // Somma entrambi gli anni
         this.participants.forEach(participant => {
             this.allMonths.forEach(month => {
-                if (this.portfolioData2024[participant] && this.portfolioData2024[participant][month]) {
-                    grandTotal += this.portfolioData2024[participant][month];
-                }
-            });
-        });
-        
-        // Somma 2025
-        this.participants.forEach(participant => {
-            this.allMonths.forEach(month => {
-                if (this.portfolioData2025[participant] && this.portfolioData2025[participant][month]) {
-                    grandTotal += this.portfolioData2025[participant][month];
-                }
+                grandTotal += this.portfolioData2024[participant][month] || 0;
+                grandTotal += this.portfolioData2025[participant][month] || 0;
             });
         });
         
@@ -535,31 +583,21 @@ class CryptoPortfolioApp {
 
     updateSummary() {
         const grandTotal = this.calculateGrandTotal();
-        const avgMonthly = (this.allMonths.length * 2) > 0 ? grandTotal / (this.allMonths.length * 2) : 0; // 2 anni
+        const totalMonths = this.allMonths.length * 2; // 2 anni
+        const avgMonthly = totalMonths > 0 ? grandTotal / totalMonths : 0;
         
-        let activeParticipants = 0;
-        this.participants.forEach(participant => {
-            let hasDeposits = false;
-            
-            // Controlla 2024
-            if (this.portfolioData2024[participant]) {
+        let activeParticipants = new Set();
+        
+        // Controlla partecipanti attivi in entrambi gli anni
+        ['2024', '2025'].forEach(year => {
+            const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
+            this.participants.forEach(participant => {
                 this.allMonths.forEach(month => {
-                    if (this.portfolioData2024[participant][month] > 0) {
-                        hasDeposits = true;
+                    if (portfolioData[participant][month] > 0) {
+                        activeParticipants.add(participant);
                     }
                 });
-            }
-            
-            // Controlla 2025
-            if (this.portfolioData2025[participant]) {
-                this.allMonths.forEach(month => {
-                    if (this.portfolioData2025[participant][month] > 0) {
-                        hasDeposits = true;
-                    }
-                });
-            }
-            
-            if (hasDeposits) activeParticipants++;
+            });
         });
 
         const totalEl = document.getElementById('totalPortfolio');
@@ -568,15 +606,17 @@ class CryptoPortfolioApp {
 
         if (totalEl) totalEl.textContent = `€${grandTotal.toLocaleString('it-IT')}`;
         if (avgEl) avgEl.textContent = `€${Math.round(avgMonthly).toLocaleString('it-IT')}`;
-        if (activeEl) activeEl.textContent = activeParticipants.toString();
+        if (activeEl) activeEl.textContent = activeParticipants.size.toString();
     }
 
     updateParticipantsList() {
         this.participants.forEach((participant) => {
             const participantElement = document.querySelector(`[data-participant="${participant}"] .participant-total-text`);
             if (participantElement) {
-                const total = this.calculateParticipantTotalCombined(participant);
-                participantElement.textContent = `€${total.toLocaleString('it-IT')}`;
+                const total2024 = this.calculateParticipantTotal(participant, '2024');
+                const total2025 = this.calculateParticipantTotal(participant, '2025');
+                const totalCombined = total2024 + total2025;
+                participantElement.textContent = `€${totalCombined.toLocaleString('it-IT')}`;
             }
         });
     }
@@ -607,9 +647,11 @@ class CryptoPortfolioApp {
         }, displayTime);
     }
 
-    // Metodi di utilità per statistiche trimestrali combinate
-    getQuarterStatsCombined() {
+    // Metodi di utilità per statistiche
+    getYearStats(year) {
+        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
         const stats = {};
+        
         Object.keys(this.quartersVertical).forEach(quarter => {
             const months = this.quartersVertical[quarter];
             let quarterTotal = 0;
@@ -618,13 +660,9 @@ class CryptoPortfolioApp {
             this.participants.forEach(participant => {
                 participantTotals[participant] = 0;
                 months.forEach(month => {
-                    // Somma 2024 e 2025
-                    const amount2024 = this.portfolioData2024[participant] && this.portfolioData2024[participant][month] ? this.portfolioData2024[participant][month] : 0;
-                    const amount2025 = this.portfolioData2025[participant] && this.portfolioData2025[participant][month] ? this.portfolioData2025[participant][month] : 0;
-                    const totalAmount = amount2024 + amount2025;
-                    
-                    participantTotals[participant] += totalAmount;
-                    quarterTotal += totalAmount;
+                    const amount = portfolioData[participant][month] || 0;
+                    participantTotals[participant] += amount;
+                    quarterTotal += amount;
                 });
             });
             
@@ -647,25 +685,21 @@ class CryptoPortfolioApp {
             screenHeight: window.innerHeight,
             devicePixelRatio: window.devicePixelRatio,
             userAgent: navigator.userAgent,
-            tablesData: {
-                participants2024: Object.keys(this.portfolioData2024).length,
-                participants2025: Object.keys(this.portfolioData2025).length,
-                total2024: this.participants.reduce((sum, p) => sum + this.calculateParticipantTotal(p, this.portfolioData2024), 0),
-                total2025: this.participants.reduce((sum, p) => sum + this.calculateParticipantTotal(p, this.portfolioData2025), 0)
-            }
+            total2024: this.participants.reduce((sum, p) => sum + this.calculateParticipantTotal(p, '2024'), 0),
+            total2025: this.participants.reduce((sum, p) => sum + this.calculateParticipantTotal(p, '2025'), 0)
         };
     }
 }
 
 // Inizializza l'applicazione
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Avvio app con due tabelle 2024/2025...');
+    console.log('DOM Content Loaded - Avvio app con due tabelle 2024 e 2025...');
     const app = new CryptoPortfolioApp();
     
     // Rendi l'app disponibile globalmente per debugging
     window.cryptoPortfolioApp = app;
     
-    console.log('Crypto Portfolio App (Due Tabelle 2024/2025) avviata con successo');
+    console.log('Crypto Portfolio App (Due Tabelle) avviata con successo');
     
     // Log info mobile per debugging
     if (window.innerWidth <= 767) {
