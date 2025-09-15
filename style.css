@@ -738,11 +738,11 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Logo portfolio minimale */
+/* Logo portfolio geometrico */
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: var(--space-24);
+  margin-bottom: var(--space-16);
 }
 
 .portfolio-logo {
@@ -756,7 +756,55 @@ select.form-control {
   transform: scale(1.05);
 }
 
-/* Ticker scorrevole - Desktop normale, veloce su mobile */
+/* Tasti Deposita e Preleva */
+.action-buttons {
+  display: flex;
+  gap: var(--space-8);
+  justify-content: center;
+  margin: var(--space-16) 0;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  border: none;
+}
+
+.btn-deposit {
+  background: linear-gradient(135deg, var(--color-success), #059669);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-deposit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-withdraw {
+  background: white;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn-withdraw:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* Ticker scorrevole - Desktop normale */
 .ticker-container {
   width: 100%;
   background: var(--color-surface);
@@ -765,7 +813,9 @@ select.form-control {
   height: 50px;
   display: flex;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .ticker-content {
@@ -830,7 +880,7 @@ body {
 
 .header {
   text-align: center;
-  margin-bottom: var(--space-32);
+  margin-bottom: var(--space-24);
 }
 
 .header__title {
@@ -844,24 +894,23 @@ body {
 .header__subtitle {
   font-size: var(--font-size-base);
   color: var(--color-text-secondary);
-  margin: 0;
+  margin: 0 0 var(--space-16) 0;
 }
 
 .main-layout {
   display: grid;
-  grid-template-columns: 60% 40%;
-  gap: var(--space-32);
+  grid-template-columns: 65% 35%;
+  gap: var(--space-24);
   margin-bottom: var(--space-32);
 }
 
-/* Container per le due tabelle */
 .tables-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-24);
+  gap: var(--space-20);
 }
 
-/* Sezione Portfolio Verticale */
+/* Sezione Portfolio con COLORI BELLI RIPRISTINATI */
 .portfolio-section {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -889,7 +938,7 @@ body {
   overflow-y: auto;
 }
 
-/* Tabella Verticale per Trimestri - Header Corretto */
+/* Tabella Verticale COLORATA - Header Corretto */
 .portfolio-table-vertical {
   width: 100%;
   border-collapse: collapse;
@@ -909,6 +958,7 @@ body {
   background: var(--color-surface);
 }
 
+/* Month column header - TEAL */
 .month-column-header {
   background: var(--color-primary);
   color: var(--color-btn-primary-text);
@@ -919,17 +969,18 @@ body {
   font-size: var(--font-size-sm);
 }
 
-/* Header principale partecipanti */
+/* Header principale partecipanti - COLORATO */
 .participant-header {
-  background: var(--color-bg-5);
+  background: var(--color-bg-5); /* Viola chiaro */
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   min-width: 140px;
+  color: var(--color-text);
 }
 
-/* Sub-header per % e € */
+/* Sub-header per % e € - COLORATO */
 .participant-subheader {
-  background: var(--color-bg-2);
+  background: var(--color-bg-2); /* Giallo chiaro */
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   min-width: 70px;
@@ -955,7 +1006,7 @@ body {
   font-size: var(--font-size-sm);
 }
 
-/* Stili specifici per i trimestri */
+/* Trimestri colorati diversi */
 .quarter-separator {
   background: var(--color-primary);
   color: var(--color-btn-primary-text);
@@ -969,29 +1020,30 @@ body {
 }
 
 .quarter-separator.q1 {
-  background: var(--color-bg-1);
+  background: var(--color-bg-1); /* Blu */
   color: var(--color-text);
   border-top: 3px solid var(--color-primary);
 }
 
 .quarter-separator.q2 {
-  background: var(--color-bg-2);
+  background: var(--color-bg-2); /* Giallo */
   color: var(--color-text);
   border-top: 3px solid var(--color-warning);
 }
 
 .quarter-separator.q3 {
-  background: var(--color-bg-3);
+  background: var(--color-bg-3); /* Verde */
   color: var(--color-text);
   border-top: 3px solid var(--color-success);
 }
 
 .quarter-separator.q4 {
-  background: var(--color-bg-4);
+  background: var(--color-bg-4); /* Rosso */
   color: var(--color-text);
   border-top: 3px solid var(--color-error);
 }
 
+/* Nomi mesi colorati */
 .month-name {
   background: var(--color-bg-2);
   font-weight: var(--font-weight-medium);
@@ -1004,6 +1056,7 @@ body {
   min-width: 100px;
 }
 
+/* Celle depositi con hover colorato */
 .deposit-cell {
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
@@ -1049,7 +1102,7 @@ body {
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: var(--space-24);
+  gap: var(--space-20);
 }
 
 /* Grafico sezione */
@@ -1106,7 +1159,7 @@ body {
 
 .participants-list {
   padding: var(--space-16);
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -1114,9 +1167,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-12) var(--space-16);
+  padding: var(--space-10) var(--space-12);
   border-radius: var(--radius-base);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
   background: var(--color-bg-2);
@@ -1149,57 +1202,57 @@ body {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* Sezione P&L */
-.pl-section {
+/* Sezione P&L Mantenuta */
+.pnl-section {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-card-border);
   overflow: hidden;
 }
 
-.pl-container {
+.pnl-content {
   padding: var(--space-16);
 }
 
-.pl-table-container {
-  overflow-x: auto;
+.pnl-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-bottom: var(--space-16);
 }
 
-.pl-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--font-size-sm);
-}
-
-.pl-table thead th {
+.pnl-item {
+  display: flex;
+  justify-content: space-between;
   padding: var(--space-8) var(--space-12);
-  text-align: left;
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-xs);
-  border-bottom: 2px solid var(--color-border);
-  color: var(--color-text);
+  border-radius: var(--radius-sm);
   background: var(--color-bg-1);
 }
 
-.pl-table tbody td {
-  padding: var(--space-8) var(--space-12);
-  border-bottom: 1px solid var(--color-border);
-  font-size: var(--font-size-sm);
-  color: var(--color-text);
-}
-
-.pl-table tbody tr:hover {
-  background: var(--color-bg-1);
-}
-
-.pl-percentage {
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
-}
-
-.pl-value {
-  font-weight: var(--font-weight-semibold);
+.pnl-item.positive .pnl-value {
   color: var(--color-success);
+  font-weight: var(--font-weight-semibold);
+}
+
+.pnl-item.negative .pnl-value {
+  color: var(--color-error);
+  font-weight: var(--font-weight-semibold);
+}
+
+.pnl-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.pnl-value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.pnl-table {
+  font-size: var(--font-size-xs);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-12);
 }
 
 /* Summary stats */
@@ -1239,241 +1292,185 @@ body {
   font-weight: var(--font-weight-medium);
 }
 
-/* SEZIONE REGOLAMENTO */
-.regulations-section {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-card-border);
-  overflow: hidden;
-  margin-bottom: var(--space-32);
-  box-shadow: var(--shadow-lg);
-}
-
-.section-header-elegant {
-  padding: var(--space-32) var(--space-24);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-teal-600));
-  color: var(--color-btn-primary-text);
-  text-align: center;
-  position: relative;
-}
-
-.section-header-elegant h2 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  margin: 0;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.header-accent {
-  width: 80px;
-  height: 4px;
-  background: var(--color-btn-primary-text);
-  margin: var(--space-16) auto 0;
-  border-radius: var(--radius-full);
-  opacity: 0.8;
-}
-
-.regulations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-24);
-  padding: var(--space-32);
-  background: var(--color-background);
-}
-
-.regulation-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-card-border);
-  transition: all var(--duration-normal) var(--ease-standard);
-  position: relative;
-  overflow: hidden;
-}
-
-.regulation-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-teal-400));
-}
-
-.regulation-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary);
-}
-
-.regulation-icon {
-  font-size: var(--font-size-4xl);
-  margin-bottom: var(--space-16);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: var(--color-bg-1);
-  border-radius: var(--radius-full);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.regulation-card h3 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin-bottom: var(--space-16);
-  text-align: center;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.regulation-content p {
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  color: var(--color-text);
-  margin: 0;
-  text-align: center;
-}
-
-/* MEDIA QUERIES - TABLET */
-@media (max-width: 1024px) {
+/* MOBILE LAYOUT FISSO - VIEWPORT COMPLETO */
+@media (max-width: 767px) {
+  body {
+    height: 100vh;
+    overflow: hidden; /* Blocca scroll principale */
+  }
+  
+  .container {
+    height: 100vh;
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
   .main-layout {
-    grid-template-columns: 1fr;
-    gap: var(--space-24);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+    grid-template-columns: none;
+  }
+  
+  .tables-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+  
+  .portfolio-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin-bottom: var(--space-2);
+  }
+  
+  .table-container {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
   
   .sidebar {
-    flex-direction: row;
-    gap: var(--space-20);
+    height: 160px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
   }
   
-  .chart-section,
-  .participants-section,
-  .pl-section {
-    flex: 1;
+  /* MOBILE TICKER OTTIMIZZATO - LOOP SEAMLESS */
+  .ticker-container {
+    height: 35px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   
-  .chart-container {
-    height: 300px !important;
+  .ticker-content {
+    animation: scroll-left 20s linear infinite;
   }
   
-  .regulations-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-20);
-    padding: var(--space-24);
+  .ticker-item {
+    font-size: 9px;
+    padding: 2px 6px;
+    margin-right: 10px;
   }
-}
-
-/* MEDIA QUERIES - MOBILE SPECIFICHE */
-@media (max-width: 767px) {
+  
   /* Logo mobile più piccolo */
   .portfolio-logo {
     width: 90px;
     height: 60px;
   }
   
-  /* Ticker veloce su mobile - 25s invece di 60s */
-  .ticker-content {
-    animation: scroll-left 25s linear infinite;
+  .header {
+    margin-bottom: var(--space-12);
   }
   
-  .container {
-    padding: var(--space-16);
+  .header__title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-4);
   }
   
-  .sidebar {
-    flex-direction: column;
+  .header__subtitle {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-8);
   }
   
-  .summary-stats {
-    grid-template-columns: 1fr;
+  /* Mobile buttons */
+  .action-buttons {
+    gap: var(--space-2);
+    margin: var(--space-2) 0;
+  }
+  
+  .action-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: 11px;
+  }
+  
+  .btn-icon {
+    font-size: 14px;
   }
   
   /* Tabella compatta mobile */
   .portfolio-table-vertical {
-    font-size: 11px;
+    font-size: 10px;
   }
   
   .portfolio-table-vertical td,
   .portfolio-table-vertical th {
-    padding: var(--space-4) var(--space-4);
+    padding: var(--space-2) var(--space-2);
   }
   
   .participant-header,
   .participant-subheader {
-    min-width: 60px;
-    font-size: 9px;
+    min-width: 50px;
+    font-size: 8px;
   }
   
   .month-column-header {
-    min-width: 80px;
-    font-size: 10px;
+    min-width: 70px;
+    font-size: 9px;
   }
   
-  /* P&L table mobile */
-  .pl-table {
+  .summary-stats {
+    display: none; /* Nascondi su mobile per risparmiare spazio */
+  }
+  
+  /* Sidebar compatta mobile */
+  .chart-section,
+  .participants-section,
+  .pnl-section {
+    padding: var(--space-1);
+  }
+  
+  .section-header {
+    padding: var(--space-2) var(--space-4);
+  }
+  
+  .section-header h2 {
     font-size: var(--font-size-xs);
+    margin: 0;
   }
   
-  .pl-table thead th,
-  .pl-table tbody td {
-    padding: var(--space-4) var(--space-6);
-  }
-  
-  /* Grafico mobile ottimizzato */
   .chart-container {
-    max-width: 280px;
-    height: 280px !important;
-    margin: 0 auto;
-    padding: var(--space-12);
+    height: 80px !important;
+    padding: var(--space-1);
   }
   
-  /* Ticker mobile più compatto */
-  .ticker-container {
-    height: 40px;
+  .participants-list {
+    padding: var(--space-2);
+    max-height: 100px;
   }
   
-  .ticker-item {
-    margin-right: var(--space-16);
+  .participant-item {
+    padding: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-1);
     font-size: var(--font-size-xs);
-    padding: var(--space-4) var(--space-8);
   }
   
-  .regulations-grid {
-    grid-template-columns: 1fr;
-    padding: var(--space-16);
-    gap: var(--space-16);
+  .pnl-content {
+    padding: var(--space-2);
   }
   
-  .regulation-card {
-    padding: var(--space-20);
+  .pnl-summary {
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
   }
   
-  .section-header-elegant {
-    padding: var(--space-24) var(--space-16);
-  }
-  
-  .section-header-elegant h2 {
-    font-size: var(--font-size-2xl);
-  }
-}
-
-/* MEDIA QUERIES - MOBILE PICCOLI */
-@media (max-width: 480px) {
-  .header__title {
-    font-size: var(--font-size-2xl);
-  }
-  
-  .main-layout {
-    gap: var(--space-16);
-  }
-  
-  .tables-container {
-    gap: var(--space-16);
+  .pnl-item {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
   }
 }
 
@@ -1485,10 +1482,6 @@ body {
   
   .chart-container {
     height: 350px !important;
-  }
-  
-  .portfolio-table-vertical {
-    font-size: var(--font-size-sm);
   }
 }
 
@@ -1528,17 +1521,10 @@ body {
   transform: translateX(0);
 }
 
-/* Animazioni fluide */
-* {
-  transition: background-color var(--duration-fast) var(--ease-standard),
-             border-color var(--duration-fast) var(--ease-standard),
-             color var(--duration-fast) var(--ease-standard);
-}
-
 /* Scrollbar personalizzata */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
