@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Portfolio Condiviso Crypto</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -46,53 +46,31 @@
 
     <div class="container">
         <header class="header">
-            <!-- Logo Diamante Tipografico con Bitcoin -->
+            <!-- Logo nuovo minimale e moderno -->
             <div class="logo-container">
-                <svg class="portfolio-logo" viewBox="0 0 90 50" xmlns="http://www.w3.org/2000/svg">
+                <svg class="portfolio-logo" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:#1FB8CD"/>
-                            <stop offset="50%" style="stop-color:#32D4E8"/>
-                            <stop offset="100%" style="stop-color:#21808d"/>
+                            <stop offset="100%" style="stop-color:#3B82F6"/>
                         </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
-                            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                        </filter>
-                        <filter id="particleGlow">
-                            <feGaussianBlur stdDeviation="0.8" result="coloredBlur"/>
-                            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                        </filter>
                     </defs>
                     
-                    <!-- Diamante principale -->
-                    <polygon points="20,25 35,10 65,10 80,25 65,40 35,40" fill="url(#diamondGrad)" filter="url(#glow)" stroke="#ffffff" stroke-width="0.5" opacity="0.95"/>
+                    <!-- Esagono base -->
+                    <polygon points="30,20 55,10 85,10 110,20 110,50 85,60 55,60 30,50" fill="url(#logoGradient)" stroke="none"/>
                     
-                    <!-- Simbolo Bitcoin ₿ -->
-                    <text x="50" y="32" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold" filter="url(#glow)">₿</text>
+                    <!-- Freccia ascendente stilizzata -->
+                    <path d="M45,50 L60,30 L75,50 M60,30 L60,55" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                     
-                    <!-- Particelle animate luminose -->
-                    <circle cx="15" cy="15" r="1.2" fill="#1FB8CD" opacity="0.7" filter="url(#particleGlow)">
-                        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="85" cy="35" r="1" fill="#32D4E8" opacity="0.6" filter="url(#particleGlow)">
-                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle cx="12" cy="40" r="0.8" fill="#21808d" opacity="0.5" filter="url(#particleGlow)">
-                        <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3s" repeatCount="indefinite"/>
-                    </circle>
-                    
-                    <!-- Accenti geometrici -->
-                    <circle cx="75" cy="15" r="2.5" fill="#ffffff" opacity="0.6">
-                        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="1.8s" repeatCount="indefinite"/>
-                    </circle>
+                    <!-- Accento geometrico -->
+                    <circle cx="90" cy="25" r="4" fill="#ffffff" opacity="0.8"/>
                 </svg>
             </div>
 
             <h1 class="header__title">Portfolio Condiviso Crypto</h1>
             <p class="header__subtitle">Tracciamento investimenti 2024-2025</p>
             
-            <!-- Tasti Deposita e Preleva -->
+            <!-- Tasti Deposita/Preleva -->
             <div class="action-buttons">
                 <button class="action-btn btn-deposit" id="depositBtn">
                     <span class="btn-icon">💰</span>
@@ -106,16 +84,15 @@
         </header>
 
         <div class="main-layout">
-            <!-- Tabelle Portfolio (65%) -->
             <div class="tables-container">
-                <!-- Tabella 2024 -->
+                <!-- Tabella Portfolio 2024 -->
                 <section class="portfolio-section">
                     <div class="section-header">
-                        <h2>Depositi 2024 - Vista Trimestrale</h2>
+                        <h2>Depositi 2024</h2>
                     </div>
                     
                     <div class="table-container">
-                        <table class="portfolio-table-vertical" id="portfolioTable">
+                        <table class="portfolio-table-vertical" id="portfolioTable2024">
                             <thead>
                                 <tr class="participant-names-row">
                                     <th class="month-column-header" rowspan="2">Mese</th>
@@ -147,17 +124,17 @@
                                     <th class="participant-subheader">€</th>
                                 </tr>
                             </thead>
-                            <tbody id="tableBody">
-                                <!-- Sezioni trimestrali generate dinamicamente -->
+                            <tbody id="tableBody2024">
+                                <!-- Sezioni generate dinamicamente -->
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- Tabella 2025 -->
+                <!-- Tabella Portfolio 2025 -->
                 <section class="portfolio-section">
                     <div class="section-header">
-                        <h2>Depositi 2025 - Vista Trimestrale</h2>
+                        <h2>Depositi 2025</h2>
                     </div>
                     
                     <div class="table-container">
@@ -194,14 +171,14 @@
                                 </tr>
                             </thead>
                             <tbody id="tableBody2025">
-                                <!-- Sezioni trimestrali generate dinamicamente -->
+                                <!-- Sezioni generate dinamicamente -->
                             </tbody>
                         </table>
                     </div>
                 </section>
             </div>
 
-            <!-- Sidebar (35%) - Solo Chart e Partecipanti -->
+            <!-- Sidebar -->
             <aside class="sidebar">
                 <!-- Grafico a Torta -->
                 <section class="chart-section">
@@ -209,7 +186,7 @@
                         <h2>Allocazione Portfolio</h2>
                     </div>
                     
-                    <div class="chart-container" style="position: relative; height: 350px;">
+                    <div class="chart-container" style="position: relative; height: 300px;">
                         <canvas id="allocationChart"></canvas>
                     </div>
                     
@@ -228,35 +205,32 @@
                         <!-- Lista generata tramite JavaScript -->
                     </div>
                 </section>
+
+                <!-- Sezione P&L -->
+                <section class="pl-section">
+                    <div class="section-header">
+                        <h2>P&L</h2>
+                    </div>
+                    
+                    <div class="pl-container">
+                        <table class="pl-table">
+                            <thead>
+                                <tr>
+                                    <th>Mese</th>
+                                    <th>P&L</th>
+                                </tr>
+                            </thead>
+                            <tbody id="plTableBody">
+                                <tr><td>Gen 2024</td><td class="pl-positive">+5.2%</td></tr>
+                                <tr><td>Feb 2024</td><td class="pl-negative">-2.1%</td></tr>
+                                <tr><td>Mar 2024</td><td class="pl-positive">+8.7%</td></tr>
+                                <tr><td>Apr 2024</td><td class="pl-positive">+12.3%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </aside>
         </div>
-
-        <!-- Sezione P&L separata sotto tutto -->
-        <section class="pl-section-separate">
-            <div class="section-header">
-                <h2>P&L - Profit & Loss</h2>
-            </div>
-            
-            <div class="pl-container-separate">
-                <div class="pl-month-info" id="plMonthInfo">
-                    <span class="pl-month-label">Mese:</span>
-                    <span class="pl-month-value" id="plMonthValue">Settembre 2025</span>
-                </div>
-                
-                <table class="pl-table" id="plTable">
-                    <thead>
-                        <tr>
-                            <th class="pl-th-name">Nome</th>
-                            <th class="pl-th-percent">%</th>
-                            <th class="pl-th-value">€</th>
-                        </tr>
-                    </thead>
-                    <tbody id="plTableBody">
-                        <!-- Generato dinamicamente -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
 
         <div class="summary-stats">
             <div class="stat-card">
@@ -273,8 +247,8 @@
             </div>
         </div>
 
-        <!-- Solo Regulation Cards -->
-        <section class="regulations-section-new desktop-only">
+        <!-- Sezione Regolamento -->
+        <section class="regulations-section-new">
             <div class="section-header-elegant">
                 <h2>Regolamento Portfolio Condiviso Crypto</h2>
                 <div class="header-accent"></div>
@@ -285,29 +259,15 @@
                     <div class="regulation-icon">💰</div>
                     <h3>Contributi Mensili</h3>
                     <div class="regulation-content">
-                        <p><span class="highlight">Contributo minimo:</span> €400 al mese</p>
-                        <p><span class="highlight">Scadenza:</span> Entro il 5 di ogni mese</p>
-                        <p><span class="highlight">Limite massimo:</span> €1,500 per partecipante</p>
+                        <p>Ogni partecipante si impegna a versare un contributo mensile tra €400 e €1,500. I contributi devono essere versati entro il 5 di ogni mese per mantenere l'equilibrio del portfolio condiviso.</p>
                     </div>
                 </div>
 
                 <div class="regulation-card">
                     <div class="regulation-icon">📊</div>
-                    <h3>Allocazione Investimenti</h3>
-                    <div class="regulation-content">
-                        <p><span class="highlight">Decisioni:</span> Maggioranza qualificata (5/8 voti)</p>
-                        <p><span class="highlight">Target:</span> 45% BTC, 25% ETH, 15% SOL, 10% ADA, 5% Altri</p>
-                        <p><span class="highlight">Ribilanciamento:</span> Trimestrale obbligatorio</p>
-                    </div>
-                </div>
-
-                <div class="regulation-card">
-                    <div class="regulation-icon">💹</div>
                     <h3>Distribuzione P&L</h3>
                     <div class="regulation-content">
-                        <p><span class="highlight">Criteri:</span> Proporzionale ai contributi</p>
-                        <p><span class="highlight">Calcolo:</span> Base mensile</p>
-                        <p><span class="highlight">Prelievi:</span> Preavviso 30 giorni</p>
+                        <p>Profitti e perdite sono distribuiti proporzionalmente ai contributi di ogni partecipante. Le percentuali sono calcolate su base mensile e i rebalancing avvengono trimestralmente per ottimizzare il rendimento.</p>
                     </div>
                 </div>
 
@@ -315,9 +275,15 @@
                     <div class="regulation-icon">🚪</div>
                     <h3>Uscita dal Gruppo</h3>
                     <div class="regulation-content">
-                        <p><span class="highlight">Preavviso:</span> 90 giorni minimo</p>
-                        <p><span class="highlight">Liquidazione:</span> A valore di mercato</p>
-                        <p><span class="highlight">Commissioni:</span> A carico dell'uscente</p>
+                        <p>Per uscire dal gruppo è necessario un preavviso di 90 giorni. La liquidazione avviene al valore di mercato del momento dell'uscita e le spese di transazione sono a carico del partecipante uscente.</p>
+                    </div>
+                </div>
+
+                <div class="regulation-card">
+                    <div class="regulation-icon">📋</div>
+                    <h3>Trasparenza</h3>
+                    <div class="regulation-content">
+                        <p>Tutti i movimenti sono tracciati in questa dashboard. Report mensili vengono inviati a tutti i partecipanti e l'accesso in sola lettura è garantito 24/7 a tutti i membri del gruppo.</p>
                     </div>
                 </div>
             </div>
