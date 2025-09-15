@@ -8,9 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <!-- Ticker scorrevole con loop continuo -->
+    <!-- Ticker scorrevole -->
     <div class="ticker-container">
-        <div class="ticker-content" id="tickerContent">
+        <div class="ticker-content">
             <div class="ticker-item">
                 <span class="crypto-symbol">BTC</span>
                 <span class="crypto-price">€115,230</span>
@@ -44,52 +44,67 @@
         </div>
     </div>
 
+    <!-- Modal Overlay -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Sezione</h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Contenuto dinamico -->
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header class="header">
-            <!-- Logo geometrico minimale -->
+            <!-- Logo moneta con due frecce semplice -->
             <div class="logo-container">
-                <svg class="portfolio-logo" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                <svg class="portfolio-logo" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#1FB8CD"/>
-                            <stop offset="100%" style="stop-color:#3B82F6"/>
-                        </linearGradient>
+                        <radialGradient id="coinGrad" cx="30%" cy="30%">
+                            <stop offset="0%" style="stop-color:#32D4E8;stop-opacity:0.9"/>
+                            <stop offset="100%" style="stop-color:#1FB8CD;stop-opacity:1"/>
+                        </radialGradient>
                     </defs>
                     
-                    <!-- Diamante base -->
-                    <polygon points="60,15 85,40 60,65 35,40" fill="url(#logoGradient)" stroke="none"/>
+                    <!-- Moneta -->
+                    <circle cx="40" cy="30" r="18" fill="url(#coinGrad)" stroke="#21808d" stroke-width="2"/>
                     
-                    <!-- Accenti geometrici -->
-                    <polygon points="60,25 75,40 60,55 45,40" fill="#ffffff" opacity="0.3"/>
-                    <circle cx="60" cy="40" r="8" fill="#ffffff" opacity="0.8"/>
+                    <!-- Freccia SU -->
+                    <path d="M35,24 L40,19 L45,24" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="40" y1="19" x2="40" y2="27" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
                     
-                    <!-- Elementi decorativi -->
-                    <circle cx="25" cy="25" r="3" fill="#1FB8CD" opacity="0.6"/>
-                    <circle cx="95" cy="25" r="3" fill="#1FB8CD" opacity="0.6"/>
-                    <circle cx="95" cy="55" r="3" fill="#3B82F6" opacity="0.6"/>
-                    <circle cx="25" cy="55" r="3" fill="#3B82F6" opacity="0.6"/>
+                    <!-- Freccia GIÙ -->
+                    <path d="M35,36 L40,41 L45,36" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="40" y1="33" x2="40" y2="41" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                    
+                    <!-- Punto centrale -->
+                    <circle cx="40" cy="30" r="2" fill="#ffffff" opacity="0.9"/>
                 </svg>
             </div>
 
             <h1 class="header__title">Portfolio Condiviso Crypto</h1>
             <p class="header__subtitle">Tracciamento investimenti 2024-2025</p>
             
-            <!-- Tasti Deposita e Preleva -->
+            <!-- Tasti Deposita/Preleva -->
             <div class="action-buttons">
-                <button class="action-btn btn-deposit" id="depositBtn">
-                    <span class="btn-icon">💰</span>
+                <button class="btn btn-deposit">
+                    <span>💰</span>
                     Deposita
                 </button>
-                <button class="action-btn btn-withdraw" id="withdrawBtn">
-                    <span class="btn-icon">💸</span>
+                <button class="btn btn-withdraw">
+                    <span>💳</span>
                     Preleva
                 </button>
             </div>
         </header>
 
         <div class="main-layout">
+            <!-- Due tabelle impilate verticalmente (Sinistra 60%) -->
             <div class="tables-container">
-                <!-- Tabella Portfolio 2024 -->
+                <!-- Tabella 2024 -->
                 <section class="portfolio-section">
                     <div class="section-header">
                         <h2>Depositi 2024 - Vista Trimestrale</h2>
@@ -129,13 +144,13 @@
                                 </tr>
                             </thead>
                             <tbody id="tableBody2024">
-                                <!-- Generato dinamicamente -->
+                                <!-- Sezioni trimestrali generate dinamicamente -->
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- Tabella Portfolio 2025 -->
+                <!-- Tabella 2025 -->
                 <section class="portfolio-section">
                     <div class="section-header">
                         <h2>Depositi 2025 - Vista Trimestrale</h2>
@@ -175,14 +190,14 @@
                                 </tr>
                             </thead>
                             <tbody id="tableBody2025">
-                                <!-- Generato dinamicamente -->
+                                <!-- Sezioni trimestrali generate dinamicamente -->
                             </tbody>
                         </table>
                     </div>
                 </section>
             </div>
 
-            <!-- Sezione Destra Sidebar -->
+            <!-- Sezione Destra (40%) -->
             <aside class="sidebar">
                 <!-- Grafico a Torta -->
                 <section class="chart-section">
@@ -210,47 +225,109 @@
                     </div>
                 </section>
 
-                <!-- Sezione P&L Intelligente -->
-                <section class="pnl-section">
+                <!-- P&L Section -->
+                <section class="pl-section-separate">
                     <div class="section-header">
-                        <h2>P&L Settembre 2025</h2>
+                        <h2>P&L - Profit & Loss</h2>
                     </div>
                     
-                    <div class="pnl-content">
-                        <div class="pnl-summary">
-                            <div class="pnl-item positive">
-                                <span class="pnl-label">Rendimento Mese:</span>
-                                <span class="pnl-value">+12.4%</span>
+                    <div class="pl-content">
+                        <div class="pl-summary">
+                            <div class="pl-item">
+                                <span class="pl-label">Performance YTD:</span>
+                                <span class="pl-value positive">+15.4%</span>
                             </div>
-                            <div class="pnl-item positive">
-                                <span class="pnl-label">Valore Attuale:</span>
-                                <span class="pnl-value">€42,350</span>
+                            <div class="pl-item">
+                                <span class="pl-label">P&L Totale:</span>
+                                <span class="pl-value positive">€12,450</span>
                             </div>
-                        </div>
-                        
-                        <div class="pnl-table" id="pnlTable">
-                            <!-- Tabella P&L generata dinamicamente -->
                         </div>
                     </div>
                 </section>
             </aside>
         </div>
 
-        <!-- Summary Stats -->
         <div class="summary-stats">
             <div class="stat-card">
-                <div class="stat-value" id="totalPortfolio2024">€0</div>
-                <div class="stat-label">Totale 2024</div>
+                <div class="stat-value" id="totalPortfolio">€0</div>
+                <div class="stat-label">Totale Portfolio</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="totalPortfolio2025">€0</div>
-                <div class="stat-label">Totale 2025</div>
+                <div class="stat-value" id="avgDeposit">€0</div>
+                <div class="stat-label">Media Mensile</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="activeParticipants">8</div>
                 <div class="stat-label">Partecipanti Attivi</div>
             </div>
         </div>
+
+        <!-- Sezione Regolamento - 4 Targhette -->
+        <section class="regulations-section-new">
+            <div class="section-header-elegant">
+                <h2>Regolamento Portfolio Condiviso Crypto</h2>
+                <div class="header-accent"></div>
+            </div>
+            
+            <div class="regulations-grid">
+                <div class="regulation-card">
+                    <div class="regulation-icon">💰</div>
+                    <h3>Contributi Mensili</h3>
+                    <div class="regulation-content">
+                        <p><span class="highlight">Contributo minimo:</span> €400 al mese</p>
+                        <p><span class="highlight">Scadenza:</span> Entro il 5 di ogni mese</p>
+                        <p><span class="highlight">Limite massimo:</span> €1,500 per partecipante</p>
+                    </div>
+                </div>
+
+                <div class="regulation-card">
+                    <div class="regulation-icon">📊</div>
+                    <h3>Allocazione Investimenti</h3>
+                    <div class="regulation-content">
+                        <p><span class="highlight">Decisioni:</span> Maggioranza qualificata (5/8 voti)</p>
+                        <p><span class="highlight">Target:</span> 45% BTC, 25% ETH, 15% SOL, 10% ADA, 5% Altri</p>
+                        <p><span class="highlight">Ribilanciamento:</span> Trimestrale obbligatorio</p>
+                    </div>
+                </div>
+
+                <div class="regulation-card">
+                    <div class="regulation-icon">💹</div>
+                    <h3>Distribuzione P&L</h3>
+                    <div class="regulation-content">
+                        <p><span class="highlight">Criteri:</span> Proporzionale ai contributi</p>
+                        <p><span class="highlight">Calcolo:</span> Base mensile</p>
+                        <p><span class="highlight">Prelievi:</span> Preavviso 30 giorni</p>
+                    </div>
+                </div>
+
+                <div class="regulation-card">
+                    <div class="regulation-icon">🚪</div>
+                    <h3>Uscita dal Gruppo</h3>
+                    <div class="regulation-content">
+                        <p><span class="highlight">Preavviso:</span> 90 giorni minimo</p>
+                        <p><span class="highlight">Liquidazione:</span> A valore di mercato</p>
+                        <p><span class="highlight">Commissioni:</span> A carico dell'uscente</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezione FAQ Separata -->
+        <section class="faq-section-separate">
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="faq-icon">❓</span>
+                        <h3>Cosa succede se non deposito?</h3>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Se non effettui il deposito mensile entro il 5 del mese, la tua quota di partecipazione viene temporaneamente sospesa. Hai a disposizione un periodo di grazia di 10 giorni per regolarizzare la situazione con una penale del 2% sul deposito dovuto.</p>
+                        <p><strong>Dopo 3 mesi consecutivi</strong> di mancato deposito, la partecipazione viene automaticamente revocata e le tue quote vengono liquidate al valore di mercato corrente, previa detrazione delle commissioni di gestione.</p>
+                        <p><em>Nota:</em> È possibile richiedere una pausa temporanea per motivi personali con preavviso di 30 giorni e approvazione del gruppo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="app.js"></script>
