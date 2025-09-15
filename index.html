@@ -8,9 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <!-- Ticker scorrevole -->
+    <!-- Ticker scorrevole con loop continuo -->
     <div class="ticker-container">
-        <div class="ticker-content">
+        <div class="ticker-content" id="tickerContent">
             <div class="ticker-item">
                 <span class="crypto-symbol">BTC</span>
                 <span class="crypto-price">€115,230</span>
@@ -48,34 +48,48 @@
         <header class="header">
             <!-- Logo geometrico minimale -->
             <div class="logo-container">
-                <svg class="portfolio-logo" viewBox="0 0 90 50" xmlns="http://www.w3.org/2000/svg">
+                <svg class="portfolio-logo" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" style="stop-color:#1FB8CD"/>
-                            <stop offset="100%" style="stop-color:#21808d"/>
+                            <stop offset="100%" style="stop-color:#3B82F6"/>
                         </linearGradient>
                     </defs>
                     
-                    <!-- Diamante/Rombo stilizzato -->
-                    <polygon points="20,25 35,10 65,10 80,25 65,40 35,40" fill="url(#logoGrad)" stroke="none"/>
-                    
-                    <!-- Simbolo centrale Bitcoin -->
-                    <text x="50" y="30" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">₿</text>
+                    <!-- Diamante base -->
+                    <polygon points="60,15 85,40 60,65 35,40" fill="url(#logoGradient)" stroke="none"/>
                     
                     <!-- Accenti geometrici -->
-                    <circle cx="15" cy="15" r="2" fill="#1FB8CD" opacity="0.6"/>
-                    <circle cx="85" cy="35" r="2" fill="#1FB8CD" opacity="0.6"/>
+                    <polygon points="60,25 75,40 60,55 45,40" fill="#ffffff" opacity="0.3"/>
+                    <circle cx="60" cy="40" r="8" fill="#ffffff" opacity="0.8"/>
+                    
+                    <!-- Elementi decorativi -->
+                    <circle cx="25" cy="25" r="3" fill="#1FB8CD" opacity="0.6"/>
+                    <circle cx="95" cy="25" r="3" fill="#1FB8CD" opacity="0.6"/>
+                    <circle cx="95" cy="55" r="3" fill="#3B82F6" opacity="0.6"/>
+                    <circle cx="25" cy="55" r="3" fill="#3B82F6" opacity="0.6"/>
                 </svg>
             </div>
 
             <h1 class="header__title">Portfolio Condiviso Crypto</h1>
-            <p class="header__subtitle">Tracciamento investimenti 2024 e 2025</p>
+            <p class="header__subtitle">Tracciamento investimenti 2024-2025</p>
+            
+            <!-- Tasti Deposita e Preleva -->
+            <div class="action-buttons">
+                <button class="action-btn btn-deposit" id="depositBtn">
+                    <span class="btn-icon">💰</span>
+                    Deposita
+                </button>
+                <button class="action-btn btn-withdraw" id="withdrawBtn">
+                    <span class="btn-icon">💸</span>
+                    Preleva
+                </button>
+            </div>
         </header>
 
         <div class="main-layout">
-            <!-- Container delle due tabelle (Sinistra 60%) -->
             <div class="tables-container">
-                <!-- Tabella 2024 -->
+                <!-- Tabella Portfolio 2024 -->
                 <section class="portfolio-section">
                     <div class="section-header">
                         <h2>Depositi 2024 - Vista Trimestrale</h2>
@@ -115,13 +129,13 @@
                                 </tr>
                             </thead>
                             <tbody id="tableBody2024">
-                                <!-- Sezioni trimestrali generate dinamicamente -->
+                                <!-- Generato dinamicamente -->
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- Tabella 2025 -->
+                <!-- Tabella Portfolio 2025 -->
                 <section class="portfolio-section">
                     <div class="section-header">
                         <h2>Depositi 2025 - Vista Trimestrale</h2>
@@ -161,14 +175,14 @@
                                 </tr>
                             </thead>
                             <tbody id="tableBody2025">
-                                <!-- Sezioni trimestrali generate dinamicamente -->
+                                <!-- Generato dinamicamente -->
                             </tbody>
                         </table>
                     </div>
                 </section>
             </div>
 
-            <!-- Sezione Destra (40%) -->
+            <!-- Sezione Destra Sidebar -->
             <aside class="sidebar">
                 <!-- Grafico a Torta -->
                 <section class="chart-section">
@@ -196,88 +210,47 @@
                     </div>
                 </section>
 
-                <!-- Sezione P&L -->
-                <section class="pl-section">
+                <!-- Sezione P&L Intelligente -->
+                <section class="pnl-section">
                     <div class="section-header">
-                        <h2>P&L Portfolio</h2>
+                        <h2>P&L Settembre 2025</h2>
                     </div>
                     
-                    <div class="pl-container" id="plContainer">
-                        <div class="pl-table-container">
-                            <table class="pl-table">
-                                <thead>
-                                    <tr>
-                                        <th>Partecipante</th>
-                                        <th>% Portfolio</th>
-                                        <th>Valore €</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="plTableBody">
-                                    <!-- Generato dinamicamente -->
-                                </tbody>
-                            </table>
+                    <div class="pnl-content">
+                        <div class="pnl-summary">
+                            <div class="pnl-item positive">
+                                <span class="pnl-label">Rendimento Mese:</span>
+                                <span class="pnl-value">+12.4%</span>
+                            </div>
+                            <div class="pnl-item positive">
+                                <span class="pnl-label">Valore Attuale:</span>
+                                <span class="pnl-value">€42,350</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pnl-table" id="pnlTable">
+                            <!-- Tabella P&L generata dinamicamente -->
                         </div>
                     </div>
                 </section>
             </aside>
         </div>
 
+        <!-- Summary Stats -->
         <div class="summary-stats">
             <div class="stat-card">
-                <div class="stat-value" id="totalPortfolio">€0</div>
-                <div class="stat-label">Totale Portfolio</div>
+                <div class="stat-value" id="totalPortfolio2024">€0</div>
+                <div class="stat-label">Totale 2024</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="avgDeposit">€0</div>
-                <div class="stat-label">Media Mensile</div>
+                <div class="stat-value" id="totalPortfolio2025">€0</div>
+                <div class="stat-label">Totale 2025</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value" id="activeParticipants">8</div>
                 <div class="stat-label">Partecipanti Attivi</div>
             </div>
         </div>
-
-        <!-- Sezione Regolamento -->
-        <section class="regulations-section">
-            <div class="section-header-elegant">
-                <h2>Regolamento Portfolio Condiviso Crypto</h2>
-                <div class="header-accent"></div>
-            </div>
-            
-            <div class="regulations-grid">
-                <div class="regulation-card">
-                    <div class="regulation-icon">💰</div>
-                    <h3>Contributi Mensili</h3>
-                    <div class="regulation-content">
-                        <p>Ogni partecipante si impegna a versare un contributo mensile tra €400 e €1,500. I contributi devono essere versati entro il 5 di ogni mese per mantenere l'equilibrio del portfolio condiviso.</p>
-                    </div>
-                </div>
-
-                <div class="regulation-card">
-                    <div class="regulation-icon">📊</div>
-                    <h3>Distribuzione P&L</h3>
-                    <div class="regulation-content">
-                        <p>Profitti e perdite sono distribuiti proporzionalmente ai contributi di ogni partecipante. Le percentuali sono calcolate su base mensile e i rebalancing avvengono trimestralmente per ottimizzare il rendimento.</p>
-                    </div>
-                </div>
-
-                <div class="regulation-card">
-                    <div class="regulation-icon">🚪</div>
-                    <h3>Uscita dal Gruppo</h3>
-                    <div class="regulation-content">
-                        <p>Per uscire dal gruppo è necessario un preavviso di 90 giorni. La liquidazione avviene al valore di mercato del momento dell'uscita e le spese di transazione sono a carico del partecipante uscente.</p>
-                    </div>
-                </div>
-
-                <div class="regulation-card">
-                    <div class="regulation-icon">📋</div>
-                    <h3>Trasparenza</h3>
-                    <div class="regulation-content">
-                        <p>Tutti i movimenti sono tracciati in questa dashboard. Report mensili vengono inviati a tutti i partecipanti e l'accesso in sola lettura è garantito 24/7 a tutti i membri del gruppo.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 
     <script src="app.js"></script>
