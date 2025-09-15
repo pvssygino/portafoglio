@@ -1,4 +1,4 @@
-// Portfolio Crypto Application - Versione Completa con Due Tabelle Colorate
+// Portfolio Crypto Application - Versione con Due Tabelle (2024 e 2025) - Mobile Ottimizzata con Modal
 class CryptoPortfolioApp {
     constructor() {
         this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
@@ -26,7 +26,7 @@ class CryptoPortfolioApp {
         // Colori per il grafico
         this.chartColors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F'];
         
-        // Inizializza dati portfolio 2024 e 2025
+        // Inizializza dati portfolio separati per 2024 e 2025
         this.portfolioData2024 = this.initializeData2024();
         this.portfolioData2025 = this.initializeData2025();
         
@@ -35,13 +35,6 @@ class CryptoPortfolioApp {
         
         // Chart instance
         this.pieChart = null;
-        
-        // Mese corrente per P&L intelligente
-        this.currentMonth = "Settembre";
-        this.currentYear = 2025;
-        
-        // Flag per editing in corso
-        this.isEditing = false;
         
         // Inizializza app quando DOM è pronto
         if (document.readyState === 'loading') {
@@ -52,7 +45,7 @@ class CryptoPortfolioApp {
     }
 
     initializeData2024() {
-        // Dati reali 2024 dal JSON
+        // Dati 2024 esistenti con tutti i partecipanti
         return {
             "Marco": {"Gennaio": 800, "Febbraio": 750, "Marzo": 900, "Aprile": 650, "Maggio": 850, "Giugno": 700, "Luglio": 950, "Agosto": 800, "Settembre": 750, "Ottobre": 600, "Novembre": 750, "Dicembre": 900},
             "Luca": {"Gennaio": 750, "Febbraio": 700, "Marzo": 800, "Aprile": 600, "Maggio": 750, "Giugno": 650, "Luglio": 800, "Agosto": 750, "Settembre": 700, "Ottobre": 800, "Novembre": 700, "Dicembre": 650},
@@ -66,7 +59,7 @@ class CryptoPortfolioApp {
     }
 
     initializeData2025() {
-        // Dati vuoti 2025 dal JSON
+        // Dati 2025 inizializzati a zero
         const data = {};
         this.participants.forEach(participant => {
             data[participant] = {};
@@ -78,86 +71,281 @@ class CryptoPortfolioApp {
     }
 
     initializeApp() {
-        console.log('Inizializzazione Crypto Portfolio App - Versione Due Tabelle Colorate...');
-        
-        // Setup ticker loop continuo per mobile
-        this.setupSeamlessTicker();
-        
-        // Render tabelle
-        this.renderVerticalTable(2024);
-        this.renderVerticalTable(2025);
-        
-        // Render sidebar
+        console.log('Inizializzazione Crypto Portfolio App - Versione Mobile Ottimizzata con Modal...');
+        this.renderTable2024();
+        this.renderTable2025();
         this.renderParticipantsList();
         this.createResponsivePieChart();
-        this.renderPnLSection();
-        
-        // Calcoli e aggiornamenti
         this.calculateAllTotals();
         this.updateSummary();
-        
-        // Setup event listeners
         this.setupEventListeners();
-        this.setupActionButtons(); // SETUP TASTI DEPOSITA/PRELEVA
         this.setupResponsiveChart();
-        
-        console.log('App inizializzata con successo - Tabelle Colorate Attive');
+        this.setupMobileTicker(); // Setup ticker mobile ottimizzato
+        this.setupActionButtons(); // Setup tasti deposita/preleva
+        this.setupModalEvents(); // Setup modal per mobile
+        console.log('App inizializzata con successo - mobile ottimizzata con modal');
     }
 
+    // Metodi per modal
+    openModal(title, content) {
+        const modal = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        
+        if (modal && modalTitle && modalBody) {
+            modalTitle.textContent = title;
+            modalBody.innerHTML = content;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            console.log('Modal aperto:', title);
+        }
+    }
+
+    closeModal() {
+        const modal = document.getElementById('modalOverlay');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            console.log('Modal chiuso');
+        }
+    }
+
+    // Metodo per creare il grafico nel modal
+    createPieChartInModal() {
+        const modalCanvas = document.querySelector('#modalBody canvas');
+        if (!modalCanvas) {
+            console.log('Canvas nel modal non trovato');
+            return;
+        }
+
+        const labels = Object.keys(this.cryptoAllocation);
+        const data = Object.values(this.cryptoAllocation);
+
+        try {
+            new Chart(modalCanvas, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: this.chartColors,
+                        borderWidth: 1,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                fontSize: 12,
+                                padding: 10
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            console.log('Grafico creato nel modal');
+        } catch (error) {
+            console.error('Errore nella creazione del grafico nel modal:', error);
+        }
+    }
+
+    // Setup eventi modal - funziona sia su desktop che mobile
+    setupModalEvents() {
+        console.log('Setup eventi modal...');
+        
+        // Setup close button
+        const modalClose = document.getElementById('modalClose');
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                this.closeModal();
+            });
+        }
+
+        // Setup overlay click to close
+        const modalOverlay = document.getElementById('modalOverlay');
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    this.closeModal();
+                }
+            });
+        }
+
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.closeModal();
+            }
+        });
+
+        // Setup header click events - funziona sempre, ma su mobile apre modal
+        this.setupSectionHeaderEvents();
+        
+        console.log('Eventi modal configurati');
+    }
+
+    setupSectionHeaderEvents() {
+        const isMobile = () => window.innerWidth <= 767;
+        
+        // Allocazione Portfolio
+        const chartHeader = document.querySelector('.chart-section .section-header');
+        if (chartHeader) {
+            chartHeader.style.cursor = 'pointer';
+            chartHeader.addEventListener('click', () => {
+                console.log('Click su Allocazione Portfolio, mobile:', isMobile());
+                
+                if (isMobile()) {
+                    // Su mobile: apri modal
+                    const modalContent = `
+                        <div class="chart-container" style="position: relative; height: 300px; margin-bottom: 20px;">
+                            <canvas id="modalChart"></canvas>
+                        </div>
+                        <div class="chart-legend">
+                            ${document.getElementById('chartLegend').innerHTML}
+                        </div>
+                    `;
+                    this.openModal('Allocazione Portfolio', modalContent);
+                    // Ricrea il grafico nel modal
+                    setTimeout(() => this.createPieChartInModal(), 100);
+                } else {
+                    // Su desktop: notifica
+                    this.showNotification('💼 Sezione Allocazione Portfolio', 'info');
+                }
+            });
+        }
+        
+        // Partecipanti
+        const participantsHeader = document.querySelector('.participants-section .section-header');
+        if (participantsHeader) {
+            participantsHeader.style.cursor = 'pointer';
+            participantsHeader.addEventListener('click', () => {
+                console.log('Click su Partecipanti, mobile:', isMobile());
+                
+                if (isMobile()) {
+                    // Su mobile: apri modal
+                    const participantsContent = document.querySelector('.participants-section .participants-list');
+                    if (participantsContent) {
+                        this.openModal('Partecipanti', participantsContent.outerHTML);
+                    }
+                } else {
+                    // Su desktop: notifica
+                    this.showNotification('👥 Sezione Partecipanti', 'info');
+                }
+            });
+        }
+        
+        // P&L
+        const plHeader = document.querySelector('.pl-section-separate .section-header');
+        if (plHeader) {
+            plHeader.style.cursor = 'pointer';
+            plHeader.addEventListener('click', () => {
+                console.log('Click su P&L, mobile:', isMobile());
+                
+                if (isMobile()) {
+                    // Su mobile: apri modal
+                    const plContent = document.querySelector('.pl-section-separate .pl-content');
+                    if (plContent) {
+                        this.openModal('P&L - Profit & Loss', plContent.outerHTML);
+                    }
+                } else {
+                    // Su desktop: notifica
+                    this.showNotification('📈 Sezione P&L', 'info');
+                }
+            });
+        }
+    }
+
+    // Metodo per gestire i tasti Deposita/Preleva
     setupActionButtons() {
-        const depositBtn = document.getElementById('depositBtn');
-        const withdrawBtn = document.getElementById('withdrawBtn');
+        const depositBtn = document.querySelector('.btn-deposit');
+        const withdrawBtn = document.querySelector('.btn-withdraw');
         
         if (depositBtn) {
             depositBtn.addEventListener('click', () => {
-                this.showNotification('🔵 Funzione Deposita attiva!', 'info');
+                this.handleDeposit();
             });
         }
         
         if (withdrawBtn) {
             withdrawBtn.addEventListener('click', () => {
-                this.showNotification('🔴 Funzione Preleva attiva!', 'info');
+                this.handleWithdraw();
             });
         }
     }
 
-    setupSeamlessTicker() {
-        // Triplica contenuto ticker per loop seamless mobile
-        const tickerContent = document.getElementById('tickerContent');
-        if (!tickerContent) return;
+    handleDeposit() {
+        this.showNotification('💰 Funzione Deposito - Presto disponibile!', 'info');
+        console.log('Deposito richiesto');
+    }
+
+    handleWithdraw() {
+        this.showNotification('💳 Funzione Prelievo - Presto disponibile!', 'info');
+        console.log('Prelievo richiesto');
+    }
+
+    // Metodo per gestire ticker mobile ottimizzato
+    setupMobileTicker() {
+        const isMobile = window.innerWidth <= 767;
+        const tickerContent = document.querySelector('.ticker-content');
         
-        const originalContent = tickerContent.innerHTML;
-        
-        // Su mobile triplica per loop continuo
-        if (window.innerWidth <= 767) {
-            tickerContent.innerHTML = originalContent + originalContent + originalContent;
+        if (tickerContent) {
+            // Rimuove animazione esistente
+            tickerContent.style.animation = 'none';
+            
+            if (isMobile) {
+                console.log('Configurazione ticker mobile - velocità ridotta (50s)');
+                // Applica animazione mobile più lenta (50s)
+                setTimeout(() => {
+                    tickerContent.style.animation = 'scroll-left-mobile 50s linear infinite';
+                }, 100);
+            } else {
+                console.log('Configurazione ticker desktop - velocità normale (60s)');
+                // Applica animazione desktop normale
+                setTimeout(() => {
+                    tickerContent.style.animation = 'scroll-left-desktop 60s linear infinite';
+                }, 100);
+            }
         }
         
-        // Aggiorna su resize
+        // Listener per cambi di orientamento e resize
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
-                const isMobile = window.innerWidth <= 767;
-                if (isMobile && !tickerContent.innerHTML.includes('BTC')) {
-                    // Ripristina se content è vuoto per qualche motivo
-                    tickerContent.innerHTML = originalContent + originalContent + originalContent;
-                } else if (!isMobile) {
-                    // Su desktop usa contenuto singolo
-                    tickerContent.innerHTML = originalContent;
-                }
+                this.setupMobileTicker();
+                this.setupSectionHeaderEvents(); // Risetup modal events su resize
             }, 250);
         });
     }
 
-    renderVerticalTable(year) {
-        const tableBody = document.getElementById(`tableBody${year}`);
+    renderTable2024() {
+        const tableBody = document.getElementById('tableBody2024');
         if (!tableBody) return;
         
         tableBody.innerHTML = '';
-        
-        const portfolioData = year === 2024 ? this.portfolioData2024 : this.portfolioData2025;
+        this.renderTableForYear(tableBody, this.portfolioData2024, '2024');
+    }
 
+    renderTable2025() {
+        const tableBody = document.getElementById('tableBody2025');
+        if (!tableBody) return;
+        
+        tableBody.innerHTML = '';
+        this.renderTableForYear(tableBody, this.portfolioData2025, '2025');
+    }
+
+    renderTableForYear(tableBody, portfolioData, year) {
         // Itera attraverso ogni trimestre
         Object.keys(this.quartersVertical).forEach((quarter, quarterIndex) => {
             const months = this.quartersVertical[quarter];
@@ -166,7 +354,7 @@ class CryptoPortfolioApp {
             const quarterRow = document.createElement('tr');
             quarterRow.innerHTML = `
                 <td class="quarter-separator ${quarter.toLowerCase()}" colspan="17">
-                    ${quarter} ${year} - ${months.join(', ')}
+                    ${quarter} - ${months.join(', ')}
                 </td>
             `;
             tableBody.appendChild(quarterRow);
@@ -174,31 +362,31 @@ class CryptoPortfolioApp {
             // Aggiungi una riga per ogni mese del trimestre
             months.forEach((month, monthInQuarterIndex) => {
                 const monthRow = document.createElement('tr');
-                monthRow.innerHTML = this.generateMonthRowHTML(month, quarterIndex, monthInQuarterIndex, year, portfolioData);
+                monthRow.innerHTML = this.generateMonthRowHTML(month, quarterIndex, monthInQuarterIndex, portfolioData, year);
                 tableBody.appendChild(monthRow);
             });
         });
     }
 
-    generateMonthRowHTML(month, quarterIndex, monthInQuarterIndex, year, portfolioData) {
+    generateMonthRowHTML(month, quarterIndex, monthInQuarterIndex, portfolioData, year) {
         let html = `<td class="month-name">${month}</td>`;
         
         // Per ogni partecipante, aggiungi due colonne: % e €
         this.participants.forEach((participant, participantIndex) => {
-            const deposit = portfolioData[participant][month] || 0;
+            const deposit = portfolioData[participant] && portfolioData[participant][month] ? portfolioData[participant][month] : 0;
             const monthIndex = this.allMonths.indexOf(month);
             
             html += `
                 <td class="percent-cell" id="percent-${year}-${participantIndex}-${monthIndex}">
                     0%
                 </td>
-                <td class="deposit-cell editable-cell" 
+                <td class="deposit-cell" 
                     data-participant="${participant}" 
                     data-month="${month}"
                     data-year="${year}"
                     data-participant-index="${participantIndex}"
                     data-month-index="${monthIndex}"
-                    title="Clicca per modificare: ${participant} - ${month} ${year}">
+                    title="Clicca per modificare il deposito di ${participant} per ${month} ${year}">
                     €${deposit.toLocaleString('it-IT')}
                 </td>
             `;
@@ -218,66 +406,62 @@ class CryptoPortfolioApp {
             participantElement.className = 'participant-item';
             participantElement.dataset.participant = participant;
             
-            const total2024 = this.calculateParticipantTotal(participant, 2024);
-            const total2025 = this.calculateParticipantTotal(participant, 2025);
-            const totalCombined = total2024 + total2025;
+            const total = this.calculateParticipantTotalCombined(participant);
             
             participantElement.innerHTML = `
                 <div>
                     <div class="participant-name-text">${participant}</div>
                 </div>
-                <div class="participant-total-text">€${totalCombined.toLocaleString('it-IT')}</div>
+                <div class="participant-total-text">€${total.toLocaleString('it-IT')}</div>
             `;
             
             listContainer.appendChild(participantElement);
         });
     }
 
-    renderPnLSection() {
-        const pnlTable = document.getElementById('pnlTable');
-        if (!pnlTable) return;
-        
-        // Calcolo P&L intelligente: usa 2025 se disponibile, altrimenti 2024
-        const currentYearData = this.currentYear === 2025 ? this.portfolioData2025 : this.portfolioData2024;
-        const fallbackData = this.portfolioData2024;
-        
-        let html = '<div class="pnl-participants">';
-        
-        this.participants.forEach(participant => {
-            const currentDeposit = currentYearData[participant][this.currentMonth] || fallbackData[participant][this.currentMonth] || 0;
-            const percentage = this.calculateParticipantPercentageCurrentMonth(participant);
-            
-            if (currentDeposit > 0) {
-                html += `
-                    <div class="pnl-participant-row">
-                        <span class="pnl-name">${participant}</span>
-                        <span class="pnl-percent">${percentage.toFixed(1)}%</span>
-                        <span class="pnl-amount">€${currentDeposit.toLocaleString('it-IT')}</span>
-                    </div>
-                `;
-            }
+    selectParticipant(participant) {
+        // Rimuovi selezione precedente
+        document.querySelectorAll('.participant-item').forEach(item => {
+            item.classList.remove('selected');
         });
         
-        html += '</div>';
-        pnlTable.innerHTML = html;
+        // Seleziona nuovo partecipante
+        const participantElement = document.querySelector(`[data-participant="${participant}"]`);
+        if (participantElement && participantElement.classList.contains('participant-item')) {
+            participantElement.classList.add('selected');
+            this.selectedParticipant = participant;
+            
+            // Evidenzia colonne nella tabella
+            this.highlightParticipantInTable(participant);
+            
+            this.showNotification(`Selezionato: ${participant}`, 'info');
+        }
     }
 
-    calculateParticipantPercentageCurrentMonth(participant) {
-        const currentYearData = this.currentYear === 2025 ? this.portfolioData2025 : this.portfolioData2024;
-        const fallbackData = this.portfolioData2024;
-        
-        let monthTotal = 0;
-        let participantAmount = 0;
-        
-        this.participants.forEach(p => {
-            const amount = currentYearData[p][this.currentMonth] || fallbackData[p][this.currentMonth] || 0;
-            monthTotal += amount;
-            if (p === participant) {
-                participantAmount = amount;
-            }
+    highlightParticipantInTable(participant) {
+        // Rimuovi evidenziazione precedente
+        document.querySelectorAll('.portfolio-table-vertical td').forEach(cell => {
+            cell.style.background = '';
         });
         
-        return monthTotal > 0 ? (participantAmount / monthTotal) * 100 : 0;
+        // Evidenzia colonne del partecipante selezionato in entrambe le tabelle
+        const participantIndex = this.participants.indexOf(participant);
+        if (participantIndex >= 0) {
+            // Evidenzia nelle tabelle 2024 e 2025
+            ['2024', '2025'].forEach(year => {
+                this.allMonths.forEach((month, monthIndex) => {
+                    const percentCell = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
+                    const depositCell = document.querySelector(`[data-participant="${participant}"][data-month="${month}"][data-year="${year}"]`);
+                    
+                    if (percentCell) {
+                        percentCell.style.background = 'rgba(33, 128, 141, 0.15)';
+                    }
+                    if (depositCell) {
+                        depositCell.style.background = 'rgba(33, 128, 141, 0.15)';
+                    }
+                });
+            });
+        }
     }
 
     createResponsivePieChart() {
@@ -287,7 +471,7 @@ class CryptoPortfolioApp {
         const labels = Object.keys(this.cryptoAllocation);
         const data = Object.values(this.cryptoAllocation);
 
-        // Configurazione responsive per mobile
+        // Configurazione responsive per mobile migliorata
         const isMobile = window.innerWidth <= 767;
         
         this.pieChart = new Chart(ctx, {
@@ -379,124 +563,84 @@ class CryptoPortfolioApp {
     }
 
     setupEventListeners() {
-        console.log('Setting up event listeners per due tabelle...');
+        console.log('Setting up event listeners - mobile ottimizzati...');
         
-        // Event delegation per celle editabili - approccio migliorato
-        document.body.addEventListener('click', (e) => {
-            console.log('Click detected on:', e.target);
-            
-            // Gestisci click su celle editabili
-            if (e.target.classList.contains('editable-cell') || e.target.classList.contains('deposit-cell')) {
-                console.log('Editable cell clicked:', e.target);
+        // Event listeners per celle della tabella con miglior supporto touch
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('deposit-cell')) {
+                console.log('Deposit cell clicked:', e.target);
                 e.preventDefault();
                 e.stopPropagation();
-                
-                if (!this.isEditing) {
-                    this.editCell(e.target);
-                }
-                return;
-            }
-            
-            // Gestisci click su partecipanti
-            const participantItem = e.target.closest('.participant-item');
-            if (participantItem) {
+                this.editCell(e.target);
+            } else if (e.target.closest('.participant-item')) {
+                // Event listeners per partecipanti
+                const participantItem = e.target.closest('.participant-item');
                 const participant = participantItem.dataset.participant;
                 if (participant) {
                     this.selectParticipant(participant);
                 }
-                return;
             }
         });
 
-        // Event delegation per supporto touch migliorato
-        document.body.addEventListener('touchend', (e) => {
-            if (e.target.classList.contains('editable-cell') || e.target.classList.contains('deposit-cell')) {
-                console.log('Touch end on editable cell:', e.target);
+        // Supporto touch migliorato per dispositivi mobili
+        let touchStartTime = 0;
+        let touchStartPos = { x: 0, y: 0 };
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartTime = Date.now();
+            if (e.touches.length > 0) {
+                touchStartPos.x = e.touches[0].clientX;
+                touchStartPos.y = e.touches[0].clientY;
+            }
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const touchDuration = Date.now() - touchStartTime;
+            let touchDistance = 0;
+            
+            if (e.changedTouches.length > 0) {
+                const touchEndX = e.changedTouches[0].clientX;
+                const touchEndY = e.changedTouches[0].clientY;
+                touchDistance = Math.sqrt(
+                    Math.pow(touchEndX - touchStartPos.x, 2) + 
+                    Math.pow(touchEndY - touchStartPos.y, 2)
+                );
+            }
+            
+            // Se il touch è breve e non è uno swipe, gestisci come tap
+            if (touchDuration < 500 && touchDistance < 10 && e.target.classList.contains('deposit-cell')) {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                if (!this.isEditing) {
-                    this.editCell(e.target);
-                }
+                this.editCell(e.target);
             }
         });
-
-        console.log('Event listeners impostati con successo');
-    }
-
-    selectParticipant(participant) {
-        // Rimuovi selezione precedente
-        document.querySelectorAll('.participant-item').forEach(item => {
-            item.classList.remove('selected');
-        });
         
-        // Seleziona nuovo partecipante
-        const participantElement = document.querySelector(`[data-participant="${participant}"]`);
-        if (participantElement && participantElement.classList.contains('participant-item')) {
-            participantElement.classList.add('selected');
-            this.selectedParticipant = participant;
-            
-            // Evidenzia colonne nella tabella per entrambi gli anni
-            this.highlightParticipantInTable(participant);
-            
-            this.showNotification(`Selezionato: ${participant}`, 'info');
-        }
-    }
-
-    highlightParticipantInTable(participant) {
-        // Rimuovi evidenziazione precedente
-        document.querySelectorAll('.portfolio-table-vertical td').forEach(cell => {
-            cell.style.background = '';
-        });
-        
-        // Evidenzia colonne del partecipante selezionato per entrambi gli anni
-        const participantIndex = this.participants.indexOf(participant);
-        if (participantIndex >= 0) {
-            [2024, 2025].forEach(year => {
-                this.allMonths.forEach((month, monthIndex) => {
-                    const percentCell = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
-                    const depositCell = document.querySelector(`[data-participant="${participant}"][data-month="${month}"][data-year="${year}"]`);
-                    
-                    if (percentCell) {
-                        percentCell.style.background = 'rgba(33, 128, 141, 0.15)';
-                    }
-                    if (depositCell) {
-                        depositCell.style.background = 'rgba(33, 128, 141, 0.15)';
-                    }
-                });
-            });
-        }
+        console.log('Event listeners configurati con successo - mobile ottimizzati');
     }
 
     editCell(cell) {
         console.log('Edit cell chiamato per:', cell);
         
-        // Previeni editing multiplo
-        if (this.isEditing || cell.querySelector('input') || cell.classList.contains('editing')) {
-            console.log('Editing già in corso');
+        if (cell.querySelector('input') || cell.classList.contains('editing')) {
+            console.log('Cella già in editing');
             return;
         }
 
         const participant = cell.dataset.participant;
         const month = cell.dataset.month;
-        const year = parseInt(cell.dataset.year);
+        const year = cell.dataset.year;
         
         if (!participant || !month || !year) {
-            console.error('Dati mancanti:', participant, month, year);
+            console.error('Dati mancanti per participant, month o year:', participant, month, year);
             return;
         }
         
-        console.log(`Inizio editing: ${participant} - ${month} ${year}`);
-        
-        const portfolioData = year === 2024 ? this.portfolioData2024 : this.portfolioData2025;
-        const currentValue = portfolioData[participant][month] || 0;
-        
-        // Imposta flag editing
-        this.isEditing = true;
+        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
+        const currentValue = portfolioData[participant] && portfolioData[participant][month] ? portfolioData[participant][month] : 0;
+        console.log(`Editing ${participant} - ${month} ${year}: valore corrente = ${currentValue}`);
 
         // Salva contenuto originale
         const originalContent = cell.innerHTML;
-        const originalStyle = cell.style.background;
 
         // Crea input ottimizzato per mobile
         const input = document.createElement('input');
@@ -505,13 +649,13 @@ class CryptoPortfolioApp {
         input.value = currentValue;
         input.min = '0';
         input.step = '50';
-        
-        // Stili specifici per mobile
-        const isMobile = window.innerWidth <= 767;
         input.style.width = '100%';
-        input.style.minWidth = isMobile ? '40px' : '60px';
-        input.style.fontSize = isMobile ? '10px' : '14px';
-        input.style.padding = isMobile ? '2px' : '4px';
+        input.style.height = '100%';
+        
+        // Dimensioni ottimizzate per mobile
+        const isMobile = window.innerWidth <= 767;
+        input.style.minWidth = isMobile ? '50px' : '60px';
+        input.style.fontSize = isMobile ? '11px' : '14px';
         
         // Attributi per mobile
         input.setAttribute('inputmode', 'numeric');
@@ -521,56 +665,45 @@ class CryptoPortfolioApp {
         cell.innerHTML = '';
         cell.appendChild(input);
         cell.classList.add('editing');
-        cell.style.background = '#fbbf24'; // Giallo per editing
 
-        // Focus con delay per mobile
+        // Focus sull'input con delay per mobile
         setTimeout(() => {
             input.focus();
-            if (!isMobile) {
-                input.select();
-            }
-        }, isMobile ? 100 : 50);
+            input.select();
+        }, isMobile ? 100 : 10);
 
         const finishEditing = () => {
-            console.log('Completamento editing, valore input:', input.value);
+            console.log('Finendo editing, valore input:', input.value);
             const newValue = Math.max(0, parseInt(input.value) || 0);
+            
+            // Aggiorna i dati nella struttura corretta
+            if (!portfolioData[participant]) {
+                portfolioData[participant] = {};
+            }
             portfolioData[participant][month] = newValue;
             
             // Ripristina contenuto cella
             cell.innerHTML = `€${newValue.toLocaleString('it-IT')}`;
             cell.classList.remove('editing');
-            cell.style.background = originalStyle;
             
-            // Reset flag editing
-            this.isEditing = false;
-            
-            // Aggiorna calcoli per entrambe le tabelle
+            // Aggiorna calcoli
             this.calculateAllTotals();
             this.updateSummary();
             this.updateParticipantsList();
-            this.renderPnLSection();
             
             this.showNotification(`✅ ${participant} ${month} ${year}: €${newValue.toLocaleString('it-IT')}`, 'success');
-            
-            console.log('Editing completato');
         };
 
         const cancelEditing = () => {
-            console.log('Annullamento editing');
+            console.log('Cancellazione editing');
             cell.innerHTML = originalContent;
             cell.classList.remove('editing');
-            cell.style.background = originalStyle;
-            this.isEditing = false;
         };
 
-        // Gestione eventi input migliorata
+        // Gestione eventi input con supporto touch migliorato
         input.addEventListener('blur', (e) => {
             console.log('Input blur');
-            setTimeout(() => {
-                if (document.activeElement !== input) {
-                    finishEditing();
-                }
-            }, 150);
+            setTimeout(() => finishEditing(), 150);
         });
         
         input.addEventListener('keydown', (e) => {
@@ -579,6 +712,7 @@ class CryptoPortfolioApp {
             
             if (e.key === 'Enter') {
                 e.preventDefault();
+                input.blur();
                 finishEditing();
             } else if (e.key === 'Escape') {
                 e.preventDefault();
@@ -594,23 +728,19 @@ class CryptoPortfolioApp {
         input.addEventListener('touchstart', (e) => {
             e.stopPropagation();
         });
-        
-        input.addEventListener('touchend', (e) => {
-            e.stopPropagation();
-        });
     }
 
     calculateAllTotals() {
-        // Calcola totali per ogni anno
-        [2024, 2025].forEach(year => {
-            const portfolioData = year === 2024 ? this.portfolioData2024 : this.portfolioData2025;
+        // Calcola totali per ogni mese e percentuali per entrambe le tabelle
+        ['2024', '2025'].forEach(year => {
+            const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
             
             this.allMonths.forEach((month, monthIndex) => {
-                const monthTotal = this.calculateMonthTotal(month, year);
+                const monthTotal = this.calculateMonthTotal(month, portfolioData);
                 
                 // Aggiorna percentuali per questo mese
                 this.participants.forEach((participant, participantIndex) => {
-                    const deposit = portfolioData[participant][month] || 0;
+                    const deposit = portfolioData[participant] && portfolioData[participant][month] ? portfolioData[participant][month] : 0;
                     const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
                     
                     const percentElement = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
@@ -622,59 +752,93 @@ class CryptoPortfolioApp {
         });
     }
 
-    calculateMonthTotal(month, year) {
+    calculateMonthTotal(month, portfolioData) {
         let total = 0;
-        const portfolioData = year === 2024 ? this.portfolioData2024 : this.portfolioData2025;
-        
         this.participants.forEach(participant => {
-            total += portfolioData[participant][month] || 0;
+            if (portfolioData[participant] && portfolioData[participant][month]) {
+                total += portfolioData[participant][month];
+            }
         });
         return total;
     }
 
-    calculateParticipantTotal(participant, year) {
+    calculateParticipantTotal(participant, portfolioData) {
         let total = 0;
-        const portfolioData = year === 2024 ? this.portfolioData2024 : this.portfolioData2025;
-        
-        this.allMonths.forEach(month => {
-            total += portfolioData[participant][month] || 0;
-        });
+        if (portfolioData[participant]) {
+            this.allMonths.forEach(month => {
+                if (portfolioData[participant][month]) {
+                    total += portfolioData[participant][month];
+                }
+            });
+        }
         return total;
     }
 
-    calculateGrandTotal(year) {
+    calculateParticipantTotalCombined(participant) {
+        const total2024 = this.calculateParticipantTotal(participant, this.portfolioData2024);
+        const total2025 = this.calculateParticipantTotal(participant, this.portfolioData2025);
+        return total2024 + total2025;
+    }
+
+    calculateGrandTotal() {
         let grandTotal = 0;
-        const portfolioData = year === 2024 ? this.portfolioData2024 : this.portfolioData2025;
         
+        // Somma 2024
         this.participants.forEach(participant => {
             this.allMonths.forEach(month => {
-                grandTotal += portfolioData[participant][month] || 0;
+                if (this.portfolioData2024[participant] && this.portfolioData2024[participant][month]) {
+                    grandTotal += this.portfolioData2024[participant][month];
+                }
             });
         });
+        
+        // Somma 2025
+        this.participants.forEach(participant => {
+            this.allMonths.forEach(month => {
+                if (this.portfolioData2025[participant] && this.portfolioData2025[participant][month]) {
+                    grandTotal += this.portfolioData2025[participant][month];
+                }
+            });
+        });
+        
         return grandTotal;
     }
 
     updateSummary() {
-        const grandTotal2024 = this.calculateGrandTotal(2024);
-        const grandTotal2025 = this.calculateGrandTotal(2025);
+        const grandTotal = this.calculateGrandTotal();
+        const avgMonthly = (this.allMonths.length * 2) > 0 ? grandTotal / (this.allMonths.length * 2) : 0; // 2 anni
         
         let activeParticipants = 0;
         this.participants.forEach(participant => {
             let hasDeposits = false;
-            this.allMonths.forEach(month => {
-                if ((this.portfolioData2024[participant][month] > 0) || (this.portfolioData2025[participant][month] > 0)) {
-                    hasDeposits = true;
-                }
-            });
+            
+            // Controlla 2024
+            if (this.portfolioData2024[participant]) {
+                this.allMonths.forEach(month => {
+                    if (this.portfolioData2024[participant][month] > 0) {
+                        hasDeposits = true;
+                    }
+                });
+            }
+            
+            // Controlla 2025
+            if (this.portfolioData2025[participant]) {
+                this.allMonths.forEach(month => {
+                    if (this.portfolioData2025[participant][month] > 0) {
+                        hasDeposits = true;
+                    }
+                });
+            }
+            
             if (hasDeposits) activeParticipants++;
         });
 
-        const total2024El = document.getElementById('totalPortfolio2024');
-        const total2025El = document.getElementById('totalPortfolio2025');
+        const totalEl = document.getElementById('totalPortfolio');
+        const avgEl = document.getElementById('avgDeposit');
         const activeEl = document.getElementById('activeParticipants');
 
-        if (total2024El) total2024El.textContent = `€${grandTotal2024.toLocaleString('it-IT')}`;
-        if (total2025El) total2025El.textContent = `€${grandTotal2025.toLocaleString('it-IT')}`;
+        if (totalEl) totalEl.textContent = `€${grandTotal.toLocaleString('it-IT')}`;
+        if (avgEl) avgEl.textContent = `€${Math.round(avgMonthly).toLocaleString('it-IT')}`;
         if (activeEl) activeEl.textContent = activeParticipants.toString();
     }
 
@@ -682,10 +846,8 @@ class CryptoPortfolioApp {
         this.participants.forEach((participant) => {
             const participantElement = document.querySelector(`[data-participant="${participant}"] .participant-total-text`);
             if (participantElement) {
-                const total2024 = this.calculateParticipantTotal(participant, 2024);
-                const total2025 = this.calculateParticipantTotal(participant, 2025);
-                const totalCombined = total2024 + total2025;
-                participantElement.textContent = `€${totalCombined.toLocaleString('it-IT')}`;
+                const total = this.calculateParticipantTotalCombined(participant);
+                participantElement.textContent = `€${total.toLocaleString('it-IT')}`;
             }
         });
     }
@@ -704,8 +866,8 @@ class CryptoPortfolioApp {
             notification.classList.add('show');
         }, 100);
         
-        // Rimuovi dopo tempo appropriato
-        const displayTime = window.innerWidth <= 767 ? 3000 : 2500;
+        // Rimuovi dopo tempo variabile (più lungo su mobile per maggior leggibilità)
+        const displayTime = window.innerWidth <= 767 ? 4000 : 3000;
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => {
@@ -716,7 +878,39 @@ class CryptoPortfolioApp {
         }, displayTime);
     }
 
-    // Metodi utility per debugging
+    // Metodi di utilità per statistiche trimestrali combinate
+    getQuarterStatsCombined() {
+        const stats = {};
+        Object.keys(this.quartersVertical).forEach(quarter => {
+            const months = this.quartersVertical[quarter];
+            let quarterTotal = 0;
+            const participantTotals = {};
+            
+            this.participants.forEach(participant => {
+                participantTotals[participant] = 0;
+                months.forEach(month => {
+                    // Somma 2024 e 2025
+                    const amount2024 = this.portfolioData2024[participant] && this.portfolioData2024[participant][month] ? this.portfolioData2024[participant][month] : 0;
+                    const amount2025 = this.portfolioData2025[participant] && this.portfolioData2025[participant][month] ? this.portfolioData2025[participant][month] : 0;
+                    const totalAmount = amount2024 + amount2025;
+                    
+                    participantTotals[participant] += totalAmount;
+                    quarterTotal += totalAmount;
+                });
+            });
+            
+            stats[quarter] = {
+                total: quarterTotal,
+                participants: participantTotals,
+                avgPerMonth: quarterTotal / 3,
+                months: months
+            };
+        });
+        
+        return stats;
+    }
+
+    // Metodo per debugging mobile migliorato
     getMobileDebugInfo() {
         return {
             isMobile: window.innerWidth <= 767,
@@ -724,22 +918,16 @@ class CryptoPortfolioApp {
             screenHeight: window.innerHeight,
             devicePixelRatio: window.devicePixelRatio,
             userAgent: navigator.userAgent,
-            tablesLoaded: {
-                table2024: !!document.getElementById('tableBody2024'),
-                table2025: !!document.getElementById('tableBody2025')
+            orientation: window.screen?.orientation?.type || 'unknown',
+            tablesData: {
+                participants2024: Object.keys(this.portfolioData2024).length,
+                participants2025: Object.keys(this.portfolioData2025).length,
+                total2024: this.participants.reduce((sum, p) => sum + this.calculateParticipantTotal(p, this.portfolioData2024), 0),
+                total2025: this.participants.reduce((sum, p) => sum + this.calculateParticipantTotal(p, this.portfolioData2025), 0)
             },
-            isEditing: this.isEditing
-        };
-    }
-
-    // Export dati per debugging
-    exportData() {
-        return {
-            portfolioData2024: this.portfolioData2024,
-            portfolioData2025: this.portfolioData2025,
-            totals: {
-                total2024: this.calculateGrandTotal(2024),
-                total2025: this.calculateGrandTotal(2025)
+            tickerInfo: {
+                tickerElement: !!document.querySelector('.ticker-content'),
+                currentAnimation: document.querySelector('.ticker-content')?.style.animation || 'none'
             }
         };
     }
@@ -747,16 +935,16 @@ class CryptoPortfolioApp {
 
 // Inizializza l'applicazione
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Avvio app Due Tabelle Colorate...');
+    console.log('DOM Content Loaded - Avvio app mobile ottimizzata con modal e due tabelle 2024/2025...');
     const app = new CryptoPortfolioApp();
     
     // Rendi l'app disponibile globalmente per debugging
     window.cryptoPortfolioApp = app;
     
-    console.log('Crypto Portfolio App (Due Tabelle Colorate) avviata con successo');
+    console.log('Crypto Portfolio App (Mobile Ottimizzata con Modal) avviata con successo');
     
     // Log info mobile per debugging
     if (window.innerWidth <= 767) {
-        console.log('Mobile device detected:', app.getMobileDebugInfo());
+        console.log('Dispositivo mobile rilevato:', app.getMobileDebugInfo());
     }
 });
