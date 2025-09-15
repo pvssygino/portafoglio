@@ -738,7 +738,7 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Logo portfolio minimale */
+/* Logo portfolio geometrico */
 .logo-container {
   display: flex;
   justify-content: center;
@@ -756,10 +756,10 @@ select.form-control {
   transform: scale(1.05);
 }
 
-/* Tasti Deposita/Preleva */
+/* Tasti Deposita e Preleva */
 .action-buttons {
   display: flex;
-  gap: var(--space-16);
+  gap: var(--space-8);
   justify-content: center;
   margin: var(--space-16) 0;
 }
@@ -768,14 +768,13 @@ select.form-control {
   display: flex;
   align-items: center;
   gap: var(--space-8);
-  padding: var(--space-12) var(--space-20);
+  padding: var(--space-8) var(--space-16);
   border-radius: var(--radius-md);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-sm);
   cursor: pointer;
   transition: all var(--duration-normal) var(--ease-standard);
   border: none;
-  text-decoration: none;
 }
 
 .btn-deposit {
@@ -787,21 +786,18 @@ select.form-control {
 .btn-deposit:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
-  background: linear-gradient(135deg, #059669, #047857);
 }
 
 .btn-withdraw {
   background: white;
   color: var(--color-primary);
   border: 2px solid var(--color-primary);
-  box-shadow: var(--shadow-sm);
 }
 
 .btn-withdraw:hover {
   background: var(--color-primary);
   color: white;
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
 }
 
 .btn-icon {
@@ -817,7 +813,9 @@ select.form-control {
   height: 50px;
   display: flex;
   align-items: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .ticker-content {
@@ -896,28 +894,29 @@ body {
 .header__subtitle {
   font-size: var(--font-size-base);
   color: var(--color-text-secondary);
-  margin: 0;
+  margin: 0 0 var(--space-16) 0;
 }
 
 .main-layout {
   display: grid;
-  grid-template-columns: 60% 40%;
-  gap: var(--space-32);
+  grid-template-columns: 65% 35%;
+  gap: var(--space-24);
   margin-bottom: var(--space-32);
 }
 
 .tables-container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-24);
+  gap: var(--space-20);
 }
 
-/* Sezione Portfolio */
+/* Sezione Portfolio con COLORI BELLI RIPRISTINATI */
 .portfolio-section {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-card-border);
   overflow: hidden;
+  height: fit-content;
 }
 
 .section-header {
@@ -935,11 +934,11 @@ body {
 
 .table-container {
   overflow-x: auto;
+  max-height: 600px;
   overflow-y: auto;
-  max-height: 400px;
 }
 
-/* Tabella Verticale */
+/* Tabella Verticale COLORATA - Header Corretto */
 .portfolio-table-vertical {
   width: 100%;
   border-collapse: collapse;
@@ -959,6 +958,7 @@ body {
   background: var(--color-surface);
 }
 
+/* Month column header - TEAL */
 .month-column-header {
   background: var(--color-primary);
   color: var(--color-btn-primary-text);
@@ -969,15 +969,18 @@ body {
   font-size: var(--font-size-sm);
 }
 
+/* Header principale partecipanti - COLORATO */
 .participant-header {
-  background: var(--color-bg-5);
+  background: var(--color-bg-5); /* Viola chiaro */
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
   min-width: 140px;
+  color: var(--color-text);
 }
 
+/* Sub-header per % e € - COLORATO */
 .participant-subheader {
-  background: var(--color-bg-2);
+  background: var(--color-bg-2); /* Giallo chiaro */
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
   min-width: 70px;
@@ -987,6 +990,7 @@ body {
   z-index: 9;
 }
 
+/* Righe della tabella verticale */
 .portfolio-table-vertical tbody tr {
   transition: background-color var(--duration-fast) var(--ease-standard);
 }
@@ -1002,6 +1006,7 @@ body {
   font-size: var(--font-size-sm);
 }
 
+/* Trimestri colorati diversi */
 .quarter-separator {
   background: var(--color-primary);
   color: var(--color-btn-primary-text);
@@ -1014,6 +1019,31 @@ body {
   z-index: 8;
 }
 
+.quarter-separator.q1 {
+  background: var(--color-bg-1); /* Blu */
+  color: var(--color-text);
+  border-top: 3px solid var(--color-primary);
+}
+
+.quarter-separator.q2 {
+  background: var(--color-bg-2); /* Giallo */
+  color: var(--color-text);
+  border-top: 3px solid var(--color-warning);
+}
+
+.quarter-separator.q3 {
+  background: var(--color-bg-3); /* Verde */
+  color: var(--color-text);
+  border-top: 3px solid var(--color-success);
+}
+
+.quarter-separator.q4 {
+  background: var(--color-bg-4); /* Rosso */
+  color: var(--color-text);
+  border-top: 3px solid var(--color-error);
+}
+
+/* Nomi mesi colorati */
 .month-name {
   background: var(--color-bg-2);
   font-weight: var(--font-weight-medium);
@@ -1026,6 +1056,7 @@ body {
   min-width: 100px;
 }
 
+/* Celle depositi con hover colorato */
 .deposit-cell {
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
@@ -1049,6 +1080,7 @@ body {
   min-width: 45px;
 }
 
+/* Input per editing */
 .table-input {
   width: 100%;
   border: 2px solid var(--color-primary);
@@ -1070,11 +1102,11 @@ body {
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: var(--space-24);
+  gap: var(--space-20);
 }
 
-/* Sezioni sidebar */
-.chart-section, .participants-section, .pl-section {
+/* Grafico sezione */
+.chart-section {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-card-border);
@@ -1117,9 +1149,17 @@ body {
   margin-left: var(--space-8);
 }
 
+/* Partecipanti sezione */
+.participants-section {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  overflow: hidden;
+}
+
 .participants-list {
   padding: var(--space-16);
-  max-height: 300px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -1127,9 +1167,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-12) var(--space-16);
+  padding: var(--space-10) var(--space-12);
   border-radius: var(--radius-base);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
   background: var(--color-bg-2);
@@ -1162,36 +1202,57 @@ body {
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* P&L Section */
-.pl-container {
+/* Sezione P&L Mantenuta */
+.pnl-section {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  overflow: hidden;
+}
+
+.pnl-content {
   padding: var(--space-16);
 }
 
-.pl-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--font-size-sm);
+.pnl-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-bottom: var(--space-16);
 }
 
-.pl-table th, .pl-table td {
+.pnl-item {
+  display: flex;
+  justify-content: space-between;
   padding: var(--space-8) var(--space-12);
-  text-align: center;
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-1);
 }
 
-.pl-table th {
-  background: var(--color-bg-2);
+.pnl-item.positive .pnl-value {
+  color: var(--color-success);
   font-weight: var(--font-weight-semibold);
 }
 
-.pl-positive {
-  color: var(--color-success);
+.pnl-item.negative .pnl-value {
+  color: var(--color-error);
+  font-weight: var(--font-weight-semibold);
+}
+
+.pnl-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.pnl-value {
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
 }
 
-.pl-negative {
-  color: var(--color-error);
-  font-weight: var(--font-weight-medium);
+.pnl-table {
+  font-size: var(--font-size-xs);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-12);
 }
 
 /* Summary stats */
@@ -1231,104 +1292,203 @@ body {
   font-weight: var(--font-weight-medium);
 }
 
-/* Regolamento */
-.regulations-section-new {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-card-border);
-  overflow: hidden;
-  margin-bottom: var(--space-32);
-  box-shadow: var(--shadow-lg);
+/* MOBILE LAYOUT CORRETTO - SCROLL VERTICALE FUNZIONANTE */
+@media (max-width: 767px) {
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Assicura scroll verticale */
+    min-height: 100vh; /* Non height fisso */
+  }
+  
+  .container {
+    min-height: 100vh; /* Non height fisso per permettere scroll */
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .main-layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Permetti shrinking */
+    grid-template-columns: none;
+  }
+  
+  .tables-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* Permetti shrinking */
+    gap: 6px;
+  }
+  
+  .portfolio-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin-bottom: var(--space-2);
+  }
+  
+  .table-container {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  .sidebar {
+    height: 160px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+  }
+  
+  /* MOBILE TICKER OTTIMIZZATO - LOOP SEAMLESS */
+  .ticker-container {
+    height: 35px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .ticker-content {
+    animation: scroll-left 20s linear infinite;
+  }
+  
+  .ticker-item {
+    font-size: 9px;
+    padding: 2px 6px;
+    margin-right: 10px;
+  }
+  
+  /* Logo mobile più piccolo */
+  .portfolio-logo {
+    width: 90px;
+    height: 60px;
+  }
+  
+  .header {
+    margin-bottom: var(--space-12);
+  }
+  
+  .header__title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .header__subtitle {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-8);
+  }
+  
+  /* Mobile buttons */
+  .action-buttons {
+    gap: var(--space-2);
+    margin: var(--space-2) 0;
+  }
+  
+  .action-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: 11px;
+  }
+  
+  .btn-icon {
+    font-size: 14px;
+  }
+  
+  /* Tabella compatta mobile */
+  .portfolio-table-vertical {
+    font-size: 10px;
+  }
+  
+  .portfolio-table-vertical td,
+  .portfolio-table-vertical th {
+    padding: var(--space-2) var(--space-2);
+  }
+  
+  .participant-header,
+  .participant-subheader {
+    min-width: 50px;
+    font-size: 8px;
+  }
+  
+  .month-column-header {
+    min-width: 70px;
+    font-size: 9px;
+  }
+  
+  .summary-stats {
+    display: none; /* Nascondi su mobile per risparmiare spazio */
+  }
+  
+  /* Sidebar compatta mobile */
+  .chart-section,
+  .participants-section,
+  .pnl-section {
+    padding: var(--space-1);
+  }
+  
+  .section-header {
+    padding: var(--space-2) var(--space-4);
+  }
+  
+  .section-header h2 {
+    font-size: var(--font-size-xs);
+    margin: 0;
+  }
+  
+  .chart-container {
+    height: 80px !important;
+    padding: var(--space-1);
+  }
+  
+  .participants-list {
+    padding: var(--space-2);
+    max-height: 100px;
+  }
+  
+  .participant-item {
+    padding: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-xs);
+  }
+  
+  .pnl-content {
+    padding: var(--space-2);
+  }
+  
+  .pnl-summary {
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+  
+  .pnl-item {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+  }
 }
 
-.section-header-elegant {
-  padding: var(--space-32) var(--space-24);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-teal-600));
-  color: var(--color-btn-primary-text);
-  text-align: center;
-  position: relative;
-}
-
-.section-header-elegant h2 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  margin: 0;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.header-accent {
-  width: 80px;
-  height: 4px;
-  background: var(--color-btn-primary-text);
-  margin: var(--space-16) auto 0;
-  border-radius: var(--radius-full);
-  opacity: 0.8;
-}
-
-.regulations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-24);
-  padding: var(--space-32);
-  background: var(--color-background);
-}
-
-.regulation-card {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  padding: var(--space-24);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--color-card-border);
-  transition: all var(--duration-normal) var(--ease-standard);
-  position: relative;
-  overflow: hidden;
-}
-
-.regulation-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-teal-400));
-}
-
-.regulation-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary);
-}
-
-.regulation-icon {
-  font-size: var(--font-size-4xl);
-  margin-bottom: var(--space-16);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: var(--color-bg-1);
-  border-radius: var(--radius-full);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.regulation-card h3 {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin-bottom: var(--space-16);
-  text-align: center;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.regulation-content p {
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  color: var(--color-text);
-  margin: 0;
-  text-align: center;
+/* Desktop ticker normale - esplicitamente definito */
+@media (min-width: 768px) {
+  .ticker-content {
+    animation: scroll-left 60s linear infinite;
+  }
+  
+  .chart-container {
+    height: 350px !important;
+  }
 }
 
 /* Notifiche */
@@ -1367,352 +1527,10 @@ body {
   transform: translateX(0);
 }
 
-/* MOBILE - LAYOUT FISSO VIEWPORT - VERSIONE RIGOROSA */
-@media (max-width: 767px) {
-  /* Tasti azione mobile ottimizzati */
-  .action-buttons {
-    gap: 10px;
-    margin: 8px 0;
-  }
-  
-  .action-btn {
-    padding: 10px 16px;
-    font-size: 12px;
-    border-radius: 8px;
-  }
-  
-  .btn-icon {
-    font-size: 15px;
-  }
-
-  /* Layout viewport COMPLETAMENTE fisso senza scroll verticale */
-  html {
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  body {
-    height: 100vh;
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    width: 100%;
-  }
-  
-  /* Ticker MOLTO compatto */
-  .ticker-container {
-    height: 25px;
-    flex-shrink: 0;
-    z-index: 100;
-  }
-  
-  .ticker-content {
-    animation: scroll-left 20s linear infinite;
-  }
-  
-  .ticker-item {
-    font-size: 7px;
-    padding: 1px 3px;
-    margin-right: 6px;
-  }
-  
-  /* Header ULTRA compatto */
-  .header {
-    flex-shrink: 0;
-    padding: 2px 4px;
-    margin-bottom: 0;
-    text-align: center;
-  }
-  
-  .logo-container {
-    margin-bottom: 2px;
-  }
-  
-  .portfolio-logo {
-    width: 40px;
-    height: 25px;
-  }
-  
-  .header__title {
-    font-size: 14px;
-    margin-bottom: 1px;
-  }
-  
-  .header__subtitle {
-    font-size: 9px;
-    margin: 0;
-  }
-  
-  /* Main layout che occupa tutto lo spazio rimanente */
-  .main-layout {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    grid-template-columns: 1fr;
-    gap: 2px;
-    margin-bottom: 0;
-    min-height: 0;
-    padding: 2px;
-  }
-  
-  /* Tables container - occupa la maggior parte dello spazio */
-  .tables-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    gap: 2px;
-    min-height: 0;
-  }
-  
-  .portfolio-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-    max-height: calc(50vh - 50px); /* Ogni tabella max metà schermo meno overhead */
-  }
-  
-  .section-header {
-    padding: 2px 4px;
-    flex-shrink: 0;
-  }
-  
-  .section-header h2 {
-    font-size: 9px;
-    margin: 0;
-  }
-  
-  .table-container {
-    flex: 1;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    scrollbar-width: thin;
-    min-height: 0;
-  }
-  
-  .table-container::-webkit-scrollbar {
-    height: 3px;
-  }
-  
-  .table-container::-webkit-scrollbar-thumb {
-    background: #1FB8CD;
-    border-radius: 1px;
-  }
-  
-  .portfolio-table-vertical {
-    height: 100%;
-    min-width: 800px; /* Forza scroll orizzontale */
-    font-size: 8px;
-    white-space: nowrap;
-  }
-  
-  .portfolio-table-vertical th,
-  .portfolio-table-vertical td {
-    padding: 1px 2px;
-    min-width: 40px;
-    font-size: 8px;
-  }
-  
-  .participant-header,
-  .participant-subheader {
-    min-width: 50px;
-    font-size: 7px;
-  }
-  
-  .month-column-header {
-    min-width: 60px;
-    font-size: 8px;
-  }
-  
-  .quarter-separator {
-    font-size: 8px;
-    padding: 2px 4px;
-  }
-  
-  /* Sidebar MOLTO compatta */
-  .sidebar {
-    height: 100px;
-    flex-shrink: 0;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2px;
-    flex-direction: row;
-  }
-  
-  .chart-section,
-  .participants-section,
-  .pl-section {
-    font-size: 7px;
-    overflow: hidden;
-  }
-  
-  .chart-container {
-    height: 70px !important;
-    padding: 1px;
-  }
-  
-  .participants-list {
-    max-height: 70px;
-    padding: 1px;
-    overflow-y: auto;
-  }
-  
-  .participant-item {
-    padding: 1px 2px;
-    margin-bottom: 1px;
-    font-size: 7px;
-  }
-  
-  .participant-name-text {
-    font-size: 7px;
-  }
-  
-  .participant-total-text {
-    font-size: 6px;
-  }
-  
-  .pl-container {
-    padding: 1px;
-    overflow-y: auto;
-    max-height: 70px;
-  }
-  
-  .pl-table {
-    font-size: 7px;
-  }
-  
-  .pl-table th,
-  .pl-table td {
-    padding: 1px;
-    font-size: 6px;
-  }
-  
-  /* Elements nascosti su mobile per risparmiare spazio */
-  .summary-stats {
-    display: none;
-  }
-  
-  .regulations-section-new {
-    display: none;
-  }
-  
-  /* Input mobile ottimizzato */
-  .table-input {
-    font-size: 8px;
-    padding: 1px 2px;
-    min-width: 35px;
-  }
-  
-  /* Notifiche mobile compatte */
-  .notification {
-    font-size: 8px;
-    padding: 4px 6px;
-    max-width: 150px;
-    top: 30px;
-    right: 2px;
-  }
-  
-  /* Assicura che elementi deposit-cell siano toccabili */
-  .deposit-cell {
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    touch-action: manipulation;
-    min-height: 20px; /* Aumenta area di tocco */
-  }
-  
-  .deposit-cell:active {
-    background: var(--color-warning) !important;
-    color: var(--color-black) !important;
-  }
-  
-  /* Forza la tabella a non espandersi oltre i limiti */
-  .portfolio-table-vertical tbody {
-    display: table-row-group;
-  }
-  
-  /* Limita altezza chart legend */
-  .chart-legend {
-    padding: 1px;
-    font-size: 6px;
-    max-height: 25px;
-    overflow: hidden;
-  }
-  
-  .legend-item {
-    margin-bottom: 1px;
-    font-size: 6px;
-  }
-  
-  .legend-color {
-    width: 8px;
-    height: 8px;
-    margin-right: 2px;
-  }
-}
-
-/* Tablet */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .main-layout {
-    grid-template-columns: 1fr;
-    gap: var(--space-24);
-  }
-  
-  .sidebar {
-    flex-direction: row;
-    gap: var(--space-20);
-  }
-  
-  .chart-section,
-  .participants-section, 
-  .pl-section {
-    flex: 1;
-  }
-  
-  .chart-container {
-    height: 300px !important;
-  }
-  
-  .regulations-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-20);
-    padding: var(--space-24);
-  }
-}
-
-/* Desktop esplicito */
-@media (min-width: 768px) {
-  .ticker-content {
-    animation: scroll-left 60s linear infinite;
-  }
-  
-  .chart-container {
-    height: 350px !important;
-  }
-}
-
 /* Scrollbar personalizzata */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
