@@ -738,7 +738,7 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Logo portfolio semplice - moneta con frecce */
+/* Logo portfolio minimale */
 .logo-container {
   display: flex;
   justify-content: center;
@@ -746,8 +746,8 @@ select.form-control {
 }
 
 .portfolio-logo {
-  width: 80px;
-  height: 60px;
+  width: 120px;
+  height: 80px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
   transition: transform var(--duration-normal) var(--ease-standard);
 }
@@ -756,7 +756,7 @@ select.form-control {
   transform: scale(1.05);
 }
 
-/* Ticker scorrevole - Desktop normale */
+/* Ticker scorrevole - Desktop normale, veloce su mobile */
 .ticker-container {
   width: 100%;
   background: var(--color-surface);
@@ -885,7 +885,7 @@ body {
 
 .table-container {
   overflow-x: auto;
-  max-height: 800px;
+  max-height: 600px;
   overflow-y: auto;
 }
 
@@ -1149,6 +1149,59 @@ body {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Sezione P&L */
+.pl-section {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  overflow: hidden;
+}
+
+.pl-container {
+  padding: var(--space-16);
+}
+
+.pl-table-container {
+  overflow-x: auto;
+}
+
+.pl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.pl-table thead th {
+  padding: var(--space-8) var(--space-12);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  border-bottom: 2px solid var(--color-border);
+  color: var(--color-text);
+  background: var(--color-bg-1);
+}
+
+.pl-table tbody td {
+  padding: var(--space-8) var(--space-12);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.pl-table tbody tr:hover {
+  background: var(--color-bg-1);
+}
+
+.pl-percentage {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+}
+
+.pl-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-success);
+}
+
 /* Summary stats */
 .summary-stats {
   display: grid;
@@ -1186,7 +1239,7 @@ body {
   font-weight: var(--font-weight-medium);
 }
 
-/* SEZIONE REGOLAMENTO - 4 TARGHETTE PULITE */
+/* SEZIONE REGOLAMENTO */
 .regulations-section {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -1286,83 +1339,6 @@ body {
   text-align: center;
 }
 
-/* SEZIONE FAQ SEPARATA */
-.faq-section {
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-card-border);
-  margin-bottom: var(--space-32);
-  box-shadow: var(--shadow-sm);
-}
-
-.faq-header {
-  padding: var(--space-24);
-  background: var(--color-bg-8);
-  border-bottom: 1px solid var(--color-card-border-inner);
-  text-align: center;
-}
-
-.faq-header h2 {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-  margin: 0;
-  color: var(--color-text);
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.faq-categories {
-  padding: var(--space-24);
-  background: var(--color-background);
-  display: grid;
-  gap: var(--space-32);
-}
-
-.faq-category {
-  background: var(--color-surface);
-  border-radius: var(--radius-base);
-  border: 1px solid var(--color-card-border);
-  padding: var(--space-20);
-}
-
-.faq-category-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text);
-  margin: 0 0 var(--space-16) 0;
-  padding-bottom: var(--space-8);
-  border-bottom: 2px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-}
-
-.faq-items {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
-}
-
-.faq-item {
-  background: var(--color-bg-1);
-  border-radius: var(--radius-sm);
-  padding: var(--space-16);
-  border-left: 4px solid var(--color-primary);
-}
-
-.faq-question {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-  margin-bottom: var(--space-8);
-}
-
-.faq-answer {
-  font-size: var(--font-size-sm);
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
 /* MEDIA QUERIES - TABLET */
 @media (max-width: 1024px) {
   .main-layout {
@@ -1376,7 +1352,8 @@ body {
   }
   
   .chart-section,
-  .participants-section {
+  .participants-section,
+  .pl-section {
     flex: 1;
   }
   
@@ -1389,19 +1366,14 @@ body {
     gap: var(--space-20);
     padding: var(--space-24);
   }
-
-  /* Ticker più veloce su tablet */
-  .ticker-content {
-    animation: scroll-left 40s linear infinite;
-  }
 }
 
 /* MEDIA QUERIES - MOBILE SPECIFICHE */
 @media (max-width: 767px) {
   /* Logo mobile più piccolo */
   .portfolio-logo {
-    width: 70px;
-    height: 50px;
+    width: 90px;
+    height: 60px;
   }
   
   /* Ticker veloce su mobile - 25s invece di 60s */
@@ -1423,7 +1395,7 @@ body {
   
   /* Tabella compatta mobile */
   .portfolio-table-vertical {
-    font-size: 10px;
+    font-size: 11px;
   }
   
   .portfolio-table-vertical td,
@@ -1440,6 +1412,16 @@ body {
   .month-column-header {
     min-width: 80px;
     font-size: 10px;
+  }
+  
+  /* P&L table mobile */
+  .pl-table {
+    font-size: var(--font-size-xs);
+  }
+  
+  .pl-table thead th,
+  .pl-table tbody td {
+    padding: var(--space-4) var(--space-6);
   }
   
   /* Grafico mobile ottimizzato */
@@ -1478,23 +1460,6 @@ body {
   .section-header-elegant h2 {
     font-size: var(--font-size-2xl);
   }
-
-  .faq-categories {
-    padding: var(--space-16);
-    gap: var(--space-24);
-  }
-  
-  .faq-category {
-    padding: var(--space-16);
-  }
-  
-  .faq-items {
-    gap: var(--space-12);
-  }
-  
-  .faq-item {
-    padding: var(--space-12);
-  }
 }
 
 /* MEDIA QUERIES - MOBILE PICCOLI */
@@ -1506,18 +1471,9 @@ body {
   .main-layout {
     gap: var(--space-16);
   }
-
-  .faq-header {
-    padding: var(--space-16);
-  }
   
-  .faq-header h2 {
-    font-size: var(--font-size-lg);
-  }
-
-  /* Ticker molto veloce su mobile piccoli - 20s */
-  .ticker-content {
-    animation: scroll-left 20s linear infinite;
+  .tables-container {
+    gap: var(--space-16);
   }
 }
 
@@ -1529,6 +1485,10 @@ body {
   
   .chart-container {
     height: 350px !important;
+  }
+  
+  .portfolio-table-vertical {
+    font-size: var(--font-size-sm);
   }
 }
 
