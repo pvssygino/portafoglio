@@ -1,4 +1,4 @@
-// Portfolio Crypto Application - Versione Finale con Tasti e P&L Separata
+// Portfolio Crypto Application - Versione Mobile Ottimizzata con Due Tabelle
 class CryptoPortfolioApp {
     constructor() {
         this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
@@ -26,11 +26,7 @@ class CryptoPortfolioApp {
         // Colori per il grafico
         this.chartColors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F'];
         
-        // Mese e anno correnti
-        this.currentMonth = "Settembre";
-        this.currentYear = 2025;
-        
-        // Inizializza dati portfolio - include sia 2024 che 2025
+        // Inizializza dati portfolio separati per 2024 e 2025
         this.portfolioData2024 = this.initializeData2024();
         this.portfolioData2025 = this.initializeData2025();
         
@@ -39,6 +35,9 @@ class CryptoPortfolioApp {
         
         // Chart instance
         this.pieChart = null;
+        
+        // Flag per gestire l'editing
+        this.isEditing = false;
         
         // Inizializza app quando DOM è pronto
         if (document.readyState === 'loading') {
@@ -63,7 +62,7 @@ class CryptoPortfolioApp {
     }
 
     initializeData2025() {
-        // Dati 2025 dal JSON fornito - attualmente tutti a 0
+        // Dati 2025 inizialmente vuoti (dal JSON fornito)
         const data = {};
         this.participants.forEach(participant => {
             data[participant] = {};
@@ -75,145 +74,39 @@ class CryptoPortfolioApp {
     }
 
     initializeApp() {
-        console.log('Inizializzazione Crypto Portfolio App - Versione Finale...');
-        this.renderVerticalTable('2024');
-        this.renderVerticalTable('2025');
+        console.log('Inizializzazione Crypto Portfolio App - Versione Mobile Ottimizzata con Due Tabelle...');
+        this.renderVerticalTable('2024', this.portfolioData2024, 'tableBody2024');
+        this.renderVerticalTable('2025', this.portfolioData2025, 'tableBody2025');
         this.renderParticipantsList();
         this.createResponsivePieChart();
         this.calculateAllTotals();
         this.updateSummary();
-        this.renderPLTableSeparate(); // Nuova P&L separata
         this.setupEventListeners();
+        this.setupActionButtons();
         this.setupResponsiveChart();
-        this.setupActionButtons(); // Nuovi tasti Deposita/Preleva
         console.log('App inizializzata con successo');
     }
 
-    // NUOVA FUNZIONE: Setup tasti Deposita e Preleva
     setupActionButtons() {
         const depositBtn = document.getElementById('depositBtn');
         const withdrawBtn = document.getElementById('withdrawBtn');
         
         if (depositBtn) {
-            depositBtn.addEventListener('click', () => this.handleDeposit());
+            depositBtn.addEventListener('click', () => {
+                this.showNotification('💰 Funzione Deposita in arrivo!', 'info');
+            });
         }
         
         if (withdrawBtn) {
-            withdrawBtn.addEventListener('click', () => this.handleWithdraw());
-        }
-        
-        console.log('Tasti Deposita/Preleva configurati');
-    }
-
-    handleDeposit() {
-        this.showNotification('💰 Funzione Deposita - Integrazione con sistema bancario', 'success');
-        console.log('Deposit button clicked');
-        // Qui si può implementare la logica per i depositi
-    }
-
-    handleWithdraw() {
-        this.showNotification('💸 Funzione Preleva - Richiesta prelievo inoltrata', 'info');
-        console.log('Withdraw button clicked');
-        // Qui si può implementare la logica per i prelievi
-    }
-
-    // NUOVA FUNZIONE: Logica P&L Intelligente per sezione separata
-    getCurrentMonthPLData() {
-        const targetMonth = this.currentMonth;
-        const targetYear = this.currentYear;
-        
-        // Prima prova con l'anno corrente (2025)
-        let monthData = {};
-        let hasData = false;
-        let totalMonth = 0;
-        
-        this.participants.forEach(participant => {
-            const value = this.portfolioData2025[participant] ? 
-                         (this.portfolioData2025[participant][targetMonth] || 0) : 0;
-            monthData[participant] = value;
-            totalMonth += value;
-            if (value > 0) hasData = true;
-        });
-        
-        // Se non ci sono dati per il 2025, fallback al 2024
-        if (!hasData || totalMonth === 0) {
-            console.log('Fallback da 2025 a 2024 per P&L');
-            monthData = {};
-            totalMonth = 0;
-            
-            this.participants.forEach(participant => {
-                const value = this.portfolioData2024[participant] ? 
-                             (this.portfolioData2024[participant][targetMonth] || 0) : 0;
-                monthData[participant] = value;
-                totalMonth += value;
+            withdrawBtn.addEventListener('click', () => {
+                this.showNotification('💸 Funzione Preleva in arrivo!', 'info');
             });
-            
-            return {
-                monthData: monthData,
-                totalMonth: totalMonth,
-                displayMonth: `${targetMonth} 2024`,
-                year: 2024
-            };
         }
-        
-        return {
-            monthData: monthData,
-            totalMonth: totalMonth,
-            displayMonth: `${targetMonth} ${targetYear}`,
-            year: targetYear
-        };
     }
 
-    // NUOVA FUNZIONE: Render Tabella P&L Separata
-    renderPLTableSeparate() {
-        const plData = this.getCurrentMonthPLData();
-        const plTableBody = document.getElementById('plTableBody');
-        const plMonthValue = document.getElementById('plMonthValue');
-        
-        if (!plTableBody || !plMonthValue) return;
-        
-        // Aggiorna il mese visualizzato
-        plMonthValue.textContent = plData.displayMonth;
-        
-        // Pulisci tabella
-        plTableBody.innerHTML = '';
-        
-        // Se non ci sono dati, mostra messaggio
-        if (plData.totalMonth === 0) {
-            const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = `
-                <td colspan="3" style="text-align: center; color: var(--color-text-secondary); font-style: italic; padding: var(--space-16);">
-                    Nessun dato disponibile per ${plData.displayMonth}
-                </td>
-            `;
-            plTableBody.appendChild(emptyRow);
-            return;
-        }
-        
-        // Genera righe per ogni partecipante
-        this.participants.forEach(participant => {
-            const value = plData.monthData[participant] || 0;
-            const percentage = plData.totalMonth > 0 ? ((value / plData.totalMonth) * 100) : 0;
-            
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="pl-participant-name">${participant}</td>
-                <td class="pl-percentage">${percentage.toFixed(1)}%</td>
-                <td class="pl-value">€${value.toLocaleString('it-IT')}</td>
-            `;
-            
-            plTableBody.appendChild(row);
-        });
-        
-        console.log(`P&L Table aggiornata per ${plData.displayMonth}`);
-    }
-
-    renderVerticalTable(year) {
-        const tableId = year === '2024' ? 'tableBody' : 'tableBody2025';
-        const tableBody = document.getElementById(tableId);
+    renderVerticalTable(year, portfolioData, tableBodyId) {
+        const tableBody = document.getElementById(tableBodyId);
         if (!tableBody) return;
-        
-        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
         
         tableBody.innerHTML = '';
 
@@ -257,7 +150,9 @@ class CryptoPortfolioApp {
                     data-year="${year}"
                     data-participant-index="${participantIndex}"
                     data-month-index="${monthIndex}"
-                    title="Clicca per modificare il deposito di ${participant} per ${month} ${year}">
+                    title="Clicca per modificare il deposito di ${participant} per ${month} ${year}"
+                    role="button"
+                    tabindex="0">
                     €${deposit.toLocaleString('it-IT')}
                 </td>
             `;
@@ -277,13 +172,15 @@ class CryptoPortfolioApp {
             participantElement.className = 'participant-item';
             participantElement.dataset.participant = participant;
             
-            const total = this.calculateParticipantTotal(participant);
+            const total2024 = this.calculateParticipantTotal(participant, this.portfolioData2024);
+            const total2025 = this.calculateParticipantTotal(participant, this.portfolioData2025);
+            const totalOverall = total2024 + total2025;
             
             participantElement.innerHTML = `
                 <div>
                     <div class="participant-name-text">${participant}</div>
                 </div>
-                <div class="participant-total-text">€${total.toLocaleString('it-IT')}</div>
+                <div class="participant-total-text">€${totalOverall.toLocaleString('it-IT')}</div>
             `;
             
             listContainer.appendChild(participantElement);
@@ -302,7 +199,7 @@ class CryptoPortfolioApp {
             participantElement.classList.add('selected');
             this.selectedParticipant = participant;
             
-            // Evidenzia colonne nella tabella
+            // Evidenzia colonne nelle tabelle
             this.highlightParticipantInTable(participant);
             
             this.showNotification(`Selezionato: ${participant}`, 'info');
@@ -318,30 +215,18 @@ class CryptoPortfolioApp {
         // Evidenzia colonne del partecipante selezionato in entrambe le tabelle
         const participantIndex = this.participants.indexOf(participant);
         if (participantIndex >= 0) {
-            // Evidenzia per 2024
-            this.allMonths.forEach((month, monthIndex) => {
-                const percentCell2024 = document.getElementById(`percent-2024-${participantIndex}-${monthIndex}`);
-                const depositCell2024 = document.querySelector(`[data-participant="${participant}"][data-month="${month}"][data-year="2024"]`);
-                
-                if (percentCell2024) {
-                    percentCell2024.style.background = 'rgba(33, 128, 141, 0.15)';
-                }
-                if (depositCell2024) {
-                    depositCell2024.style.background = 'rgba(33, 128, 141, 0.15)';
-                }
-            });
-            
-            // Evidenzia per 2025
-            this.allMonths.forEach((month, monthIndex) => {
-                const percentCell2025 = document.getElementById(`percent-2025-${participantIndex}-${monthIndex}`);
-                const depositCell2025 = document.querySelector(`[data-participant="${participant}"][data-month="${month}"][data-year="2025"]`);
-                
-                if (percentCell2025) {
-                    percentCell2025.style.background = 'rgba(33, 128, 141, 0.15)';
-                }
-                if (depositCell2025) {
-                    depositCell2025.style.background = 'rgba(33, 128, 141, 0.15)';
-                }
+            ['2024', '2025'].forEach(year => {
+                this.allMonths.forEach((month, monthIndex) => {
+                    const percentCell = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
+                    const depositCell = document.querySelector(`[data-participant="${participant}"][data-month="${month}"][data-year="${year}"]`);
+                    
+                    if (percentCell) {
+                        percentCell.style.background = 'rgba(33, 128, 141, 0.15)';
+                    }
+                    if (depositCell) {
+                        depositCell.style.background = 'rgba(33, 128, 141, 0.15)';
+                    }
+                });
             });
         }
     }
@@ -447,48 +332,71 @@ class CryptoPortfolioApp {
     setupEventListeners() {
         console.log('Setting up event listeners...');
         
-        // Event listeners per celle della tabella con miglior supporto touch
+        // Event delegation per celle deposito - Più robusto
         document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('deposit-cell')) {
-                console.log('Deposit cell clicked:', e.target);
+            console.log('Click event:', e.target, e.target.classList);
+            
+            // Verifica se è una deposit-cell o se si trova all'interno di una
+            const depositCell = e.target.closest('.deposit-cell');
+            if (depositCell) {
+                console.log('Deposit cell found:', depositCell);
                 e.preventDefault();
                 e.stopPropagation();
-                this.editCell(e.target);
-            } else if (e.target.closest('.participant-item')) {
-                // Event listeners per partecipanti
-                const participantItem = e.target.closest('.participant-item');
+                this.handleCellClick(depositCell);
+                return;
+            }
+            
+            // Verifica click su partecipant item
+            const participantItem = e.target.closest('.participant-item');
+            if (participantItem) {
                 const participant = participantItem.dataset.participant;
                 if (participant) {
                     this.selectParticipant(participant);
                 }
+                return;
             }
         });
 
-        // Supporto touch per dispositivi mobili
-        let touchStartTime = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartTime = Date.now();
-        });
-
+        // Event delegation per touchend su mobile
         document.addEventListener('touchend', (e) => {
-            const touchDuration = Date.now() - touchStartTime;
+            console.log('Touch end event:', e.target);
             
-            // Se il touch è breve (tap), gestisci come click
-            if (touchDuration < 300 && e.target.classList.contains('deposit-cell')) {
+            const depositCell = e.target.closest('.deposit-cell');
+            if (depositCell) {
                 e.preventDefault();
                 e.stopPropagation();
-                this.editCell(e.target);
+                console.log('Touch on deposit cell:', depositCell);
+                this.handleCellClick(depositCell);
+                return;
+            }
+        });
+
+        // Previeni il default touch behavior sui deposit cells
+        document.addEventListener('touchstart', (e) => {
+            const depositCell = e.target.closest('.deposit-cell');
+            if (depositCell) {
+                e.preventDefault();
             }
         });
         
         console.log('Event listeners set up successfully');
     }
 
+    handleCellClick(cell) {
+        if (this.isEditing) {
+            console.log('Already editing a cell');
+            return;
+        }
+        
+        console.log('Handling cell click:', cell);
+        this.editCell(cell);
+    }
+
     editCell(cell) {
         console.log('Edit cell called for:', cell);
         
-        if (cell.querySelector('input') || cell.classList.contains('editing')) {
-            console.log('Cell already being edited');
+        if (cell.querySelector('input') || cell.classList.contains('editing') || this.isEditing) {
+            console.log('Cell already being edited or editing in progress');
             return;
         }
 
@@ -501,6 +409,9 @@ class CryptoPortfolioApp {
             return;
         }
         
+        this.isEditing = true;
+        
+        // Seleziona il dataset corretto
         const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
         const currentValue = portfolioData[participant][month] || 0;
         console.log(`Editing ${participant} - ${month} ${year}: current value = ${currentValue}`);
@@ -522,6 +433,7 @@ class CryptoPortfolioApp {
         // Attributi per mobile
         input.setAttribute('inputmode', 'numeric');
         input.setAttribute('pattern', '[0-9]*');
+        input.setAttribute('autocomplete', 'off');
 
         // Sostituisci contenuto cella
         cell.innerHTML = '';
@@ -531,8 +443,10 @@ class CryptoPortfolioApp {
         // Focus sull'input con delay per mobile
         setTimeout(() => {
             input.focus();
-            input.select();
-        }, window.innerWidth <= 767 ? 50 : 10);
+            if (window.innerWidth > 767) {
+                input.select();
+            }
+        }, window.innerWidth <= 767 ? 100 : 10);
 
         const finishEditing = () => {
             console.log('Finishing edit, input value:', input.value);
@@ -543,11 +457,12 @@ class CryptoPortfolioApp {
             cell.innerHTML = `€${newValue.toLocaleString('it-IT')}`;
             cell.classList.remove('editing');
             
+            this.isEditing = false;
+            
             // Aggiorna calcoli
             this.calculateAllTotals();
             this.updateSummary();
             this.updateParticipantsList();
-            this.renderPLTableSeparate(); // Aggiorna anche P&L separata
             
             this.showNotification(`✅ ${participant} ${month} ${year}: €${newValue.toLocaleString('it-IT')}`, 'success');
         };
@@ -556,12 +471,13 @@ class CryptoPortfolioApp {
             console.log('Cancelling edit');
             cell.innerHTML = originalContent;
             cell.classList.remove('editing');
+            this.isEditing = false;
         };
 
-        // Gestione eventi input con supporto touch migliorato
+        // Gestione eventi input
         input.addEventListener('blur', (e) => {
             console.log('Input blur');
-            setTimeout(() => finishEditing(), 100);
+            setTimeout(() => finishEditing(), 150);
         });
         
         input.addEventListener('keydown', (e) => {
@@ -570,7 +486,7 @@ class CryptoPortfolioApp {
             
             if (e.key === 'Enter') {
                 e.preventDefault();
-                input.blur(); // Su mobile forza il blur
+                input.blur();
                 finishEditing();
             } else if (e.key === 'Escape') {
                 e.preventDefault();
@@ -586,77 +502,68 @@ class CryptoPortfolioApp {
         input.addEventListener('touchstart', (e) => {
             e.stopPropagation();
         });
+
+        input.addEventListener('touchend', (e) => {
+            e.stopPropagation();
+        });
     }
 
     calculateAllTotals() {
-        // Calcola totali per ogni mese e percentuali per entrambe le tabelle
-        
-        // 2024
-        this.allMonths.forEach((month, monthIndex) => {
-            const monthTotal = this.calculateMonthTotal(month, '2024');
+        // Calcola totali per ogni mese e percentuali per entrambi gli anni
+        ['2024', '2025'].forEach(year => {
+            const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
             
-            // Aggiorna percentuali per questo mese
-            this.participants.forEach((participant, participantIndex) => {
-                const deposit = this.portfolioData2024[participant][month] || 0;
-                const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
+            this.allMonths.forEach((month, monthIndex) => {
+                const monthTotal = this.calculateMonthTotal(month, portfolioData);
                 
-                const percentElement = document.getElementById(`percent-2024-${participantIndex}-${monthIndex}`);
-                if (percentElement) {
-                    percentElement.textContent = `${percentage.toFixed(1)}%`;
-                }
-            });
-        });
-        
-        // 2025
-        this.allMonths.forEach((month, monthIndex) => {
-            const monthTotal = this.calculateMonthTotal(month, '2025');
-            
-            // Aggiorna percentuali per questo mese
-            this.participants.forEach((participant, participantIndex) => {
-                const deposit = this.portfolioData2025[participant][month] || 0;
-                const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
-                
-                const percentElement = document.getElementById(`percent-2025-${participantIndex}-${monthIndex}`);
-                if (percentElement) {
-                    percentElement.textContent = `${percentage.toFixed(1)}%`;
-                }
+                // Aggiorna percentuali per questo mese
+                this.participants.forEach((participant, participantIndex) => {
+                    const deposit = portfolioData[participant][month] || 0;
+                    const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
+                    
+                    const percentElement = document.getElementById(`percent-${year}-${participantIndex}-${monthIndex}`);
+                    if (percentElement) {
+                        percentElement.textContent = `${percentage.toFixed(1)}%`;
+                    }
+                });
             });
         });
     }
 
-    calculateMonthTotal(month, year) {
+    calculateMonthTotal(month, portfolioData) {
         let total = 0;
-        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
         this.participants.forEach(participant => {
             total += portfolioData[participant][month] || 0;
         });
         return total;
     }
 
-    calculateParticipantTotal(participant) {
+    calculateParticipantTotal(participant, portfolioData) {
         let total = 0;
-        // Somma entrambi gli anni
         this.allMonths.forEach(month => {
-            total += this.portfolioData2024[participant][month] || 0;
-            total += this.portfolioData2025[participant][month] || 0;
+            total += portfolioData[participant][month] || 0;
         });
         return total;
     }
 
     calculateGrandTotal() {
         let grandTotal = 0;
+        
+        // Somma entrambi gli anni
         this.participants.forEach(participant => {
             this.allMonths.forEach(month => {
                 grandTotal += this.portfolioData2024[participant][month] || 0;
                 grandTotal += this.portfolioData2025[participant][month] || 0;
             });
         });
+        
         return grandTotal;
     }
 
     updateSummary() {
         const grandTotal = this.calculateGrandTotal();
-        const avgMonthly = (this.allMonths.length * 2) > 0 ? grandTotal / (this.allMonths.length * 2) : 0;
+        const totalMonths = this.allMonths.length * 2; // 2024 + 2025
+        const avgMonthly = totalMonths > 0 ? grandTotal / totalMonths : 0;
         
         let activeParticipants = 0;
         this.participants.forEach(participant => {
@@ -683,8 +590,10 @@ class CryptoPortfolioApp {
         this.participants.forEach((participant) => {
             const participantElement = document.querySelector(`[data-participant="${participant}"] .participant-total-text`);
             if (participantElement) {
-                const total = this.calculateParticipantTotal(participant);
-                participantElement.textContent = `€${total.toLocaleString('it-IT')}`;
+                const total2024 = this.calculateParticipantTotal(participant, this.portfolioData2024);
+                const total2025 = this.calculateParticipantTotal(participant, this.portfolioData2025);
+                const totalOverall = total2024 + total2025;
+                participantElement.textContent = `€${totalOverall.toLocaleString('it-IT')}`;
             }
         });
     }
@@ -703,7 +612,7 @@ class CryptoPortfolioApp {
             notification.classList.add('show');
         }, 100);
         
-        // Rimuovi dopo 3 secondi (4s su mobile per maggior leggibilità)
+        // Rimuovi dopo tempo appropriato
         const displayTime = window.innerWidth <= 767 ? 4000 : 3000;
         setTimeout(() => {
             notification.classList.remove('show');
@@ -715,21 +624,34 @@ class CryptoPortfolioApp {
         }, displayTime);
     }
 
-    // Metodi di utilità per statistiche complete
-    getFullStats() {
-        return {
-            participants: this.participants,
-            totals2024: this.participants.map(p => ({
-                participant: p,
-                total: this.allMonths.reduce((sum, month) => sum + (this.portfolioData2024[p][month] || 0), 0)
-            })),
-            totals2025: this.participants.map(p => ({
-                participant: p,
-                total: this.allMonths.reduce((sum, month) => sum + (this.portfolioData2025[p][month] || 0), 0)
-            })),
-            grandTotal: this.calculateGrandTotal(),
-            plData: this.getCurrentMonthPLData()
-        };
+    // Metodi di utilità per statistiche
+    getYearStats(year) {
+        const portfolioData = year === '2024' ? this.portfolioData2024 : this.portfolioData2025;
+        const stats = {};
+        
+        Object.keys(this.quartersVertical).forEach(quarter => {
+            const months = this.quartersVertical[quarter];
+            let quarterTotal = 0;
+            const participantTotals = {};
+            
+            this.participants.forEach(participant => {
+                participantTotals[participant] = 0;
+                months.forEach(month => {
+                    const amount = portfolioData[participant][month] || 0;
+                    participantTotals[participant] += amount;
+                    quarterTotal += amount;
+                });
+            });
+            
+            stats[quarter] = {
+                total: quarterTotal,
+                participants: participantTotals,
+                avgPerMonth: quarterTotal / 3,
+                months: months
+            };
+        });
+        
+        return stats;
     }
 
     // Metodo per debugging su mobile
@@ -740,28 +662,25 @@ class CryptoPortfolioApp {
             screenHeight: window.innerHeight,
             devicePixelRatio: window.devicePixelRatio,
             userAgent: navigator.userAgent,
-            currentMonth: this.currentMonth,
-            currentYear: this.currentYear,
-            fullStats: this.getFullStats()
+            isEditing: this.isEditing,
+            totalData2024: this.calculateParticipantTotal('Marco', this.portfolioData2024),
+            totalData2025: this.calculateParticipantTotal('Marco', this.portfolioData2025)
         };
     }
 }
 
 // Inizializza l'applicazione
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Avvio app versione finale...');
+    console.log('DOM Content Loaded - Avvio app mobile ottimizzata con due tabelle...');
     const app = new CryptoPortfolioApp();
     
     // Rendi l'app disponibile globalmente per debugging
     window.cryptoPortfolioApp = app;
     
-    console.log('Crypto Portfolio App (Versione Finale) avviata con successo');
+    console.log('Crypto Portfolio App (Mobile Ottimizzata) avviata con successo');
     
     // Log info mobile per debugging
     if (window.innerWidth <= 767) {
         console.log('Mobile device detected:', app.getMobileDebugInfo());
     }
-    
-    // Log statistiche complete per debugging
-    console.log('Full Stats:', app.getFullStats());
 });
