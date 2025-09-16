@@ -1,4 +1,4 @@
-// Portfolio Crypto Application - Versione Finale con Tasti e P&L Separata
+// Portfolio Crypto Application - Versione Finale con Grafico Mobile Riparato
 class CryptoPortfolioApp {
     constructor() {
         this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
@@ -75,18 +75,18 @@ class CryptoPortfolioApp {
     }
 
     initializeApp() {
-        console.log('Inizializzazione Crypto Portfolio App - Versione Finale...');
+        console.log('Inizializzazione Crypto Portfolio App - Versione con Grafico Mobile Riparato...');
         this.renderVerticalTable('2024');
         this.renderVerticalTable('2025');
         this.renderParticipantsList();
-        this.createResponsivePieChart();
+        this.createPieChart(); // Nuova funzione ottimizzata per mobile
         this.calculateAllTotals();
         this.updateSummary();
         this.renderPLTableSeparate(); // Nuova P&L separata
         this.setupEventListeners();
         this.setupResponsiveChart();
         this.setupActionButtons(); // Nuovi tasti Deposita/Preleva
-        console.log('App inizializzata con successo');
+        console.log('App inizializzata con successo - Grafico mobile riparato');
     }
 
     // NUOVA FUNZIONE: Setup tasti Deposita e Preleva
@@ -115,6 +115,62 @@ class CryptoPortfolioApp {
         this.showNotification('💸 Funzione Preleva - Richiesta prelievo inoltrata', 'info');
         console.log('Withdraw button clicked');
         // Qui si può implementare la logica per i prelievi
+    }
+
+    // GRAFICO PIE OTTIMIZZATO PER MOBILE - RIPARATO
+    createPieChart() {
+        const ctx = document.getElementById('allocationChart');
+        if (!ctx) return;
+
+        const labels = Object.keys(this.cryptoAllocation);
+        const data = Object.values(this.cryptoAllocation);
+        
+        if (this.pieChart) {
+            this.pieChart.destroy();
+        }
+        
+        const isMobile = window.innerWidth <= 767;
+
+        this.pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: this.chartColors,
+                    borderWidth: isMobile ? 1 : 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, /* IMPORTANTE: Permette altezza custom */
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + '%';
+                            }
+                        },
+                        titleFont: {
+                            size: isMobile ? 12 : 14
+                        },
+                        bodyFont: {
+                            size: isMobile ? 11 : 12
+                        }
+                    }
+                },
+                layout: {
+                    padding: isMobile ? 8 : 20 /* Padding interno ridotto */
+                }
+            }
+        });
+
+        this.renderChartLegend();
+        console.log(`Grafico pie chart creato - Mobile: ${isMobile}`);
     }
 
     // NUOVA FUNZIONE: Logica P&L Intelligente per sezione separata
@@ -346,59 +402,6 @@ class CryptoPortfolioApp {
         }
     }
 
-    createResponsivePieChart() {
-        const ctx = document.getElementById('allocationChart');
-        if (!ctx) return;
-
-        const labels = Object.keys(this.cryptoAllocation);
-        const data = Object.values(this.cryptoAllocation);
-
-        // Configurazione responsive per mobile
-        const isMobile = window.innerWidth <= 767;
-        
-        this.pieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: this.chartColors,
-                    borderWidth: isMobile ? 1 : 2,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false // Usiamo la nostra legenda personalizzata
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.label + ': ' + context.parsed + '%';
-                            }
-                        },
-                        titleFont: {
-                            size: isMobile ? 12 : 14
-                        },
-                        bodyFont: {
-                            size: isMobile ? 11 : 13
-                        }
-                    }
-                },
-                elements: {
-                    arc: {
-                        borderWidth: isMobile ? 1 : 2
-                    }
-                }
-            }
-        });
-
-        this.renderChartLegend();
-    }
-
     renderChartLegend() {
         const legendContainer = document.getElementById('chartLegend');
         if (!legendContainer) return;
@@ -428,17 +431,8 @@ class CryptoPortfolioApp {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 if (this.pieChart) {
-                    const isMobile = window.innerWidth <= 767;
-                    
-                    // Aggiorna opzioni del grafico per mobile
-                    this.pieChart.options.plugins.tooltip.titleFont.size = isMobile ? 12 : 14;
-                    this.pieChart.options.plugins.tooltip.bodyFont.size = isMobile ? 11 : 13;
-                    this.pieChart.options.elements.arc.borderWidth = isMobile ? 1 : 2;
-                    
-                    // Aggiorna dataset
-                    this.pieChart.data.datasets[0].borderWidth = isMobile ? 1 : 2;
-                    
-                    this.pieChart.update();
+                    // Ricrea completamente il grafico su resize per evitare problemi mobile
+                    this.createPieChart();
                 }
             }, 250);
         });
@@ -749,13 +743,13 @@ class CryptoPortfolioApp {
 
 // Inizializza l'applicazione
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded - Avvio app versione finale...');
+    console.log('DOM Content Loaded - Avvio app con grafico mobile riparato...');
     const app = new CryptoPortfolioApp();
     
     // Rendi l'app disponibile globalmente per debugging
     window.cryptoPortfolioApp = app;
     
-    console.log('Crypto Portfolio App (Versione Finale) avviata con successo');
+    console.log('Crypto Portfolio App (Grafico Mobile Riparato) avviata con successo');
     
     // Log info mobile per debugging
     if (window.innerWidth <= 767) {
