@@ -944,16 +944,6 @@ body {
   }
 }
 
-.desktop-only {
-  display: block;
-}
-
-@media (max-width: 767px) {
-  .desktop-only {
-    display: none !important; /* FORZA NASCOSTO SU MOBILE */
-  }
-}
-
 /* RIPARA COMPLETAMENTE SCROLL E LAYOUT MOBILE */
 @media (max-width: 767px) {
   html {
@@ -1070,6 +1060,36 @@ body {
     min-height: 160px;
     display: flex;
     flex-direction: column;
+  }
+  
+  /* CORREZIONE GRAFICO A TORTA MOBILE - NON PIÙ TAGLIATO */
+  .chart-section {
+    border-radius: 8px;
+    background: var(--color-surface);
+    height: auto;
+    min-height: 220px; /* Aumenta altezza minima */
+    overflow: visible; /* Permetti overflow */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chart-container {
+    height: 180px !important; /* Aumenta altezza del container */
+    padding: 16px; /* Aumenta padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible !important; /* NON nascondere contenuto */
+    position: relative;
+  }
+  
+  .chart-legend {
+    padding: 12px;
+    background: var(--color-bg-1);
+    border-radius: 0 0 8px 8px;
+    max-height: 100px;
+    overflow-y: auto;
+    flex-shrink: 0;
   }
 }
 
@@ -1483,7 +1503,7 @@ body {
   font-weight: var(--font-weight-medium);
 }
 
-/* SOLO REGULATION CARDS */
+/* REGULATION CARDS - ORA VISIBILI ANCHE SU MOBILE */
 .regulations-section-new {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -1592,6 +1612,238 @@ body {
   color: var(--color-primary);
 }
 
+/* STILI MOBILE PER REGULATION CARDS */
+@media (max-width: 767px) {
+  .regulations-section-new {
+    display: block !important; /* Forza visibilità */
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    width: 100%;
+  }
+  
+  .section-header-elegant {
+    padding: 16px 12px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-teal-600));
+    color: white;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .section-header-elegant h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+  }
+  
+  .header-accent {
+    width: 40px;
+    height: 3px;
+    background: white;
+    margin: 8px auto 0;
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+  
+  .regulations-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Una colonna su mobile */
+    gap: 12px;
+    padding: 16px 12px;
+    background: var(--color-background);
+  }
+  
+  .regulation-card {
+    background: var(--color-surface);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--color-card-border);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .regulation-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-teal-400));
+  }
+  
+  .regulation-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--color-bg-1);
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .regulation-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 12px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  
+  .regulation-content p {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-text);
+    margin: 0 0 6px 0;
+    text-align: left;
+  }
+  
+  .regulation-content p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .highlight {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+}
+
+/* FAQ SECTION SEPARATA */
+.faq-section-separate {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  overflow: hidden;
+  margin-bottom: var(--space-32);
+  box-shadow: var(--shadow-sm);
+}
+
+.faq-container {
+  padding: var(--space-24);
+}
+
+.faq-item {
+  background: var(--color-background);
+  border-radius: var(--radius-base);
+  padding: var(--space-24);
+  border-left: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.faq-icon {
+  font-size: var(--font-size-2xl);
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.faq-question h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+  line-height: var(--line-height-tight);
+}
+
+.faq-answer p {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0 0 var(--space-12) 0;
+}
+
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-answer strong {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.faq-answer em {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* FAQ MOBILE */
+@media (max-width: 767px) {
+  .faq-section-separate {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    background: var(--color-surface);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .faq-container {
+    padding: 16px;
+  }
+  
+  .faq-item {
+    background: var(--color-background);
+    border-radius: 8px;
+    padding: 16px;
+    border-left: 3px solid var(--color-primary);
+  }
+  
+  .faq-question {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .faq-icon {
+    font-size: 18px;
+    background: var(--color-primary);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .faq-question h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+  
+  .faq-answer p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-text);
+    margin: 0 0 8px 0;
+  }
+  
+  .faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 /* MEDIA QUERIES - TABLET */
 @media (max-width: 1024px) {
   .regulations-grid {
@@ -1630,13 +1882,6 @@ body {
   
   .container {
     padding: var(--space-16);
-  }
-  
-  .chart-container {
-    max-width: 280px;
-    height: 280px !important;
-    margin: 0 auto;
-    padding: var(--space-12);
   }
   
   .ticker-container {
