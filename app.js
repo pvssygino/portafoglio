@@ -1,7 +1,7 @@
 // Portfolio Crypto Application - Versione Finale con Grafico Mobile Riparato
 class CryptoPortfolioApp {
     constructor() {
-        this.participants = ["Marco", "Luca", "Sara", "Giovanni", "Anna", "Paolo", "Elena", "Roberto"];
+        this.participants = ["Lorenzo", "Ivan", "Al pacchero", "Vittorio", "Kekko", "Peppe", "Gianluca", "Gabriele" , "Luigi"];
         
         // Organizzazione trimestrale verticale
         this.quartersVertical = {
@@ -16,11 +16,40 @@ class CryptoPortfolioApp {
         
         // Dati crypto allocation
         this.cryptoAllocation = {
-            "Bitcoin": 45,
-            "Ethereum": 25,
-            "Solana": 15,
-            "Cardano": 10,
-            "Others": 5
+            "UNI": 45,
+            "XRP": 25,
+            "DOT": 15,
+            "TON": 10,
+            "ATOM": 5
+        };
+
+        this.manualPercentages = {
+            "2024": {
+                "Gennaio": { "Lorenzo": 33, "Ivan": 33, "Al pacchero": 33, "Vittorio": 0, "Kekko":0, "Peppe":0, "Gianluca":0, "Gabriele":0, "Luigi":0 }, // somma 100%
+"Febbraio": { "Lorenzo": 33, "Ivan": 33, "Al pacchero": 33, "Vittorio": 0, "Kekko":0, "Peppe":0, "Gianluca":0, "Gabriele":0, "Luigi":0 },
+"Marzo": { "Lorenzo": 33, "Ivan": 33, "Al pacchero": 33, "Vittorio": 0, "Kekko":0, "Peppe":0, "Gianluca":0, "Gabriele":0, "Luigi":0 },
+"Aprile": { "Lorenzo": 33, "Ivan": 33, "Al pacchero": 33, "Vittorio": 0, "Kekko":0, "Peppe":0, "Gianluca":0, "Gabriele":0, "Luigi":0 },
+"Maggio": { "Lorenzo": 33, "Ivan": 33, "Al pacchero": 33, "Vittorio": 0, "Kekko":0, "Peppe":0, "Gianluca":0, "Gabriele":0, "Luigi":0 },                
+"Giugno": { "Lorenzo": 33, "Ivan": 33, "Al pacchero": 33, "Vittorio": 0, "Kekko":0, "Peppe":0, "Gianluca":0, "Gabriele":0, "Luigi":0 },
+"Luglio": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 18, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":10 },   
+"Agosto": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 18, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":9 }, 
+"Settembre": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 18, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":9 },
+"Ottobre": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 18, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":9 }, 
+"Novembre": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 18, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":10 }, 
+"Dicembre": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 18, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":10 } 
+        // Se un mese manca, viene calcolato automaticamente
+            },
+            "2025": {
+                 "Gennaio": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 17, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":10 }, // somma 100%
+"Febbraio": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 16, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":11 }, // somma 100%
+"Marzo": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 16, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":11 }, // somma 100%
+"Aprile": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 14, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":12 },
+"Maggio": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 14, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":12 },               
+"Giugno": { "Lorenzo": 18, "Ivan": 18, "Al pacchero": 13, "Vittorio": 9, "Kekko":9, "Peppe":6, "Gianluca":6, "Gabriele":6, "Luigi":13 }, 
+"Luglio": { "Lorenzo": 18, "Ivan": 17, "Al pacchero": 12, "Vittorio": 9, "Kekko":9, "Peppe":7, "Gianluca":7, "Gabriele":7, "Luigi":14 },  
+"Agosto": { "Lorenzo": 18, "Ivan": 16, "Al pacchero": 12, "Vittorio": 9, "Kekko":9, "Peppe":7, "Gianluca":7, "Gabriele":7, "Luigi":14 }
+
+            }
         };
         
         // Colori per il grafico
@@ -51,27 +80,30 @@ class CryptoPortfolioApp {
     initializeData2024() {
         // Dati 2024 dal JSON fornito
         return {
-            "Marco": {"Gennaio": 800, "Febbraio": 750, "Marzo": 900, "Aprile": 650, "Maggio": 850, "Giugno": 700, "Luglio": 950, "Agosto": 800, "Settembre": 750, "Ottobre": 600, "Novembre": 750, "Dicembre": 900},
-            "Luca": {"Gennaio": 750, "Febbraio": 700, "Marzo": 800, "Aprile": 600, "Maggio": 750, "Giugno": 650, "Luglio": 800, "Agosto": 750, "Settembre": 700, "Ottobre": 800, "Novembre": 700, "Dicembre": 650},
-            "Sara": {"Gennaio": 650, "Febbraio": 800, "Marzo": 750, "Aprile": 700, "Maggio": 900, "Giugno": 600, "Luglio": 750, "Agosto": 700, "Settembre": 800, "Ottobre": 700, "Novembre": 800, "Dicembre": 750},
-            "Giovanni": {"Gennaio": 500, "Febbraio": 550, "Marzo": 600, "Aprile": 580, "Maggio": 520, "Giugno": 600, "Luglio": 550, "Agosto": 580, "Settembre": 500, "Ottobre": 550, "Novembre": 600, "Dicembre": 580},
-            "Anna": {"Gennaio": 650, "Febbraio": 700, "Marzo": 600, "Aprile": 650, "Maggio": 700, "Giugno": 600, "Luglio": 650, "Agosto": 700, "Settembre": 650, "Ottobre": 600, "Novembre": 650, "Dicembre": 700},
-            "Paolo": {"Gennaio": 480, "Febbraio": 520, "Marzo": 500, "Aprile": 580, "Maggio": 600, "Giugno": 550, "Luglio": 580, "Agosto": 520, "Settembre": 480, "Ottobre": 520, "Novembre": 580, "Dicembre": 600},
-            "Elena": {"Gennaio": 550, "Febbraio": 600, "Marzo": 580, "Aprile": 520, "Maggio": 620, "Giugno": 580, "Luglio": 550, "Agosto": 600, "Settembre": 550, "Ottobre": 580, "Novembre": 520, "Dicembre": 620},
-            "Roberto": {"Gennaio": 500, "Febbraio": 480, "Marzo": 520, "Aprile": 550, "Maggio": 500, "Giugno": 480, "Luglio": 520, "Agosto": 500, "Settembre": 520, "Ottobre": 500, "Novembre": 480, "Dicembre": 550}
+            "Lorenzo": {"Gennaio": 50, "Febbraio": 50, "Marzo": 80, "Aprile": 100, "Maggio": 50, "Giugno": 50, "Luglio": 50, "Agosto": 50, "Settembre": 50, "Ottobre": 50, "Novembre": 50, "Dicembre": 50},
+            "Ivan": {"Gennaio": 50, "Febbraio": 50, "Marzo": 80, "Aprile": 100, "Maggio": 50, "Giugno": 50, "Luglio": 50, "Agosto": 50, "Settembre": 50, "Ottobre": 50, "Novembre": 50, "Dicembre": 50},
+            "Al pacchero": {"Gennaio": 50, "Febbraio": 50, "Marzo": 80, "Aprile": 100, "Maggio": 50, "Giugno": 50, "Luglio": 50, "Agosto": 50, "Settembre": 50, "Ottobre": 50, "Novembre": 50, "Dicembre": 0},
+            "Vittorio": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 280, "Agosto": 25, "Settembre": 25, "Ottobre": 25, "Novembre": 25, "Dicembre": 25},
+            "Kekko": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 280, "Agosto": 25, "Settembre": 25, "Ottobre": 25, "Novembre": 25, "Dicembre": 25},
+            "Peppe": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 187, "Agosto": 17, "Settembre": 17, "Ottobre": 17, "Novembre": 17, "Dicembre": 17},
+            "Gianluca": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 187, "Agosto": 17, "Settembre": 17, "Ottobre": 17, "Novembre": 17, "Dicembre": 17},
+            "Gabriele": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 187, "Agosto": 17, "Settembre": 17, "Ottobre": 17, "Novembre": 17, "Dicembre": 17},
+            "Luigi": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 300, "Agosto": 25, "Settembre": 50, "Ottobre": 50, "Novembre": 50, "Dicembre": 100}
         };
     }
 
     initializeData2025() {
-        // Dati 2025 dal JSON fornito - attualmente tutti a 0
-        const data = {};
-        this.participants.forEach(participant => {
-            data[participant] = {};
-            this.allMonths.forEach(month => {
-                data[participant][month] = 0;
-            });
-        });
-        return data;
+       return {
+            "Lorenzo": {"Gennaio": 50, "Febbraio": 50, "Marzo": 50, "Aprile": 50, "Maggio": 50, "Giugno": 50, "Luglio": 0, "Agosto": 50, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Ivan": {"Gennaio": 50, "Febbraio": 50, "Marzo": 50, "Aprile": 50, "Maggio": 50, "Giugno": 0, "Luglio": 0, "Agosto": 0, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Al pacchero": {"Gennaio": 0, "Febbraio": 0, "Marzo": 0, "Aprile": 0, "Maggio": 0, "Giugno": 0, "Luglio": 0, "Agosto": 0, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Vittorio": {"Gennaio": 25, "Febbraio": 25, "Marzo": 25, "Aprile": 25, "Maggio": 25, "Giugno": 25, "Luglio": 25, "Agosto": 25, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Kekko": {"Gennaio": 25, "Febbraio": 25, "Marzo": 25, "Aprile": 25, "Maggio": 25, "Giugno": 25, "Luglio": 25, "Agosto": 25, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Peppe": {"Gennaio": 17, "Febbraio": 17, "Marzo": 17, "Aprile": 17, "Maggio": 17, "Giugno": 17, "Luglio": 17, "Agosto": 17, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Gianluca": {"Gennaio": 17, "Febbraio": 17, "Marzo": 17, "Aprile": 17, "Maggio": 17, "Giugno": 17, "Luglio": 17, "Agosto": 17, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Gabriele": {"Gennaio": 17, "Febbraio": 17, "Marzo": 17, "Aprile": 17, "Maggio": 17, "Giugno": 17, "Luglio": 17, "Agosto": 17, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0},
+            "Luigi": {"Gennaio": 50, "Febbraio": 50, "Marzo": 50, "Aprile": 100, "Maggio": 50, "Giugno": 50, "Luglio": 50, "Agosto": 50, "Settembre": 0, "Ottobre": 0, "Novembre": 0, "Dicembre": 0}
+        };
     }
 
     initializeApp() {
@@ -224,12 +256,12 @@ class CryptoPortfolioApp {
     renderPLTableSeparate() {
         const plData = this.getCurrentMonthPLData();
         const plTableBody = document.getElementById('plTableBody');
-        const plMonthValue = document.getElementById('plMonthValue');
+        
         
         if (!plTableBody || !plMonthValue) return;
         
         // Aggiorna il mese visualizzato
-        plMonthValue.textContent = plData.displayMonth;
+        
         
         // Pulisci tabella
         plTableBody.innerHTML = '';
@@ -248,7 +280,7 @@ class CryptoPortfolioApp {
         
         // Genera righe per ogni partecipante
         this.participants.forEach(participant => {
-            const value = plData.monthData[participant] || 0;
+            const value = this.calculateParticipantTotal(participant);
             const percentage = plData.totalMonth > 0 ? ((value / plData.totalMonth) * 100) : 0;
             
             const row = document.createElement('tr');
@@ -582,41 +614,52 @@ class CryptoPortfolioApp {
         });
     }
 
-    calculateAllTotals() {
-        // Calcola totali per ogni mese e percentuali per entrambe le tabelle
-        
-        // 2024
-        this.allMonths.forEach((month, monthIndex) => {
-            const monthTotal = this.calculateMonthTotal(month, '2024');
-            
-            // Aggiorna percentuali per questo mese
-            this.participants.forEach((participant, participantIndex) => {
+  calculateAllTotals() {
+    this.allMonths.forEach((month, monthIndex) => {
+        const monthTotal2024 = this.calculateMonthTotal(month, '2024');
+
+        this.participants.forEach((participant, participantIndex) => {
+            let percentage;
+
+            if (this.manualPercentages?.["2024"]?.[month]?.[participant] !== undefined) {
+                // Usa percentuale manuale
+                percentage = this.manualPercentages["2024"][month][participant];
+            } else {
+                // Calcola automaticamente
                 const deposit = this.portfolioData2024[participant][month] || 0;
-                const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
-                
-                const percentElement = document.getElementById(`percent-2024-${participantIndex}-${monthIndex}`);
-                if (percentElement) {
-                    percentElement.textContent = `${percentage.toFixed(1)}%`;
-                }
-            });
+                percentage = monthTotal2024 > 0 ? ((deposit / monthTotal2024) * 100) : 0;
+            }
+
+            const percentElement = document.getElementById(`percent-2024-${participantIndex}-${monthIndex}`);
+            if (percentElement) {
+                percentElement.textContent = `${percentage.toFixed(1)}%`;
+            }
         });
-        
-        // 2025
-        this.allMonths.forEach((month, monthIndex) => {
-            const monthTotal = this.calculateMonthTotal(month, '2025');
-            
-            // Aggiorna percentuali per questo mese
-            this.participants.forEach((participant, participantIndex) => {
+    });
+
+    // Stessa cosa per il 2025...
+this.allMonths.forEach((month, monthIndex) => {
+        const monthTotal2025 = this.calculateMonthTotal(month, '2025');
+
+        this.participants.forEach((participant, participantIndex) => {
+            let percentage;
+
+            if (this.manualPercentages?.["2025"]?.[month]?.[participant] !== undefined) {
+                // Usa percentuale manuale
+                percentage = this.manualPercentages["2025"][month][participant];
+            } else {
+                // Calcola automaticamente
                 const deposit = this.portfolioData2025[participant][month] || 0;
-                const percentage = monthTotal > 0 ? ((deposit / monthTotal) * 100) : 0;
-                
-                const percentElement = document.getElementById(`percent-2025-${participantIndex}-${monthIndex}`);
-                if (percentElement) {
-                    percentElement.textContent = `${percentage.toFixed(1)}%`;
-                }
-            });
+                percentage = monthTotal2025 > 0 ? ((deposit / monthTotal2025) * 100) : 0;
+            }
+
+            const percentElement = document.getElementById(`percent-2025-${participantIndex}-${monthIndex}`);
+            if (percentElement) {
+                percentElement.textContent = `${percentage.toFixed(1)}%`;
+            }
         });
-    }
+    });
+}
 
     calculateMonthTotal(month, year) {
         let total = 0;
@@ -650,7 +693,8 @@ class CryptoPortfolioApp {
 
     updateSummary() {
         const grandTotal = this.calculateGrandTotal();
-        const avgMonthly = (this.allMonths.length * 2) > 0 ? grandTotal / (this.allMonths.length * 2) : 0;
+        const avgMonthly = parseFloat(document.getElementById('totalPortfolio').textContent.replace("€", "")) / 5.536;
+
         
         let activeParticipants = 0;
         this.participants.forEach(participant => {
@@ -664,11 +708,11 @@ class CryptoPortfolioApp {
             if (hasDeposits) activeParticipants++;
         });
 
-        const totalEl = document.getElementById('totalPortfolio');
+        
         const avgEl = document.getElementById('avgDeposit');
         const activeEl = document.getElementById('activeParticipants');
 
-        if (totalEl) totalEl.textContent = `€${grandTotal.toLocaleString('it-IT')}`;
+        
         if (avgEl) avgEl.textContent = `€${Math.round(avgMonthly).toLocaleString('it-IT')}`;
         if (activeEl) activeEl.textContent = activeParticipants.toString();
     }
